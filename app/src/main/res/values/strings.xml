@@ -1,6 +1,18 @@
 <resources>
     <string name="app_name">MDancingProject</string>
+    <string name="checkbox">com.mocom.com.mdancingproject.Activities.checkbox</string>
+    <string name="username">com.mocom.com.mdancingproject.Activities.username</string>
+    <string name="password">com.mocom.com.mdancingproject.Activities.password</string>
+    //เก็บ User Login
+    <string name="UserID">com.mocom.com.mdancingproject.Activities.userID</string>
+    <string name="User">com.mocom.com.mdancingproject.Activities.User</string>
+    <string name="Email">com.mocom.com.mdancingproject.Activities.Email</string>
+    <string name="GroupID">com.mocom.com.mdancingproject.Activities.GroupID</string>
+    <string name="Groups">com.mocom.com.mdancingproject.Activities.Groups</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+
+    //dropdown register
+    <string name="sex_prompt">Choose a sex</string>
 </resources>
