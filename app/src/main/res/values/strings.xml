@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MDancingProject</string>
+    <string name="app_name">Home</string>
     <string name="checkbox">com.mocom.com.mdancingproject.Activities.checkbox</string>
     <string name="username">com.mocom.com.mdancingproject.Activities.username</string>
     <string name="password">com.mocom.com.mdancingproject.Activities.password</string>

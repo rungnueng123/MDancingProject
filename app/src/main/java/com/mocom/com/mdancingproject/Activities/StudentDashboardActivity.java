@@ -55,6 +55,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                 Class fragmentClass = null;
                if(id == R.id.nav_home){
                    fragmentClass = StudentHomeFragment.class;
+                   actionbar.setTitle("Home");
                }else if(id == R.id.nav_logout){
                    editor.putString(getString(R.string.UserID), "");
                    editor.putString(getString(R.string.User), "");
