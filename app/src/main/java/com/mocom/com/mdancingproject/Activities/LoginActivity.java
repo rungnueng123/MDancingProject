@@ -1,10 +1,12 @@
 package com.mocom.com.mdancingproject.Activities;
 
+import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -46,6 +48,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         initInstance();
     }
 
+    private void checkLogin() {
+        String UserID = sharedPreferences.getString(getString(R.string.UserID),"");
+        if(!UserID.equals("")){
+            Intent intent = new Intent(this, DashboardActivity.class);
+            startActivity(intent);
+            finish();
+        }
+
+    }
+
     private void initInstance() {
         edtUsername = findViewById(R.id.edt_username);
         edtPassword = findViewById(R.id.edt_pass);
@@ -57,7 +69,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        sharedPreferences = getSharedPreferences("dancing",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        checkSharedPreferences();
+        checkLogin();
 
 //        editor.putString("key", "mitch");
 //        editor.commit();
@@ -85,6 +97,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v == btnLogin) {
+            checkInputNull();
             String username = edtUsername.getText().toString();
             String pass = edtPassword.getText().toString();
             goLogin(username, pass);
@@ -107,6 +120,20 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(v == btnSignUp){
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
+            finish();
+        }
+    }
+
+    private void checkInputNull() {
+        if (TextUtils.isEmpty(edtUsername.getText())) {
+            edtUsername.setError("User name is required!");
+        } else {
+            edtUsername.setError(null);
+        }
+        if (TextUtils.isEmpty(edtPassword.getText())) {
+            edtPassword.setError("Password is required!");
+        } else {
+            edtPassword.setError(null);
         }
     }
 
@@ -132,22 +159,31 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             String Email = obj.getString("Email");
                             String GroupID = obj.getString("GroupID");
                             String Groups = obj.getString("Groups");
-                            Toast.makeText(getApplicationContext(), UserID, Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(getApplicationContext(), UserID, Toast.LENGTH_SHORT).show();
                             editor.putString(getString(R.string.UserID), UserID);
-                            editor.commit();
                             editor.putString(getString(R.string.User), User);
                             editor.putString(getString(R.string.Email), Email);
                             editor.putString(getString(R.string.GroupID), GroupID);
                             editor.putString(getString(R.string.Groups), Groups);
+                            editor.commit();
 //                        courseList.add(item);
                         }
                         Intent intent = new Intent(this, DashboardActivity.class);
                         startActivity(intent);
                         finish();
-                    }else if(jsonObject.getString("msg").equals("Login finish")){
-                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                    }else if(jsonObject.getString("msg").equals("verify email")){
+//                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage(jsonObject.getString("msg"))
+                                .setNegativeButton("ok", null);
+                        AlertDialog alert = builder.create();
+                        alert.show();
                     }else{
-                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                        builder.setMessage(jsonObject.getString("msg"))
+                                .setNegativeButton("ok", null);
+                        AlertDialog alert = builder.create();
+                        alert.show();
                     }
 
                 } catch (JSONException e) {

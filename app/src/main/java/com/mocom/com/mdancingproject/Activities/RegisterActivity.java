@@ -1,6 +1,9 @@
 package com.mocom.com.mdancingproject.Activities;
 
+import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Color;
 import android.graphics.drawable.ColorDrawable;
 import android.os.Bundle;
@@ -26,6 +29,9 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mocom.com.mdancingproject.R;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -41,7 +47,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     String registerUrl = DATA_URL + "register.php";
 
     private EditText edtUsername, edtEmail, edtPass, edtCpass, edtTel;
-    private Button btnRegister;
+    private Button btnRegister, btnBack;
     private TextView txtBirth;
     private Spinner spinnerSex;
     private DatePickerDialog.OnDateSetListener dateSetListener;
@@ -67,6 +73,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         txtBirth.setOnClickListener(this);
         btnRegister = findViewById(R.id.btn_register);
         btnRegister.setOnClickListener(this);
+        btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(this);
     }
 
     private void initInstance() {
@@ -76,9 +84,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         dateSetListener = new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int month, int day) {
-                month = month + 1;
                 Log.d(TAG, "date: " + day + "-" + month + "-" + year);
-                String date = day + "-" + month + "-" + year;
+                String date = day + "-" + month + 1 + "-" + year;
                 txtBirth.setText(date);
             }
         };
@@ -141,7 +148,13 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             String phone = edtTel.getText().toString();
             String sex = spinnerSex.getSelectedItem().toString();
             String birth = txtBirth.getText().toString();
-            goRegister(username,email,password,phone,sex,birth);
+            goRegister(username, email, password, phone, sex, birth);
+        }
+        if(v == btnBack){
+            Intent intent = new Intent(this,LoginActivity.class);
+            startActivity(intent);
+            finish();
+
         }
     }
 
@@ -189,6 +202,33 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private void goRegister(String username, String email, String password, String phone, String sex, String birth) {
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, registerUrl, response -> {
+            Log.d("onResponse", response);
+            try {
+                JSONObject obj = new JSONObject(response);
+                if (obj.getString("message").equals("You have been registered! Please verify your email!")) {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(obj.getString("message"))
+                            .setPositiveButton("ok", new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialog, int which) {
+                                    Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    startActivity(intent);
+                                    finish();
+                                }
+                            })
+                            .setNegativeButton("cancel", null);
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(obj.getString("message"))
+                            .setNegativeButton("ok", null);
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }, error -> {
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
