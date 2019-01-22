@@ -10,10 +10,10 @@ import android.view.ViewGroup;
 
 import com.mocom.com.mdancingproject.R;
 
-public class AdminDashboardFragment extends Fragment {
+public class AdminHomeFragment extends Fragment {
 
-    public static AdminDashboardFragment newInstance() {
-        AdminDashboardFragment fragment = new AdminDashboardFragment();
+    public static AdminHomeFragment newInstance() {
+        AdminHomeFragment fragment = new AdminHomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -32,7 +32,7 @@ public class AdminDashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_admin_dashboard, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_admin_home, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
 

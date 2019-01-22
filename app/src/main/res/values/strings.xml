@@ -15,4 +15,8 @@
 
     //dropdown register
     <string name="sex_prompt">Choose a sex</string>
+
+    //drawer menu
+    <string name="nav_home">Home</string>
+    <string name="logout">Logout</string>
 </resources>

@@ -11,10 +11,10 @@ import android.view.ViewGroup;
 
 import com.mocom.com.mdancingproject.R;
 
-public class StudentDashboardFragment extends Fragment {
+public class StudentHomeFragment extends Fragment {
 
-    public static StudentDashboardFragment newInstance() {
-        StudentDashboardFragment fragment = new StudentDashboardFragment();
+    public static StudentHomeFragment newInstance() {
+        StudentHomeFragment fragment = new StudentHomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -33,7 +33,7 @@ public class StudentDashboardFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        View rootView = inflater.inflate(R.layout.fragment_student_dashboard, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_student_home, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }

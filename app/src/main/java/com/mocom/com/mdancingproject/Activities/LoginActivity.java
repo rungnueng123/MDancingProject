@@ -40,6 +40,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private EditText edtUsername, edtPassword;
     private Button btnLogin, btnSignUp;
     private CheckBox chkRemember;
+    String UserID,User,Email,GroupID,Groups;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,10 +51,17 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void checkLogin() {
         String UserID = sharedPreferences.getString(getString(R.string.UserID),"");
+        String Groups = sharedPreferences.getString(getString(R.string.Groups),"");
         if(!UserID.equals("")){
-            Intent intent = new Intent(this, DashboardActivity.class);
-            startActivity(intent);
-            finish();
+            if(Groups.equals("Boss")) {
+                Intent intent = new Intent(this, AdminDashboardActivity.class);
+                startActivity(intent);
+                finish();
+            }else{
+                Intent intent = new Intent(this, StudentDashboardActivity.class);
+                startActivity(intent);
+                finish();
+            }
         }
 
     }
@@ -154,11 +162,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject obj = array.getJSONObject(i);
                             Log.d("Member name: ", obj.getString("UserID"));
-                            String UserID = obj.getString("UserID");
-                            String User = obj.getString("User");
-                            String Email = obj.getString("Email");
-                            String GroupID = obj.getString("GroupID");
-                            String Groups = obj.getString("Groups");
+                            UserID = obj.getString("UserID");
+                            User = obj.getString("User");
+                            Email = obj.getString("Email");
+                            GroupID = obj.getString("GroupID");
+                            Groups = obj.getString("Groups");
 //                            Toast.makeText(getApplicationContext(), UserID, Toast.LENGTH_SHORT).show();
                             editor.putString(getString(R.string.UserID), UserID);
                             editor.putString(getString(R.string.User), User);
@@ -168,9 +176,16 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.commit();
 //                        courseList.add(item);
                         }
-                        Intent intent = new Intent(this, DashboardActivity.class);
-                        startActivity(intent);
-                        finish();
+                        //TODO
+                        if(Groups.equals("Boss")) {
+                            Intent intent = new Intent(this, AdminDashboardActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }else{
+                            Intent intent = new Intent(this, StudentDashboardActivity.class);
+                            startActivity(intent);
+                            finish();
+                        }
                     }else if(jsonObject.getString("msg").equals("verify email")){
 //                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
