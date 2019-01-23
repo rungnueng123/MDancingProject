@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/course_applicant"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="@string/course_applicant"/>
+    <item
+        android:id="@+id/history"
+        android:icon="@drawable/ic_history_black_24dp"
+        android:title="@string/history"/>
+</menu>

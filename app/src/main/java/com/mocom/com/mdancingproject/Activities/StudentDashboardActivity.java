@@ -16,6 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.mocom.com.mdancingproject.Fragments.StudentHomeFragment;
+import com.mocom.com.mdancingproject.Fragments.StudentProfileFragment;
 import com.mocom.com.mdancingproject.R;
 
 public class StudentDashboardActivity extends AppCompatActivity {
@@ -56,6 +57,9 @@ public class StudentDashboardActivity extends AppCompatActivity {
                if(id == R.id.nav_home){
                    fragmentClass = StudentHomeFragment.class;
                    actionbar.setTitle("Home");
+               }else if(id == R.id.nav_profile){
+                   fragmentClass = StudentProfileFragment.class;
+                   actionbar.setTitle("Profile");
                }else if(id == R.id.nav_logout){
                    editor.putString(getString(R.string.UserID), "");
                    editor.putString(getString(R.string.User), "");
