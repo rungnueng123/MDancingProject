@@ -37,6 +37,10 @@ dependencies {
 
     //calendar
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.0'
+
+    //Qrcode
+    implementation 'me.dm7.barcodescanner:zxing:1.9.8'
+
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'
     androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.2'
