@@ -32,7 +32,7 @@ import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
-public class StudentProfileFragment extends Fragment {
+public class StudentProfileFragment extends Fragment implements View.OnClickListener {
 
     String profileUrl = DATA_URL + "profile.php";
     String userID;
@@ -101,6 +101,7 @@ public class StudentProfileFragment extends Fragment {
         transaction.commit();
 
 
+
     }
 
     private void queryProfile() {
@@ -144,6 +145,7 @@ public class StudentProfileFragment extends Fragment {
         txtProfile = rootView.findViewById(R.id.txt_profile);
         imgProfile = rootView.findViewById(R.id.img_profile);
         txtCoin = rootView.findViewById(R.id.txt_coin);
+        txtCoin.setOnClickListener(this);
         txtUser = rootView.findViewById(R.id.txt_user);
         txtTel = rootView.findViewById(R.id.txt_tel);
         txtBirth = rootView.findViewById(R.id.txt_birth);
@@ -166,5 +168,12 @@ public class StudentProfileFragment extends Fragment {
     }
 
     private void onRestoreInstanceState(Bundle savedInstanceState) {
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == txtCoin){
+            Toast.makeText(getActivity(), "aaa", Toast.LENGTH_SHORT).show();
+        }
     }
 }

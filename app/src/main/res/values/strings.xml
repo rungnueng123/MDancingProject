@@ -18,6 +18,7 @@
 
     //drawer menu
     <string name="nav_home">Home</string>
+    <string name="nav_coin">Coin</string>
     <string name="nav_profile">Profile</string>
     <string name="logout">Logout</string>
 

@@ -6,4 +6,5 @@
     <color name="white">#FFFFFF</color>
     <color name="signupColor">#066e8a</color>
     <color name="nav_item_profile">#FFFFFF</color>
+    <color name="calendar">#3F51B5</color>
 </resources>

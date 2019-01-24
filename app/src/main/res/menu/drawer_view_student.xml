@@ -5,6 +5,10 @@
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/nav_home" />
+        <item
+            android:id="@+id/nav_coin"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/nav_coin" />
     </group>
     <group android:id="@+id/about_menu">
             <item
