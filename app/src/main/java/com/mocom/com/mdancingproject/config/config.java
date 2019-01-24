@@ -9,4 +9,5 @@ public class config {
 //    public static final String DATA_URL = "http://192.168.1.37/MDancingPHP/";
     //host
     public static final String DATA_URL = "https://danceschool.matchbox-station.com/MDancingPHP/";
+    public static final String QR_CODE_STRING = "encrypted_string";
 }
