@@ -15,7 +15,9 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentHomeFragment;
+import com.mocom.com.mdancingproject.Fragments.StudentProfileFragment;
 import com.mocom.com.mdancingproject.R;
 
 public class StudentDashboardActivity extends AppCompatActivity {
@@ -42,19 +44,30 @@ public class StudentDashboardActivity extends AppCompatActivity {
         checkFragmentShow(savedInstanceState);
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
         ActionBar actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
+
+
         drawerLayout = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
             @Override
             public boolean onNavigationItemSelected(@NonNull MenuItem item) {
+//                navigationView.getMenu().getItem(0).setChecked(true);
                 int id = item.getItemId();
                 Fragment fragment = null;
                 Class fragmentClass = null;
                if(id == R.id.nav_home){
                    fragmentClass = StudentHomeFragment.class;
+                   actionbar.setTitle("Home");
+               }else if(id == R.id.nav_coin){
+                   fragmentClass = StudentCoinFragment.class;
+                   actionbar.setTitle("Coin");
+               }else if(id == R.id.nav_profile){
+                   fragmentClass = StudentProfileFragment.class;
+                   actionbar.setTitle("Profile");
                }else if(id == R.id.nav_logout){
                    editor.putString(getString(R.string.UserID), "");
                    editor.putString(getString(R.string.User), "");

@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MDancingProject</string>
+    <string name="app_name">MDancing</string>
     <string name="checkbox">com.mocom.com.mdancingproject.Activities.checkbox</string>
     <string name="username">com.mocom.com.mdancingproject.Activities.username</string>
     <string name="password">com.mocom.com.mdancingproject.Activities.password</string>
@@ -18,5 +18,11 @@
 
     //drawer menu
     <string name="nav_home">Home</string>
+    <string name="nav_coin">Coin</string>
+    <string name="nav_profile">Profile</string>
     <string name="logout">Logout</string>
+
+    //navigation profile
+    <string name="course_applicant">Course Applicant</string>
+    <string name="history">History</string>
 </resources>
