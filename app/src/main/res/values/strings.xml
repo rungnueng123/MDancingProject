@@ -10,6 +10,10 @@
     <string name="GroupID">com.mocom.com.mdancingproject.Activities.GroupID</string>
     <string name="Groups">com.mocom.com.mdancingproject.Activities.Groups</string>
 
+    //facebook
+    <string name="facebook_app_id">1094329207415724</string>
+    <string name="fb_login_protocol_scheme">fb1094329207415724</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
 
