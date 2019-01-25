@@ -6,28 +6,39 @@
     android:layout_margin="8dp"
     tools:context=".Fragments.StudentCourseFragment">
 
+    <FrameLayout
+        android:id="@+id/youtube_player"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"/>
+
     <TextView
         android:id="@+id/txt_course"
+        android:layout_below="@+id/youtube_player"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="8dp"
+        android:layout_marginTop="8dp"
         android:text="Course"
         android:textSize="22sp" />
 
     <TextView
         android:id="@+id/txt_coin"
+        android:layout_below="@+id/youtube_player"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="22dp"
+        android:layout_marginTop="8dp"
         android:text="Coin"
         android:textSize="22sp" />
 
     <TextView
         android:id="@+id/txt_hour"
+        android:layout_below="@+id/youtube_player"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="22dp"
+        android:layout_marginTop="8dp"
         android:layout_toStartOf="@id/txt_coin"
         android:text="Hour"
         android:textSize="22sp" />

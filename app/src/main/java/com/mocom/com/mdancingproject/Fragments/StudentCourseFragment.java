@@ -3,13 +3,28 @@ package com.mocom.com.mdancingproject.Fragments;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.FrameLayout;
 
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerSupportFragment;
 import com.mocom.com.mdancingproject.R;
+import com.mocom.com.mdancingproject.config.config;
 
-public class StudentCourseFragment extends Fragment {
+public class StudentCourseFragment extends Fragment implements View.OnClickListener, YouTubePlayer.OnInitializedListener {
+
+    private static final String TAG = "StudentCourseFragment";
+
+//    YouTubePlayerView youTubePlayerView;
+//    YouTubePlayer.OnInitializedListener onInitializedListener;
+
+    YouTubePlayerSupportFragment youTubePlayerFragment;
+    FrameLayout youtubePlayer;
 
     public StudentCourseFragment() {
         // Required empty public constructor
@@ -43,6 +58,44 @@ public class StudentCourseFragment extends Fragment {
     }
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
+        Log.d(TAG,"onCreated : Starting");
+        initFindViewByID(rootView);
+
+        initializeYoutube();
+
+
+    }
+
+    private void initFindViewByID(View rootView) {
+        youtubePlayer = rootView.findViewById(R.id.youtube_player);
+        youtubePlayer.setOnClickListener(this);
+    }
+
+    private void initializeYoutube() {
+        youTubePlayerFragment = YouTubePlayerSupportFragment.newInstance();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.youtube_player, youTubePlayerFragment);
+        transaction.commit();
+
+        youTubePlayerFragment.initialize(config.getYoutubeKey(), new YouTubePlayer.OnInitializedListener() {
+            @Override
+            public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                if (!b) {
+                    youTubePlayer.setFullscreen(false);
+                    youTubePlayer.loadVideo("qOjlSEkUilc");
+                    youTubePlayer.play();
+                }
+            }
+
+            @Override
+            public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+            }
+        });
+    }
+
+    @Override
+    public void onClick(View v) {
 
     }
 
@@ -65,5 +118,15 @@ public class StudentCourseFragment extends Fragment {
     }
 
     private void onRestoreInstanceState(Bundle savedInstanceState) {
+    }
+
+    @Override
+    public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+
+    }
+
+    @Override
+    public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
     }
 }
