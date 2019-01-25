@@ -14,7 +14,7 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".QRCode.AdminQRCodeScannedActivity">
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -24,7 +24,7 @@
         <activity android:name=".Activities.StudentDashboardActivity" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.AdminDashboardActivity" />
-        <activity android:name=".Activities.LoginActivity" />
+        <activity android:name=".QRCode.AdminQRCodeScannedActivity" />
         <activity android:name=".QRCode.ScannedActivity" />
         <activity android:name=".QRCode.StudentQRCodeActivity"></activity>
     </application>
