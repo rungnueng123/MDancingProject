@@ -16,7 +16,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
-import com.mocom.com.mdancingproject.Fragments.StudentCourseHomeFragment;
+import com.mocom.com.mdancingproject.Fragments.StudentCourseFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentHomeFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentProfileFragment;
 import com.mocom.com.mdancingproject.R;
@@ -64,7 +64,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                    fragmentClass = StudentHomeFragment.class;
                    actionbar.setTitle("Home");
                }else if(id == R.id.nav_course){
-                   fragmentClass = StudentCourseHomeFragment.class;
+                   fragmentClass = StudentCourseFragment.class;
                    actionbar.setTitle("Course");
                }else if(id == R.id.nav_coin){
                    fragmentClass = StudentCoinFragment.class;
