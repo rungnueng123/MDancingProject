@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.facebook.login.LoginManager;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentCourseFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentHomeFragment;
@@ -27,6 +28,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
     private SharedPreferences.Editor editor;
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
+    String name;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -36,7 +38,6 @@ public class StudentDashboardActivity extends AppCompatActivity {
 //        sharedPreferences = getSharedPreferences("dancing",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
         checkLogin();
-
         initInstance(savedInstanceState);
 
     }
@@ -79,7 +80,9 @@ public class StudentDashboardActivity extends AppCompatActivity {
                    editor.putString(getString(R.string.GroupID), "");
                    editor.putString(getString(R.string.Groups), "");
                    editor.commit();
+                   LoginManager.getInstance().logOut();
                    Intent intentLogout = new Intent(getApplicationContext(), LoginActivity.class);
+                   intentLogout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                    startActivity(intentLogout);
                    finish();
                    return true;

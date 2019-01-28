@@ -8,6 +8,7 @@ import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -108,6 +109,7 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest request = new StringRequest(Request.Method.POST, profileUrl, response -> {
+            Log.d("onResponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if(jsonObject.getString("msg").equals("success")) {
@@ -115,9 +117,21 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject obj = array.getJSONObject(i);
 //                        Log.d("Member name: ", obj.getString("UserID"));
-                        txtUser.setText(obj.getString("User"));
-                        txtTel.setText(obj.getString("Phone"));
-                        txtBirth.setText(obj.getString("Birth"));
+                        if(obj.getString("User").equals("null")) {
+                            txtUser.setText("Name: ");
+                        }else{
+                            txtUser.setText("Name: "+obj.getString("User"));
+                        }
+                        if(obj.getString("Phone").equals("null")) {
+                            txtTel.setText("Tel: ");
+                        }else{
+                            txtTel.setText("Tel: "+obj.getString("Phone"));
+                        }
+                        if(obj.getString("Birth").equals("null")) {
+                            txtBirth.setText("Birth: ");
+                        }else{
+                            txtBirth.setText("Birth: "+obj.getString("Birth"));
+                        }
                         txtCoin.setText(obj.getString("CoinAmt"));
                     }
                 }
