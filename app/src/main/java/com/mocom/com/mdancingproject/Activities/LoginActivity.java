@@ -19,12 +19,12 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.facebook.AccessToken;
 import com.facebook.AccessTokenTracker;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
 import com.facebook.FacebookException;
-import com.facebook.Profile;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
 import com.facebook.ProfileTracker;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
@@ -34,6 +34,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,17 +45,19 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private static final String TAG = "LoginActivity";
     private static final String EMAIL = "email";
     String loginUrl = DATA_URL + "login.php";
+    String loginFBUrl = DATA_URL + "login_fb.php";
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private LoginButton btnLoginFB;
     private CallbackManager callbackManager;
     AccessTokenTracker accessTokenTracker;
-    ProfileTracker profileTracker;
+    private ProfileTracker profileTracker;
 
     private EditText edtUsername, edtPassword;
     private Button btnLogin, btnSignUp;
     private CheckBox chkRemember;
-    String UserID, User, Email, GroupID, Groups, first_name = "", last_name = "", email = "", id = "";
+    String UserID, User, Email, GroupID, Groups, firstName = "", lastName = "", email = "", id = "", birthday = "", gender = "";
+    private URL profilePicture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -96,29 +99,41 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private void initInstance() {
 
         //login facebook
-        btnLoginFB.setReadPermissions("public_profile");
-//        btnLoginFB.setReadPermissions(Arrays.asList("public_profile", "email", "user_birthday"));
         callbackManager = CallbackManager.Factory.create();
-        setupTokenTracker();
-        setupProfileTracker();
 
-        accessTokenTracker.startTracking();
-        profileTracker.startTracking();
-
-        accessTokenTracker.startTracking();
-        profileTracker.startTracking();
-        btnLoginFB.registerCallback(callbackManager, new FacebookCallback<LoginResult>() {
+        FacebookCallback<LoginResult> callback = new FacebookCallback<LoginResult>() {
             @Override
             public void onSuccess(LoginResult loginResult) {
-                AccessToken accessToken = loginResult.getAccessToken();
-                Profile profile = Profile.getCurrentProfile();
-//                Toast.makeText(getApplicationContext(),first_name,Toast.LENGTH_LONG).show();
-//                tv_name.setText(constructWelcomeMessage(profile));
-//                goMainScreen();
-                Intent intent = new Intent(getApplicationContext(), StudentDashboardActivity.class);
-                intent.putExtra("name",edtUsername.getText().toString());
-                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-//                startActivity(intent);
+                GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
+                    @Override
+                    public void onCompleted(JSONObject object, GraphResponse response) {
+                        Log.e(TAG, object.toString());
+                        Log.e(TAG, response.toString());
+                        try {
+//                            Toast.makeText(getApplicationContext(),object.getString("first_name"),Toast.LENGTH_LONG).show();
+                            id = object.getString("id");
+                            if (object.has("first_name"))
+                                firstName = object.getString("first_name");
+                            if (object.has("last_name"))
+                                lastName = object.getString("last_name");
+                            if (object.has("email"))
+                                email = object.getString("email");
+                            if (object.has("gender"))
+                                gender = object.getString("gender");
+                            if (object.has("birthday"))
+                                birthday = object.getString("birthday");
+
+                            goMainScreenWithFB(id, firstName, lastName, email, birthday, gender);
+//                            finish();
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                });
+                Bundle parameters = new Bundle();
+                parameters.putString("fields", "id, first_name, last_name, email, gender, birthday");
+                request.setParameters(parameters);
+                request.executeAsync();
             }
 
             @Override
@@ -130,7 +145,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onError(FacebookException error) {
 
             }
-        });
+        };
+        btnLoginFB.setReadPermissions("email", "user_birthday", "user_posts", "user_gender");
+        btnLoginFB.registerCallback(callbackManager, callback);
 
 
         //sharedPreferences
@@ -183,50 +200,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         }
-    }
-
-    private String constructWelcomeMessage(Profile profile) {
-        StringBuffer stringBuffer = new StringBuffer();
-        if (profile != null) {
-            stringBuffer.append(profile.getName());
-        }
-        return stringBuffer.toString();
-    }
-
-    public void displayUserInfo(JSONObject object) {
-        try {
-            first_name = object.getString("first_name");
-            last_name = object.getString("last_name");
-            email = object.getString("email");
-            id = object.getString("id");
-//            stringFacebook.setFirst_name(object.getString("first_name"));
-//            stringFacebook.setLast_name(object.getString("last_name"));
-//            stringFacebook.setEmail(object.getString("email"));
-//            stringFacebook.setId(object.getString("id"));
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        edtUsername.setText(first_name);
-//        Toast.makeText(getApplicationContext(),first_name+last_name+email+id,Toast.LENGTH_LONG).show();
-    }
-
-    private void setupTokenTracker() {
-        accessTokenTracker = new AccessTokenTracker() {
-            @Override
-            protected void onCurrentAccessTokenChanged(AccessToken oldAccessToken, AccessToken currentAccessToken) {
-//                Log.d("VIVZ", "" + currentAccessToken);
-            }
-        };
-    }
-
-    private void setupProfileTracker() {
-        profileTracker = new ProfileTracker() {
-            @Override
-            protected void onCurrentProfileChanged(Profile oldProfile, Profile currentProfile) {
-//                Log.d("VIVZ", "" + currentProfile);
-//                tv_name.setText(constructWelcomeMessage(currentProfile));
-            }
-        };
     }
 
     private void checkInputNull() {
@@ -320,21 +293,87 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
     }
 
-    @Override
-    public void onResume() {
-        super.onResume();
-        Profile profile = Profile.getCurrentProfile();
-        edtUsername.setText(constructWelcomeMessage(profile));
+    private void goMainScreenWithFB(String id, String firstName, String lastName, String email, String birthday, String gender) {
+
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest request = new StringRequest(Request.Method.POST, loginFBUrl, response -> {
+            Log.d("onResponse", response);
+            try {
+                //converting response to json object
+
+                JSONObject jsonObject = new JSONObject(response);
+                if (jsonObject.getString("msg").equals("Login finish")) {
+                    Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+                    JSONArray array = jsonObject.getJSONArray("data");
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject obj = array.getJSONObject(i);
+                        Log.d("Member name: ", obj.getString("UserID"));
+                        UserID = obj.getString("UserID");
+                        User = obj.getString("User");
+                        Email = obj.getString("Email");
+                        GroupID = obj.getString("GroupID");
+                        Groups = obj.getString("Groups");
+//                            Toast.makeText(getApplicationContext(), UserID, Toast.LENGTH_SHORT).show();
+                        editor.putString(getString(R.string.UserID), UserID);
+                        editor.putString(getString(R.string.User), User);
+                        editor.putString(getString(R.string.Email), Email);
+                        editor.putString(getString(R.string.GroupID), GroupID);
+                        editor.putString(getString(R.string.Groups), Groups);
+                        editor.commit();
+//                        courseList.add(item);
+                    }
+                    //TODO
+                    if (Groups.equals("Boss")) {
+                        Intent intent = new Intent(this, AdminDashboardActivity.class);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        Intent intent = new Intent(this, StudentDashboardActivity.class);
+                        startActivity(intent);
+                        finish();
+                    }
+                } else {
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(jsonObject.getString("msg"))
+                            .setNegativeButton("ok", null);
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+//                    Log.d("onError", error.toString());
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("id", id);
+                params.put("firstName", firstName);
+                params.put("lastName", lastName);
+                params.put("email", email);
+                params.put("birthday", birthday);
+                params.put("gender", gender);
+
+                return params;
+            }
+        };
+        requestQueue.add(request);
 
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+
+    }
 
 
     @Override
     public void onStop() {
         super.onStop();
-        accessTokenTracker.stopTracking();
-        profileTracker.stopTracking();
     }
 
     @Override
