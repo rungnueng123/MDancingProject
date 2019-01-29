@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
@@ -74,11 +75,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                    fragmentClass = StudentProfileFragment.class;
                    actionbar.setTitle("Profile");
                }else if(id == R.id.nav_logout){
-                   editor.putString(getString(R.string.UserID), "");
-                   editor.putString(getString(R.string.User), "");
-                   editor.putString(getString(R.string.Email), "");
-                   editor.putString(getString(R.string.GroupID), "");
-                   editor.putString(getString(R.string.Groups), "");
+                   editor.clear();
                    editor.commit();
                    LoginManager.getInstance().logOut();
                    Intent intentLogout = new Intent(getApplicationContext(), LoginActivity.class);
@@ -95,7 +92,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                 FragmentManager fragmentManager = getSupportFragmentManager();
                 fragmentManager.beginTransaction().replace(R.id.fragment_dashboard, fragment).commit();
 
-                DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
+                DrawerLayout drawer = findViewById(R.id.drawer_layout);
                 drawer.closeDrawer(GravityCompat.START);
                 return true;
             }
@@ -113,6 +110,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
 
     private void checkLogin() {
         String UserID = sharedPreferences.getString(getString(R.string.UserID),"");
+        Toast.makeText(this,UserID,Toast.LENGTH_LONG).show();
         if(UserID.equals("")){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);

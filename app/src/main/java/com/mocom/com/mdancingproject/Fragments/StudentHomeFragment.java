@@ -11,7 +11,6 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.SearchView;
-import android.widget.Toast;
 
 import com.mocom.com.mdancingproject.R;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
@@ -68,7 +67,7 @@ public class StudentHomeFragment extends Fragment {
 
     private void initCalendarListener() {
         Day day = collapsibleCalendar.getSelectedDay();
-        Toast.makeText(getActivity(),day.getYear() + "/" + (day.getMonth()) + "/" + day.getDay(),Toast.LENGTH_LONG).show();
+//        Toast.makeText(getActivity(),day.getYear() + "/" + (day.getMonth()) + "/" + day.getDay(),Toast.LENGTH_LONG).show();
         getDateTime();
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
