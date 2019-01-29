@@ -24,6 +24,7 @@
         android:drawableStart="@drawable/ic_person_black_24dp"
         android:drawablePadding="10dp"
         android:hint="Username/Email"
+        android:inputType="textEmailAddress"
         android:padding="10dp"
         android:textColor="@color/white"
         android:textColorHighlight="@color/white"

@@ -106,14 +106,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             public View getDropDownView(int position, View convertView, @NonNull ViewGroup parent) {
                 View view = super.getDropDownView(position, convertView, parent);
                 TextView tv = (TextView) view;
-                if (position % 2 == 1) {
-                    // Set the item background color
                     tv.setTextColor(Color.BLACK);
-                } else {
-                    // Set the alternate item background color
-                    tv.setBackgroundColor(Color.parseColor("#d3cbcb"));
-                    tv.setTextColor(Color.BLACK);
-                }
                 return view;
             }
         };
