@@ -12,6 +12,7 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -53,6 +54,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
 
+    private TextView txtForgotPass;
     private EditText edtUsername, edtPassword;
     private Button btnLogin, btnSignUp;
     private CheckBox chkRemember;
@@ -76,7 +78,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         btnSignUp.setOnClickListener(this);
         chkRemember = findViewById(R.id.chk_remember);
         btnLoginFB = findViewById(R.id.btn_login_fb);
-//        btnLoginFB.setOnClickListener(this);
+        txtForgotPass = findViewById(R.id.txt_forgot);
+        txtForgotPass.setOnClickListener(this);
+
     }
 
     private void checkLogin() {
@@ -197,6 +201,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }
         if (v == btnSignUp) {
             Intent intent = new Intent(this, RegisterActivity.class);
+            startActivity(intent);
+            finish();
+        }
+        if(v == txtForgotPass){
+            Intent intent = new Intent(this, ForgotPasswordActivity.class);
             startActivity(intent);
             finish();
         }
