@@ -33,7 +33,7 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
     String requestUrl = DATA_URL + "forgot_pass.php";
 
     private EditText edtEmail;
-    private Button btnRequest;
+    private Button btnRequest, btnBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,6 +47,8 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
         edtEmail = findViewById(R.id.edt_email);
         btnRequest = findViewById(R.id.btn_send_request);
         btnRequest.setOnClickListener(this);
+        btnBack = findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(this);
 
     }
 
@@ -56,6 +58,11 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             checkInputNull();
             String email = edtEmail.getText().toString();
             goSendRequest(email);
+        }
+        if(v == btnBack){
+            Intent intent = new Intent(this,LoginActivity.class);
+            startActivity(intent);
+            finish();
         }
     }
 
