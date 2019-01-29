@@ -13,7 +13,6 @@ import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -41,7 +40,6 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
     private SharedPreferences.Editor editor;
 
     TextView txtProfile,txtCoin,txtUser,txtTel,txtBirth;
-    ImageView imgProfile;
     BottomNavigationView bottomNavigationView;
 
     public static StudentProfileFragment newInstance() {
@@ -157,7 +155,6 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
     private void initFindViewByID(View rootView) {
         bottomNavigationView = rootView.findViewById(R.id.profile_navigation);
         txtProfile = rootView.findViewById(R.id.txt_profile);
-        imgProfile = rootView.findViewById(R.id.img_profile);
         txtCoin = rootView.findViewById(R.id.txt_coin);
         txtCoin.setOnClickListener(this);
         txtUser = rootView.findViewById(R.id.txt_user);
