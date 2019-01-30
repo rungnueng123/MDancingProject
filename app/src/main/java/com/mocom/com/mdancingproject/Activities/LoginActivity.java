@@ -256,12 +256,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                        courseList.add(item);
                         }
                         //TODO
-                        if (Groups.equals("Boss")) {
-                            Intent intent = new Intent(this, AdminDashboardActivity.class);
+                        if (Groups.equals("student")) {
+                            Intent intent = new Intent(this, StudentDashboardActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
-                            Intent intent = new Intent(this, StudentDashboardActivity.class);
+                            Intent intent = new Intent(this, AdminDashboardActivity.class);
                             startActivity(intent);
                             finish();
                         }
