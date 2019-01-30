@@ -17,7 +17,6 @@ import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
 import com.mocom.com.mdancingproject.Fragments.AdminHomeFragment;
-import com.mocom.com.mdancingproject.Fragments.StudentHomeFragment;
 import com.mocom.com.mdancingproject.R;
 
 public class AdminDashboardActivity extends AppCompatActivity {
@@ -56,7 +55,13 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 Class fragmentClass = null;
                 if(id == R.id.nav_home){
-                    fragmentClass = StudentHomeFragment.class;
+                    fragmentClass = AdminHomeFragment.class;
+                }else if(id == R.id.nav_course){
+                    fragmentClass = AdminHomeFragment.class;
+                }else if(id == R.id.nav_coin){
+                    fragmentClass = AdminHomeFragment.class;
+                }else if(id == R.id.nav_profile){
+                    fragmentClass = AdminHomeFragment.class;
                 }else if(id == R.id.nav_logout){
                     editor.clear();
                     editor.commit();
