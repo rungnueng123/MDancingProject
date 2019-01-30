@@ -13,15 +13,10 @@ import android.view.ViewGroup;
 import android.widget.SearchView;
 
 import com.mocom.com.mdancingproject.R;
-import com.shrikanthravi.collapsiblecalendarview.data.Day;
-import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
-
-import java.time.LocalDate;
 
 public class StudentHomeFragment extends Fragment {
 
-    CollapsibleCalendar collapsibleCalendar;
-    LocalDate today, tomorrow;
+
 
     MenuItem menuItem;
     SearchView searchView;
@@ -62,47 +57,10 @@ public class StudentHomeFragment extends Fragment {
     private void initInstances(View rootView, Bundle savedInstanceState) {
         setHasOptionsMenu(true);
         initFindViewByID(rootView);
-        initCalendarListener();
-    }
-
-    private void initCalendarListener() {
-        Day day = collapsibleCalendar.getSelectedDay();
-//        Toast.makeText(getActivity(),day.getYear() + "/" + (day.getMonth()) + "/" + day.getDay(),Toast.LENGTH_LONG).show();
-        getDateTime();
-        collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
-            @Override
-            public void onDaySelect() {
-                Day day = collapsibleCalendar.getSelectedDay();
-//                Toast.makeText(getActivity(),day.getYear() + "/" + (day.getMonth() + 1) + "/" + day.getDay(),Toast.LENGTH_LONG).show();
-            }
-
-            @Override
-            public void onItemClick(View view) {
-
-            }
-
-            @Override
-            public void onDataUpdate() {
-
-            }
-
-            @Override
-            public void onMonthChange() {
-
-            }
-
-            @Override
-            public void onWeekChange(int i) {
-
-            }
-        });
-    }
-
-    private void getDateTime() {
     }
 
     private void initFindViewByID(View rootView) {
-        collapsibleCalendar = rootView.findViewById(R.id.calendarView);
+//        collapsibleCalendar = rootView.findViewById(R.id.calendarView);
     }
 
     @Override
