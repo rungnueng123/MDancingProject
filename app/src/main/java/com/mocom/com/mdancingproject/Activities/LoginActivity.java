@@ -236,7 +236,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("msg").equals("Login finish")) {
-                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                         JSONArray array = jsonObject.getJSONArray("data");
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject obj = array.getJSONObject(i);
