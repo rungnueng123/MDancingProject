@@ -15,6 +15,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
 
+import com.facebook.login.LoginManager;
 import com.mocom.com.mdancingproject.Fragments.AdminHomeFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentHomeFragment;
 import com.mocom.com.mdancingproject.R;
@@ -57,13 +58,11 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 if(id == R.id.nav_home){
                     fragmentClass = StudentHomeFragment.class;
                 }else if(id == R.id.nav_logout){
-                    editor.putString(getString(R.string.UserID), "");
-                    editor.putString(getString(R.string.User), "");
-                    editor.putString(getString(R.string.Email), "");
-                    editor.putString(getString(R.string.GroupID), "");
-                    editor.putString(getString(R.string.Groups), "");
+                    editor.clear();
                     editor.commit();
+                    LoginManager.getInstance().logOut();
                     Intent intentLogout = new Intent(getApplicationContext(), LoginActivity.class);
+                    intentLogout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
                     startActivity(intentLogout);
                     finish();
                     return true;
