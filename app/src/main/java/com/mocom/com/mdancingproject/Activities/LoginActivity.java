@@ -87,12 +87,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         String UserID = sharedPreferences.getString(getString(R.string.UserID), "");
         String Groups = sharedPreferences.getString(getString(R.string.Groups), "");
         if (!UserID.equals("")) {
-            if (Groups.equals("Boss")) {
-                Intent intent = new Intent(this, AdminDashboardActivity.class);
+            if (Groups.equals("student")) {
+                Intent intent = new Intent(this, StudentDashboardActivity.class);
                 startActivity(intent);
                 finish();
             } else {
-                Intent intent = new Intent(this, StudentDashboardActivity.class);
+                Intent intent = new Intent(this, AdminDashboardActivity.class);
                 startActivity(intent);
                 finish();
             }
@@ -236,7 +236,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("msg").equals("Login finish")) {
-                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
+//                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                         JSONArray array = jsonObject.getJSONArray("data");
                         for (int i = 0; i < array.length(); i++) {
                             JSONObject obj = array.getJSONObject(i);
@@ -256,12 +256,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                        courseList.add(item);
                         }
                         //TODO
-                        if (Groups.equals("Boss")) {
-                            Intent intent = new Intent(this, AdminDashboardActivity.class);
+                        if (Groups.equals("student")) {
+                            Intent intent = new Intent(this, StudentDashboardActivity.class);
                             startActivity(intent);
                             finish();
                         } else {
-                            Intent intent = new Intent(this, StudentDashboardActivity.class);
+                            Intent intent = new Intent(this, AdminDashboardActivity.class);
                             startActivity(intent);
                             finish();
                         }

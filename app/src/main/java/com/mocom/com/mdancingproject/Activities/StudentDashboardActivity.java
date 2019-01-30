@@ -14,7 +14,6 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.MenuItem;
-import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
@@ -110,7 +109,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
 
     private void checkLogin() {
         String UserID = sharedPreferences.getString(getString(R.string.UserID),"");
-        Toast.makeText(this,UserID,Toast.LENGTH_LONG).show();
+//        Toast.makeText(this,UserID,Toast.LENGTH_LONG).show();
         if(UserID.equals("")){
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
