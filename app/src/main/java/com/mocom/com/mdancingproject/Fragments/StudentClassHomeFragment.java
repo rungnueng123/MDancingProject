@@ -9,10 +9,10 @@ import android.view.ViewGroup;
 
 import com.mocom.com.mdancingproject.R;
 
-public class StudentCourseHomeFragment extends Fragment {
+public class StudentClassHomeFragment extends Fragment {
 
-    public static StudentCourseHomeFragment newInstance() {
-        StudentCourseHomeFragment fragment = new StudentCourseHomeFragment();
+    public static StudentClassHomeFragment newInstance() {
+        StudentClassHomeFragment fragment = new StudentClassHomeFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -30,7 +30,7 @@ public class StudentCourseHomeFragment extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_student_course_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_student_class_home, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }

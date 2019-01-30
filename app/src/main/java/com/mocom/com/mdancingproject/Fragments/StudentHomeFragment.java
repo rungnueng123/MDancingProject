@@ -50,7 +50,7 @@ public class StudentHomeFragment extends Fragment {
         initInstances(rootView, savedInstanceState);
         if (savedInstanceState == null) {
             getFragmentManager().beginTransaction()
-                    .add(R.id.frame_container, StudentCourseHomeFragment.newInstance())
+                    .add(R.id.frame_container, StudentClassHomeFragment.newInstance())
                     .commit();
         }
         return rootView;
