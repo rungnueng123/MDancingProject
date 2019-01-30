@@ -20,7 +20,7 @@ public class StudentClassHomeAdapter extends RecyclerView.Adapter<StudentClassHo
 
     private ItemClickCallBack listener;
     private List<StudentClassHomeDao> studentClassList;
-    private Context context;
+    Context context;
 
     public StudentClassHomeAdapter(ItemClickCallBack listener, List<StudentClassHomeDao> studentClassList, Context context) {
         this.listener = listener;
@@ -63,6 +63,12 @@ public class StudentClassHomeAdapter extends RecyclerView.Adapter<StudentClassHo
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (studentClassList == null) {
+            return 0;
+        }
+        if (studentClassList.size() == 0) {
+            return 0;
+        }
+        return studentClassList.size();
     }
 }

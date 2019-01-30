@@ -21,8 +21,8 @@
 
             <ImageView
                 android:id="@+id/img_class_home"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
                 android:layout_below="@id/txt_class_name"
                 android:layout_marginTop="8dp"
                 android:src="@mipmap/ic_launcher" />

@@ -12,17 +12,8 @@ import com.mocom.com.mdancingproject.R;
 
 public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private TextView classID, classStart, classEnd, description, className, courseName, playlist, style;
-    private ImageView imgUrl;
-
-    public ImageView getImgUrl() {
-        return imgUrl;
-    }
-
-    public void setImgUrl(ImageView imgUrl) {
-        this.imgUrl = imgUrl;
-    }
-
+    TextView classID, classStart, classEnd, description, className, courseName, playlist, style;
+    ImageView imgUrl;
     private ItemClickCallBack mListener;
 
     public TextView getClassID() {
@@ -57,6 +48,10 @@ public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements V
         return style;
     }
 
+    public ImageView getImgUrl() {
+        return imgUrl;
+    }
+
     public StudentClassHomeHolder(@NonNull View itemView, ItemClickCallBack listener) {
         super(itemView);
         mListener = listener;
@@ -73,7 +68,7 @@ public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements V
         itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(itemView.getContext(),"aaa",Toast.LENGTH_LONG).show();
+                Toast.makeText(itemView.getContext(), "aaa", Toast.LENGTH_LONG).show();
             }
         });
 
