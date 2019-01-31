@@ -16,8 +16,6 @@ import com.mocom.com.mdancingproject.R;
 
 public class StudentHomeFragment extends Fragment {
 
-
-
     MenuItem menuItem;
     SearchView searchView;
 
@@ -60,7 +58,7 @@ public class StudentHomeFragment extends Fragment {
     }
 
     private void initFindViewByID(View rootView) {
-//        collapsibleCalendar = rootView.findViewById(R.id.calendarView);
+
     }
 
     @Override

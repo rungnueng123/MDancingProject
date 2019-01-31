@@ -6,6 +6,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,9 +32,11 @@ import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
 public class StudentClassHomeFragment extends Fragment {
 
+    private static final String TAG = "StudentClassHomeFragment";
     private String jsonUrl = DATA_URL + "json_get_class_home_student.php";
 
     CollapsibleCalendar collapsibleCalendar;
+    Integer year, month, date;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -103,14 +106,13 @@ public class StudentClassHomeFragment extends Fragment {
 //        recyclerView.setAdapter(adapter);
         //Test RecyclerView <<<
 
-//        loadClassData();
+        loadClassData();
     }
 
     private void loadClassData() {
         classList.clear();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST,jsonUrl,response -> {
-
-
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
+Log.d("Onresponse",response);
 
         }, error -> {
 //                    Log.d("onError", error.toString());
@@ -120,8 +122,9 @@ public class StudentClassHomeFragment extends Fragment {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
-//                params.put("username", username);
-//                params.put("password", pass);
+                params.put("year", year.toString());
+                params.put("month", month.toString());
+                params.put("date", date.toString());
 
                 return params;
             }
@@ -141,12 +144,21 @@ public class StudentClassHomeFragment extends Fragment {
 
     private void initCalendarListener() {
         Day day = collapsibleCalendar.getSelectedDay();
-//        Toast.makeText(getActivity(),day.getYear() + "/" + (day.getMonth()) + "/" + day.getDay(),Toast.LENGTH_LONG).show();
+        year = day.getYear();
+        month = (day.getMonth());
+        date = day.getDay();
+//        Toast.makeText(getActivity(),year + "/" + month + "/" + date,Toast.LENGTH_LONG).show();
+//        Log.d("create",year + "/" + month + "/" + date);
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDaySelect() {
                 Day day = collapsibleCalendar.getSelectedDay();
-//                Toast.makeText(getActivity(),day.getYear() + "/" + (day.getMonth() + 1) + "/" + day.getDay(),Toast.LENGTH_LONG).show();
+                year = day.getYear();
+                month = day.getMonth()+1;
+                date = day.getDay();
+//                Log.d("select",year + "/" + month + "/" + date);
+                loadClassData();
+//                Toast.makeText(getActivity(),year + "/" + month + "/" + date,Toast.LENGTH_LONG).show();
             }
 
             @Override

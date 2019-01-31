@@ -37,7 +37,6 @@ dependencies {
     //connect mysql
     implementation 'com.android.volley:volley:1.1.0'
     implementation 'com.squareup.retrofit2:converter-gson:2.4.0'
-    implementation 'com.squareup.retrofit2:retrofit:2.5.0'
     //calendar
     implementation 'com.github.shrikanth7698:Collapsible-Calendar-View-Android:v1.0.0'
     //Qrcode
