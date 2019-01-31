@@ -11,6 +11,12 @@
     <string name="Groups">com.mocom.com.mdancingproject.Activities.Groups</string>
 
     <string name="txt_recycler_home_empty">Today dont have class</string>
+    <string name="course">Course Name</string>
+    <string name="coin">Coin</string>
+    <string name="hour">Hour</string>
+    <string name="gallery">Gallery</string>
+    <string name="description">Description</string>
+    <string name="player_error">Error initializing YouTube player: %s</string>
 
     //facebook
     <string name="facebook_app_id">1094329207415724</string>

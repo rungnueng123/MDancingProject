@@ -1,6 +1,7 @@
 package com.mocom.com.mdancingproject.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -18,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mocom.com.mdancingproject.Activities.StudentCourseActivity;
 import com.mocom.com.mdancingproject.Adapter.StudentClassHomeAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentClassHomeDao;
@@ -38,7 +40,6 @@ import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
 public class StudentClassHomeFragment extends Fragment {
 
-    private static final String TAG = "StudentClassHomeFragment";
     private String jsonUrl = DATA_URL + "json_get_class_home_student.php";
 
     CollapsibleCalendar collapsibleCalendar;
@@ -84,6 +85,14 @@ public class StudentClassHomeFragment extends Fragment {
         initCalendarListener();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+
+        listener = (view, position) -> {
+            Intent intent = new Intent(getActivity(), StudentCourseActivity.class);
+            String courseID = classList.get(position).getCourseID();
+            Log.d("CourseID", courseID);
+            intent.putExtra("courseID", courseID);
+            startActivity(intent);
+        };
 
         swipeRefreshLayout = rootView.findViewById(R.id.pullToRefresh);
         swipeRefreshLayout.setOnRefreshListener(() -> {
@@ -142,17 +151,17 @@ public class StudentClassHomeFragment extends Fragment {
                         classList.add(item);
                     }
 
-                    if(classList.size() == 0){
+                    if (classList.size() == 0) {
                         txtRecyclerEmpty.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                    }else{
+                    } else {
                         txtRecyclerEmpty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         adapter = new StudentClassHomeAdapter(listener, classList, getContext());
                         recyclerView.setAdapter(adapter);
                     }
 
-                } else{
+                } else {
                     txtRecyclerEmpty.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                 }

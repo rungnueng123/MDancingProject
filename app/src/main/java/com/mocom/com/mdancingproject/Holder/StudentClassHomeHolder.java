@@ -5,7 +5,6 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.R;
@@ -59,6 +58,7 @@ public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements V
     public StudentClassHomeHolder(@NonNull View itemView, ItemClickCallBack listener) {
         super(itemView);
         mListener = listener;
+        itemView.setOnClickListener(this);
 
         classStart = itemView.findViewById(R.id.txt_start);
         classEnd = itemView.findViewById(R.id.txt_end);
@@ -69,13 +69,6 @@ public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements V
         playlist = itemView.findViewById(R.id.txt_playlist);
         style = itemView.findViewById(R.id.txt_style);
         courseID = itemView.findViewById(R.id.txt_courseID);
-
-        itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Toast.makeText(itemView.getContext(), courseID.getText(), Toast.LENGTH_LONG).show();
-            }
-        });
 
 
     }
