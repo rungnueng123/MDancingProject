@@ -58,6 +58,7 @@ public class StudentClassHomeAdapter extends RecyclerView.Adapter<StudentClassHo
         holder.getPlaylist().setText(studentClassHomeDao.getPlaylistTitle());
         holder.getStyle().setText(studentClassHomeDao.getCourseStyleName());
         holder.getDescription().setText(studentClassHomeDao.getDescription());
+        holder.getCourseID().setText(studentClassHomeDao.getCourseID());
         String imgUrl = HOST_URL + studentClassHomeDao.getImgUrl();
         Glide.with(context)
                 .load(imgUrl)

@@ -133,6 +133,7 @@ public class StudentClassHomeFragment extends Fragment {
                                 obj.getString("eventEnd"),
                                 obj.getString("description"),
                                 obj.getString("title"),
+                                obj.getString("CourseID"),
                                 obj.getString("Course"),
                                 obj.getString("gallery1"),
                                 obj.getString("playlistTitle"),

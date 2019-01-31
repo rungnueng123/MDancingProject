@@ -87,6 +87,12 @@
                 android:maxLines="3"
                 android:text="description" />
 
+            <TextView
+                android:id="@+id/txt_courseID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
 
         </RelativeLayout>
 
