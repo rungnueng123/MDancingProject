@@ -15,6 +15,8 @@ import com.mocom.com.mdancingproject.R;
 
 import java.util.List;
 
+import static com.mocom.com.mdancingproject.config.config.HOST_URL;
+
 
 public class StudentClassHomeAdapter extends RecyclerView.Adapter<StudentClassHomeHolder> {
 
@@ -56,8 +58,9 @@ public class StudentClassHomeAdapter extends RecyclerView.Adapter<StudentClassHo
         holder.getPlaylist().setText(studentClassHomeDao.getPlaylistTitle());
         holder.getStyle().setText(studentClassHomeDao.getCourseStyleName());
         holder.getDescription().setText(studentClassHomeDao.getDescription());
+        String imgUrl = HOST_URL + studentClassHomeDao.getImgUrl();
         Glide.with(context)
-                .load(studentClassHomeDao.getImgUrl())
+                .load(imgUrl)
                 .into(holder.getImgUrl());
     }
 

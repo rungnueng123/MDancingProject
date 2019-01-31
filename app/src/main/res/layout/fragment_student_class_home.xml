@@ -27,6 +27,14 @@
         android:layout_height="wrap_content"
         android:layout_margin="8dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/txt_recycler_home_empty"
+            android:text="@string/txt_recycler_home_empty"
+            android:visibility="gone"
+            android:layout_gravity="center"/>
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/pullToRefresh"
         android:layout_width="match_parent"

@@ -83,20 +83,20 @@ public class StudentHomeFragment extends Fragment {
     @Override
     public void onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
         inflater.inflate(R.menu.menu_toolbar_home, menu);
-        menuItem = menu.findItem(R.id.menu_search);
-        searchView = (SearchView) menuItem.getActionView();
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-//                Toast.makeText(getActivity(),"aaa",Toast.LENGTH_LONG).show();
-                return false;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+//        menuItem = menu.findItem(R.id.menu_search);
+//        searchView = (SearchView) menuItem.getActionView();
+//        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+//            @Override
+//            public boolean onQueryTextSubmit(String query) {
+////                Toast.makeText(getActivity(),"aaa",Toast.LENGTH_LONG).show();
+//                return false;
+//            }
+//
+//            @Override
+//            public boolean onQueryTextChange(String newText) {
+//                return false;
+//            }
+//        });
 
         super.onCreateOptionsMenu(menu,inflater);
     }

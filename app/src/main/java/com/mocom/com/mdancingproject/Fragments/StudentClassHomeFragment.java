@@ -10,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -17,11 +18,16 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mocom.com.mdancingproject.Adapter.StudentClassHomeAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentClassHomeDao;
 import com.mocom.com.mdancingproject.R;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,6 +43,7 @@ public class StudentClassHomeFragment extends Fragment {
 
     CollapsibleCalendar collapsibleCalendar;
     Integer year, month, date;
+    TextView txtRecyclerEmpty;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -112,7 +119,46 @@ public class StudentClassHomeFragment extends Fragment {
     private void loadClassData() {
         classList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
-Log.d("Onresponse",response);
+            Log.d("Onresponse", response);
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                if (jsonObject.getString("msg").equals("have class")) {
+                    JSONArray array = jsonObject.getJSONArray("data");
+
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject obj = array.getJSONObject(i);
+                        StudentClassHomeDao item = new StudentClassHomeDao(
+                                obj.getString("eventID"),
+                                obj.getString("eventStart"),
+                                obj.getString("eventEnd"),
+                                obj.getString("description"),
+                                obj.getString("title"),
+                                obj.getString("Course"),
+                                obj.getString("gallery1"),
+                                obj.getString("playlistTitle"),
+                                obj.getString("courseStyleName")
+                        );
+                        classList.add(item);
+                    }
+
+                    if(classList.size() == 0){
+                        txtRecyclerEmpty.setVisibility(View.VISIBLE);
+                        recyclerView.setVisibility(View.GONE);
+                    }else{
+                        txtRecyclerEmpty.setVisibility(View.GONE);
+                        recyclerView.setVisibility(View.VISIBLE);
+                        adapter = new StudentClassHomeAdapter(listener, classList, getContext());
+                        recyclerView.setAdapter(adapter);
+                    }
+
+                } else{
+                    txtRecyclerEmpty.setVisibility(View.VISIBLE);
+                    recyclerView.setVisibility(View.GONE);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
 
         }, error -> {
 //                    Log.d("onError", error.toString());
@@ -138,7 +184,7 @@ Log.d("Onresponse",response);
         recyclerView = rootView.findViewById(R.id.recycler_student_class_home);
         swipeRefreshLayout = rootView.findViewById(R.id.pullToRefresh);
         collapsibleCalendar = rootView.findViewById(R.id.calendarView);
-
+        txtRecyclerEmpty = rootView.findViewById(R.id.txt_recycler_home_empty);
 
     }
 
@@ -154,7 +200,7 @@ Log.d("Onresponse",response);
             public void onDaySelect() {
                 Day day = collapsibleCalendar.getSelectedDay();
                 year = day.getYear();
-                month = day.getMonth()+1;
+                month = day.getMonth() + 1;
                 date = day.getDay();
 //                Log.d("select",year + "/" + month + "/" + date);
                 loadClassData();

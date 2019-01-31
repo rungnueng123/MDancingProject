@@ -10,6 +10,8 @@
     <string name="GroupID">com.mocom.com.mdancingproject.Activities.GroupID</string>
     <string name="Groups">com.mocom.com.mdancingproject.Activities.Groups</string>
 
+    <string name="txt_recycler_home_empty">Today dont have class</string>
+
     //facebook
     <string name="facebook_app_id">1094329207415724</string>
     <string name="fb_login_protocol_scheme">fb1094329207415724</string>

@@ -20,4 +20,6 @@ public class config {
     public static String getYoutubeKey() {
         return YOUTUBE_KEY;
     }
+
+    public static final String HOST_URL = "https://danceschool.matchbox-station.com/";
 }
