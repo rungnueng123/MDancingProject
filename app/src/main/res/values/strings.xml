@@ -16,7 +16,7 @@
     <string name="hour">Hour</string>
     <string name="gallery">Gallery</string>
     <string name="description">Description</string>
-    <string name="player_error">Error initializing YouTube player: %s</string>
+    <string name="style">Style</string>
 
     //facebook
     <string name="facebook_app_id">1094329207415724</string>
