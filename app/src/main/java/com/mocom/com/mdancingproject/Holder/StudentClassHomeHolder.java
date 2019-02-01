@@ -11,8 +11,8 @@ import com.mocom.com.mdancingproject.R;
 
 public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    TextView classID, classStart, classEnd, description, className, courseName, playlist, style, courseID;
-    ImageView imgUrl;
+    private TextView classID, classStart, classEnd, description, className, courseName, playlist, style, courseID;
+    private ImageView imgUrl;
     private ItemClickCallBack mListener;
 
     public TextView getClassID() {

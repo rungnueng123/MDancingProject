@@ -18,6 +18,8 @@
     <string name="description">Description</string>
     <string name="style">Style</string>
     <string name="watch_class">Watch Class</string>
+    <string name="payment">Payment</string>
+    <string name="detail">Detail</string>
 
     //facebook
     <string name="facebook_app_id">1094329207415724</string>

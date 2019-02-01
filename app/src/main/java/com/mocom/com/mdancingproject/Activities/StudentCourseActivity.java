@@ -39,9 +39,9 @@ import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
 public class StudentCourseActivity extends AppCompatActivity implements View.OnClickListener {
 
-    String courseID, youtubeUrl;
     private static final String TAG = "StudentCourseActivity";
     String getCourseUrl = DATA_URL + "json_get_course_detail_student.php";
+    String courseID, youtubeUrl;
     TextView txtCourse, txtCoin, txtHour, txtStyle, txtDesc;
     Button btnWatchClass;
     private RecyclerView recyclerViewGallery;
@@ -196,7 +196,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
         btnWatchClass = findViewById(R.id.btn_watch_class);
         btnWatchClass.setOnClickListener(this);
         toolbar = findViewById(R.id.toolbar_course_detail);
-        
+
 
     }
 
