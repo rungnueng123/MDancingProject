@@ -6,14 +6,22 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
+import android.widget.Toast;
 
-import com.mocom.com.mdancingproject.Adapter.StudentCourseClassAdapter;
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentCourseClassDao;
 import com.mocom.com.mdancingproject.R;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
@@ -50,23 +58,50 @@ public class StudentCourseClassActivity extends AppCompatActivity {
         recyclerViewClass.setLayoutManager(new LinearLayoutManager(this));
 
         classList = new ArrayList<>();
+        loadClassData();
 
         //Test RecyclerView >>>
-        for(int i = 0; i<=10;i++){
-            StudentCourseClassDao studentClassHomeDao = new StudentCourseClassDao(
-                    "1",
-                    "imgBanner/images.png",
-                    "fdsfsdffd",
-                    "qweqrg",
-                    "19/01/2019",
-                    "07:00 - 09:00",
-                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
-            );
-            classList.add(studentClassHomeDao);
-        }
-        adapter = new StudentCourseClassAdapter(listener,classList,getApplicationContext());
-        recyclerViewClass.setAdapter(adapter);
+//        for(int i = 0; i<=10;i++){
+//            StudentCourseClassDao studentClassHomeDao = new StudentCourseClassDao(
+//                    "1",
+//                    "imgBanner/images.png",
+//                    "fdsfsdffd",
+//                    "qweqrg",
+//                    "19/01/2019",
+//                    "07:00 - 09:00",
+//                    "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+//            );
+//            classList.add(studentClassHomeDao);
+//        }
+//        adapter = new StudentCourseClassAdapter(listener,classList,getApplicationContext());
+//        recyclerViewClass.setAdapter(adapter);
         //Test RecyclerView <<<
+    }
+
+    private void loadClassData() {
+        classList.clear();
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, getClassUrl, response -> {
+            Log.d("Onresponse", response);
+
+        }, error -> {
+//                    Log.d("onError", error.toString());
+//                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("courseID", courseID);
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
+
     }
 
     private void initToolbar() {
