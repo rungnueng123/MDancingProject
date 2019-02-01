@@ -41,6 +41,7 @@ import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 public class StudentClassHomeFragment extends Fragment {
 
     private String jsonUrl = DATA_URL + "json_get_class_home_student.php";
+    private String jsonWeekUrl = DATA_URL + "json_get_class_week_home_student.php";
 
     CollapsibleCalendar collapsibleCalendar;
     Integer year, month, date;
@@ -128,7 +129,7 @@ public class StudentClassHomeFragment extends Fragment {
     private void loadClassData() {
         classList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
-            Log.d("Onresponse", response);
+//            Log.d("Onresponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("msg").equals("have class")) {
@@ -171,10 +172,29 @@ public class StudentClassHomeFragment extends Fragment {
 
 
         }, error -> {
-//                    Log.d("onError", error.toString());
-//                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("year", year.toString());
+                params.put("month", month.toString());
+                params.put("date", date.toString());
+
+                return params;
+            }
+        };
+
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void loadClassWeekData() {
+        classList.clear();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonWeekUrl, response -> {
+            Log.d("Onresponse", response);
+
+        }, error -> Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show()) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -234,7 +254,13 @@ public class StudentClassHomeFragment extends Fragment {
 
             @Override
             public void onWeekChange(int i) {
-
+                Day day = collapsibleCalendar.getSelectedDay();
+                year = day.getYear();
+                month = day.getMonth() + 1;
+                date = day.getDay();
+//                String week = String.valueOf(i);
+//                Log.d("week",week);
+                loadClassWeekData();
             }
         });
     }
