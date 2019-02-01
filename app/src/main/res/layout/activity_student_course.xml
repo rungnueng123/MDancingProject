@@ -7,83 +7,91 @@
     android:orientation="vertical"
     tools:context=".Activities.StudentCourseActivity">
 
-        <fragment
-            android:id="@+id/youtube_player"
-            android:name="com.google.android.youtube.player.YouTubePlayerFragment"
-            android:layout_width="match_parent"
-            android:layout_height="200dp" />
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_course_detail"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:titleTextColor="@color/white" />
 
-        <RelativeLayout
+    <fragment
+        android:id="@+id/youtube_player"
+        android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+        android:layout_width="match_parent"
+        android:layout_height="200dp" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp">
+
+        <TextView
+            android:id="@+id/txt_course_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="4dp"
+            android:text="@string/course" />
+
+        <TextView
+            android:id="@+id/txt_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginEnd="4dp"
+            android:text="@string/coin" />
+
+        <TextView
+            android:id="@+id/txt_hour"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_course_name"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/hour" />
+
+        <TextView
+            android:id="@+id/txt_style"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_below="@id/txt_hour"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/style" />
 
-            <TextView
-                android:id="@+id/txt_course_name"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:text="@string/course" />
+        <TextView
+            android:id="@+id/txt_description"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_style"
+            android:layout_marginStart="4dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/description" />
 
-            <TextView
-                android:id="@+id/txt_coin"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:layout_marginEnd="4dp"
-                android:text="@string/coin" />
+        <Button
+            android:id="@+id/btn_watch_class"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_description"
+            android:text="@string/watch_class" />
 
-            <TextView
-                android:id="@+id/txt_hour"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                android:layout_below="@id/txt_course_name"
-                android:text="@string/hour" />
+        <TextView
+            android:id="@+id/txt_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/btn_watch_class"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/gallery" />
 
-            <TextView
-                android:id="@+id/txt_style"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_hour"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/style" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_student_course_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_gallery"
+            android:background="@android:color/white"
+            tools:listitem="@layout/course_gallery_item" />
 
-            <TextView
-                android:id="@+id/txt_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_style"
-                android:layout_marginStart="4dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/description" />
-
-            <Button
-                android:id="@+id/btn_watch_class"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_description"
-                android:text="@string/watch_class"/>
-
-            <TextView
-                android:id="@+id/txt_gallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/btn_watch_class"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="8dp"
-                android:text="@string/gallery" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_student_course_gallery"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/txt_gallery"
-                android:background="@android:color/white"
-                tools:listitem="@layout/course_gallery_item" />
-
-        </RelativeLayout>
+    </RelativeLayout>
 
 </LinearLayout>

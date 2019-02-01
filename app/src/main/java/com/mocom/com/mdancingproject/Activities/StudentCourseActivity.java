@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -47,6 +48,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
     private RecyclerView.Adapter adapter;
     private List<StudentCourseGalleryDao> galleryList;
     private ItemClickCallBack listener;
+    Toolbar toolbar;
 
     YouTubePlayerFragment youtubePlayer;
 
@@ -64,6 +66,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
 
     private void initInstance() {
         initFindViewByID();
+        initToolbar();
 
         //Gallery
         galleryList = new ArrayList<>();
@@ -92,6 +95,14 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
         };
 
 
+    }
+
+    private void initToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
+        toolbar.setNavigationOnClickListener(v -> finish());
     }
 
     private void loadCourseDetail() {
@@ -184,6 +195,8 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
         recyclerViewGallery = findViewById(R.id.recycler_student_course_gallery);
         btnWatchClass = findViewById(R.id.btn_watch_class);
         btnWatchClass.setOnClickListener(this);
+        toolbar = findViewById(R.id.toolbar_course_detail);
+        
 
     }
 
