@@ -15,7 +15,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.StudentCourseActivity"></activity>
+        <activity android:name=".Activities.StudentCourseClassActivity"></activity>
+        <activity android:name=".Activities.StudentCourseActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

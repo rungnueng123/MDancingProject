@@ -6,6 +6,8 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,13 +36,14 @@ import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
-public class StudentCourseActivity extends AppCompatActivity {
+public class StudentCourseActivity extends AppCompatActivity implements View.OnClickListener {
 
     String courseID, youtubeUrl;
     private static final String TAG = "StudentCourseActivity";
     String getCourseUrl = DATA_URL + "json_get_course_detail_student.php";
     TextView txtCourse, txtCoin, txtHour, txtStyle, txtDesc;
-    private RecyclerView recyclerView;
+    Button btnWatchClass;
+    private RecyclerView recyclerViewGallery;
     private RecyclerView.Adapter adapter;
     private List<StudentCourseGalleryDao> galleryList;
     private ItemClickCallBack listener;
@@ -61,10 +64,12 @@ public class StudentCourseActivity extends AppCompatActivity {
 
     private void initInstance() {
         initFindViewByID();
+
+        //Gallery
         galleryList = new ArrayList<>();
 
-        recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewGallery.setHasFixedSize(true);
+        recyclerViewGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
 
 
         loadCourseDetail();
@@ -80,6 +85,12 @@ public class StudentCourseActivity extends AppCompatActivity {
 
             }
         });
+
+
+        listener = (view, position) -> {
+            Toast.makeText(this, galleryList.get(position).getGallery(), Toast.LENGTH_LONG).show();
+        };
+
 
     }
 
@@ -101,12 +112,12 @@ public class StudentCourseActivity extends AppCompatActivity {
                         if (objClass.getString("CoinAmt").equals("null")) {
                             txtCoin.setText("Coins: ");
                         } else {
-                            txtCoin.setText("Coins: " + objClass.getString("CoinAmt"));
+                            txtCoin.setText(objClass.getString("CoinAmt") + " Coins/Class");
                         }
                         if (objClass.getString("CourseLength").equals("null")) {
                             txtHour.setText("Hours: ");
                         } else {
-                            txtHour.setText("Hours: " + objClass.getString("CourseLength"));
+                            txtHour.setText(objClass.getString("CourseLength") + " Hours");
                         }
                         if (objClass.getString("courseStyleName").equals("null")) {
                             txtStyle.setText("Style: ");
@@ -136,7 +147,7 @@ public class StudentCourseActivity extends AppCompatActivity {
                     if (galleryList.size() == 0) {
                     } else {
                         adapter = new StudentCourseGalleryAdapter(listener, galleryList, getApplicationContext());
-                        recyclerView.setAdapter(adapter);
+                        recyclerViewGallery.setAdapter(adapter);
                     }
 //                    Glide.with(context)
 //                            .load(imgUrl)
@@ -170,7 +181,18 @@ public class StudentCourseActivity extends AppCompatActivity {
         txtHour = findViewById(R.id.txt_hour);
         txtStyle = findViewById(R.id.txt_style);
         txtDesc = findViewById(R.id.txt_description);
-        recyclerView = findViewById(R.id.recycler_student_class_home);
+        recyclerViewGallery = findViewById(R.id.recycler_student_course_gallery);
+        btnWatchClass = findViewById(R.id.btn_watch_class);
+        btnWatchClass.setOnClickListener(this);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == btnWatchClass) {
+            Intent intent = new Intent(this, StudentCourseClassActivity.class);
+            intent.putExtra("courseID", courseID);
+            startActivity(intent);
+        }
     }
 }
