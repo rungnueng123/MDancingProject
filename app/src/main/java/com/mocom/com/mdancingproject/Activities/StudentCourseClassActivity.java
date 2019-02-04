@@ -7,6 +7,7 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -14,9 +15,14 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mocom.com.mdancingproject.Adapter.StudentCourseClassAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentCourseClassDao;
 import com.mocom.com.mdancingproject.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -30,6 +36,7 @@ public class StudentCourseClassActivity extends AppCompatActivity {
     String getClassUrl = DATA_URL + "json_get_course_class_student.php";
     String courseID;
     Toolbar toolbar;
+    TextView txtCoin;
     private RecyclerView recyclerViewClass;
     private RecyclerView.Adapter adapter;
     private ItemClickCallBack listener;
@@ -83,7 +90,37 @@ public class StudentCourseClassActivity extends AppCompatActivity {
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, getClassUrl, response -> {
             Log.d("Onresponse", response);
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                if (jsonObject.getString("msg").equals("success")) {
+                    JSONArray classArray = jsonObject.getJSONArray("class");
+                    for (int i = 0; i < classArray.length(); i++) {
+                        JSONObject objGallery = classArray.getJSONObject(i);
+                        StudentCourseClassDao item = new StudentCourseClassDao(
+                                objGallery.getString("eventID"),
+                                objGallery.getString("imgUrl"),
+                                objGallery.getString("eventTitle"),
+                                objGallery.getString("playlist"),
+                                objGallery.getString("eventDate"),
+                                objGallery.getString("eventTime"),
+                                objGallery.getString("description"),
+                                objGallery.getString("coin")
+                        );
 
+                        txtCoin.setText(objGallery.getString("coin")+" Coins/Time");
+                        classList.add(item);
+                    }
+
+                    if (classList.size() == 0) {
+                    } else {
+                        adapter = new StudentCourseClassAdapter(listener, classList, getApplicationContext());
+                        recyclerViewClass.setAdapter(adapter);
+                    }
+
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
         }, error -> {
 //                    Log.d("onError", error.toString());
 //                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
@@ -114,6 +151,7 @@ public class StudentCourseClassActivity extends AppCompatActivity {
 
     private void initFindViewByID() {
         toolbar = findViewById(R.id.toolbar_course_class_detail);
+        txtCoin = findViewById(R.id.txt_coin_amount);
         recyclerViewClass = findViewById(R.id.recycler_student_course_class);
     }
 }
