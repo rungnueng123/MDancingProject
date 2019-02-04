@@ -23,6 +23,7 @@ import com.mocom.com.mdancingproject.Activities.StudentCourseActivity;
 import com.mocom.com.mdancingproject.Adapter.StudentClassHomeAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentClassHomeDao;
+import com.mocom.com.mdancingproject.Dao.StudentEventHomeDao;
 import com.mocom.com.mdancingproject.R;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
@@ -41,11 +42,13 @@ import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 public class StudentClassHomeFragment extends Fragment {
 
     private String jsonUrl = DATA_URL + "json_get_class_home_student.php";
-    private String jsonWeekUrl = DATA_URL + "json_get_class_week_home_student.php";
+    private String jsonEventUrl = DATA_URL + "json_get_event_home_student.php";
 
     CollapsibleCalendar collapsibleCalendar;
     Integer year, month, date;
     TextView txtRecyclerEmpty;
+    private List<StudentEventHomeDao> eventList;
+
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
@@ -83,6 +86,8 @@ public class StudentClassHomeFragment extends Fragment {
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
+        eventList = new ArrayList<>();
+        classList = new ArrayList<>();
         initCalendarListener();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
@@ -102,7 +107,6 @@ public class StudentClassHomeFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
         });
 
-        classList = new ArrayList<>();
 
         //Test RecyclerView >>>
 //        for(int i = 0; i<=10;i++){
@@ -123,11 +127,14 @@ public class StudentClassHomeFragment extends Fragment {
 //        recyclerView.setAdapter(adapter);
         //Test RecyclerView <<<
 
+//        loadEventData();
         loadClassData();
     }
 
     private void loadClassData() {
-        classList.clear();
+        if (classList != null && classList.size() > 0) {
+            classList.clear();
+        }
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
 //            Log.d("Onresponse", response);
             try {
@@ -189,10 +196,40 @@ public class StudentClassHomeFragment extends Fragment {
         requestQueue.add(stringRequest);
     }
 
-    private void loadClassWeekData() {
-        classList.clear();
-        StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonWeekUrl, response -> {
+    private void loadEventData() {
+        if (eventList != null && eventList.size() > 0) {
+            eventList.clear();
+        }
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonEventUrl, response -> {
             Log.d("Onresponse", response);
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                if (jsonObject.getString("msg").equals("have event")) {
+                    JSONArray array = jsonObject.getJSONArray("data");
+
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject obj = array.getJSONObject(i);
+                        StudentEventHomeDao item = new StudentEventHomeDao(
+                                Integer.parseInt(obj.getString("year")),
+                                Integer.parseInt(obj.getString("month")),
+                                Integer.parseInt(obj.getString("day"))
+                        );
+                        Log.d("aaaa",item.getYear().toString());
+                        collapsibleCalendar.addEventTag(item.getYear(),item.getMonth()-1,item.getDay());
+
+//                        eventList.add(item);
+//                        Log.d("Member name: ", obj.getString("UserID"));
+//                        int y = Integer.parseInt(obj.getString("year"));
+//                        int m = Integer.parseInt(obj.getString("month"));
+//                        int d = Integer.parseInt(obj.getString("day"));
+//                        Toast.makeText(getContext(),y+m+d,Toast.LENGTH_LONG).show();
+//                        collapsibleCalendar.addEventTag(y, m, d);
+//                            txtUser.setText("Name: "+obj.getString("User"));
+                    }
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
 
         }, error -> Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show()) {
             @Override
@@ -219,12 +256,14 @@ public class StudentClassHomeFragment extends Fragment {
     }
 
     private void initCalendarListener() {
+//        collapsibleCalendar.addEventTag(2019,1,19);
         Day day = collapsibleCalendar.getSelectedDay();
         year = day.getYear();
         month = (day.getMonth());
         date = day.getDay();
+        loadEventData();
+//        loadClassData();
 //        Toast.makeText(getActivity(),year + "/" + month + "/" + date,Toast.LENGTH_LONG).show();
-//        Log.d("create",year + "/" + month + "/" + date);
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
             public void onDaySelect() {
@@ -232,7 +271,6 @@ public class StudentClassHomeFragment extends Fragment {
                 year = day.getYear();
                 month = day.getMonth() + 1;
                 date = day.getDay();
-//                Log.d("select",year + "/" + month + "/" + date);
                 loadClassData();
 //                Toast.makeText(getActivity(),year + "/" + month + "/" + date,Toast.LENGTH_LONG).show();
             }
@@ -254,13 +292,8 @@ public class StudentClassHomeFragment extends Fragment {
 
             @Override
             public void onWeekChange(int i) {
-                Day day = collapsibleCalendar.getSelectedDay();
-                year = day.getYear();
-                month = day.getMonth() + 1;
-                date = day.getDay();
 //                String week = String.valueOf(i);
 //                Log.d("week",week);
-                loadClassWeekData();
             }
         });
     }
