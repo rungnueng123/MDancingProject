@@ -4,6 +4,7 @@ package com.mocom.com.mdancingproject.Adapter;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
@@ -115,10 +116,17 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
 //
 //            AlertDialog dialog = alertDialog.create();
 //            dialog.show();
-
-            StudentPaymentDialog dialog = new StudentPaymentDialog();
-            dialog.show(((AppCompatActivity)context).getSupportFragmentManager(),"StudentPaymentDialog");
+            openDialogFragment(studentCourseClassDao.getCoin(),studentCourseClassDao.getEventID());
         });
+    }
+
+    private void openDialogFragment(String coin, String eventID) {
+        Bundle bundle = new Bundle();
+        bundle.putString("coin",coin);
+        bundle.putString("eventID",eventID);
+        StudentPaymentDialog dialog = new StudentPaymentDialog();
+        dialog.setArguments(bundle);
+        dialog.show(((AppCompatActivity)context).getSupportFragmentManager(),"StudentPaymentDialog");
     }
 
     @Override

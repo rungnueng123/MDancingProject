@@ -15,7 +15,8 @@ import com.mocom.com.mdancingproject.R;
 public class StudentPaymentDialog extends DialogFragment implements View.OnClickListener {
 
     private static final String TAG = "StudentPaymentDialog";
-    private TextView actionBuy, actionCancel;
+    private TextView actionBuy, actionCancel, txtCoinPrice;
+    private String coin, eventID;
 
     @Nullable
     @Override
@@ -27,11 +28,19 @@ public class StudentPaymentDialog extends DialogFragment implements View.OnClick
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
+
+        coin = this.getArguments().getString("coin");
+        eventID = this.getArguments().getString("eventID");
+
+        txtCoinPrice.setText("Coin: "+coin);
+
+
     }
 
     private void initFindViewByID(View rootView) {
         actionBuy = rootView.findViewById(R.id.action_buy);
         actionCancel = rootView.findViewById(R.id.action_cancel);
+        txtCoinPrice = rootView.findViewById(R.id.txt_coin_price);
         actionBuy.setOnClickListener(this);
         actionCancel.setOnClickListener(this);
     }
