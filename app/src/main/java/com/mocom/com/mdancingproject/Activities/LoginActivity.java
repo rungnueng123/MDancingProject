@@ -111,8 +111,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.e(TAG, object.toString());
-                        Log.e(TAG, response.toString());
+//                        Log.e(TAG, object.toString());
+//                        Log.e(TAG, response.toString());
                         try {
 //                            Toast.makeText(getApplicationContext(),object.getString("first_name"),Toast.LENGTH_LONG).show();
                             id = object.getString("id");

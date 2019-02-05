@@ -3,6 +3,7 @@ package com.mocom.com.mdancingproject.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,14 +12,12 @@ import android.view.ViewGroup;
 import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
+import com.mocom.com.mdancingproject.Activities.StudentCourseClassDetailActivity;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentCourseClassDao;
 import com.mocom.com.mdancingproject.Holder.StudentCourseClassHolder;
 import com.mocom.com.mdancingproject.R;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.List;
 
 import static com.mocom.com.mdancingproject.config.config.HOST_URL;
@@ -27,7 +26,7 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
 
     private ItemClickCallBack listener;
     private List<StudentCourseClassDao> studentCourseClassList;
-    Context context;
+    private Context context;
 
     public StudentCourseClassAdapter(ItemClickCallBack listener, List<StudentCourseClassDao> studentCourseClassList, Context context) {
         this.listener = listener;
@@ -69,19 +68,31 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
                 .into(holder.getImgUrl());
 
         //click button
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-        Date strDate = null;
-        try {
-            strDate = sdf.parse(studentCourseClassDao.getEventDate());
-        } catch (ParseException e) {
-            e.printStackTrace();
-        }
-        if (new Date().after(strDate)) {
-            holder.getBtnPayment().setVisibility(View.GONE);
-        }else{
-            holder.getBtnPayment().setVisibility(View.VISIBLE);
-        }
-        holder.getBtnDetail().setOnClickListener(v -> Toast.makeText(context,studentCourseClassDao.getEventID()+"Detail",Toast.LENGTH_LONG).show());
+        //TODO set hide payment
+//        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+//        Date strDate = null;
+//        try {
+//            strDate = sdf.parse(studentCourseClassDao.getEventDate());
+//        } catch (ParseException e) {
+//            e.printStackTrace();
+//        }
+//        if (new Date().after(strDate)) {
+//            holder.getBtnPayment().setVisibility(View.GONE);
+//        }else{
+//            holder.getBtnPayment().setVisibility(View.VISIBLE);
+//        }
+
+        //set click listener
+        holder.getBtnDetail().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(context, StudentCourseClassDetailActivity.class);
+                intent.putExtra("eventID", studentCourseClassDao.getEventID());
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(intent);
+            }
+        });
+
         holder.getBtnPayment().setOnClickListener(v -> Toast.makeText(context,studentCourseClassDao.getEventID()+"Payment",Toast.LENGTH_LONG).show());
     }
 
