@@ -21,6 +21,9 @@
     <string name="payment">Payment</string>
     <string name="detail">Detail</string>
     <string name="class_list">Class List</string>
+    <string name="class_detail_title">Class Detail</string>
+    <string name="course_title">Course</string>
+
 
     //facebook
     <string name="facebook_app_id">1094329207415724</string>

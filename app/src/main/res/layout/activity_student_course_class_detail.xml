@@ -1,21 +1,20 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".Activities.StudentCourseClassDetailActivity">
 
-    <TextView
+    <android.support.v7.widget.Toolbar
+        android:id="@+id/toolbar_course_class_detail_single"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginStart="20dp"
-        android:layout_marginTop="30dp"
-        android:gravity="center"
-        android:text="@string/scanned_qr_code_result"
-        android:textColor="@color/littleWhite"
-        android:textSize="14sp"
-        android:textStyle="bold" />
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="@string/class_detail_title"
+        app:titleTextColor="@color/white" />
 
-</RelativeLayout>
+
+
+</LinearLayout>

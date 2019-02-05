@@ -13,6 +13,7 @@
         android:layout_height="?attr/actionBarSize"
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="@string/class_list"
         app:titleTextColor="@color/white" />
 
     <FrameLayout
