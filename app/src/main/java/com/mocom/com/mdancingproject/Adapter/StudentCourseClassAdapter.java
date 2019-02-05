@@ -5,16 +5,17 @@ import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mocom.com.mdancingproject.Activities.StudentCourseClassDetailActivity;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentCourseClassDao;
+import com.mocom.com.mdancingproject.DialogFragment.StudentPaymentDialog;
 import com.mocom.com.mdancingproject.Holder.StudentCourseClassHolder;
 import com.mocom.com.mdancingproject.R;
 
@@ -56,11 +57,11 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
     @Override
     public void onBindViewHolder(@NonNull StudentCourseClassHolder holder, int position) {
         StudentCourseClassDao studentCourseClassDao = studentCourseClassList.get(position);
-        holder.getEventTitle().setText("Class : "+studentCourseClassDao.getEventTitle());
-        holder.getPlaylist().setText("PlayList : "+studentCourseClassDao.getPlaylist());
-        holder.getEventDate().setText("Date : "+studentCourseClassDao.getEventDate());
-        holder.getEventTime().setText("Time : "+studentCourseClassDao.getEventTime());
-        holder.getEventDesc().setText("Description : "+studentCourseClassDao.getEventDesc());
+        holder.getEventTitle().setText("Class : " + studentCourseClassDao.getEventTitle());
+        holder.getPlaylist().setText("PlayList : " + studentCourseClassDao.getPlaylist());
+        holder.getEventDate().setText("Date : " + studentCourseClassDao.getEventDate());
+        holder.getEventTime().setText("Time : " + studentCourseClassDao.getEventTime());
+        holder.getEventDesc().setText("Description : " + studentCourseClassDao.getEventDesc());
 
         String imgUrl = HOST_URL + studentCourseClassDao.getImgUrl();
         Glide.with(context)
@@ -93,7 +94,31 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
             }
         });
 
-        holder.getBtnPayment().setOnClickListener(v -> Toast.makeText(context,studentCourseClassDao.getEventID()+"Payment",Toast.LENGTH_LONG).show());
+        holder.getBtnPayment().setOnClickListener(v -> {
+//            AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
+//            alertDialog.setTitle("Are you sure to buy this class");
+//            alertDialog.setMessage("Coins: " + studentCourseClassDao.getCoin());
+//            alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//                    dialog.cancel();
+//                }
+//            });
+//            alertDialog.setNegativeButton("YES", new DialogInterface.OnClickListener() {
+//                @Override
+//                public void onClick(DialogInterface dialog, int which) {
+//
+//                    Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_SHORT).show();
+//
+//                }
+//            });
+//
+//            AlertDialog dialog = alertDialog.create();
+//            dialog.show();
+
+            StudentPaymentDialog dialog = new StudentPaymentDialog();
+            dialog.show(((AppCompatActivity)context).getSupportFragmentManager(),"StudentPaymentDialog");
+        });
     }
 
     @Override

@@ -47,5 +47,7 @@
     <string name="barcode_reader">QrCode Reader</string>
     <string name="scanned_qr_code_result">Scanned Qr Code result</string>
     <string name="app_needs_your_camera_permission_in_order_to_scan_qr_code">App needs your camera permission in order to scan qr code.</string>
+    <string name="buy">BUY</string>
+    <string name="cancel">CANCEL</string>
 
 </resources>

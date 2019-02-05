@@ -114,7 +114,7 @@ public class StudentCourseClassActivity extends AppCompatActivity {
 
                     if (classList.size() == 0) {
                     } else {
-                        adapter = new StudentCourseClassAdapter(listener, classList, getApplicationContext());
+                        adapter = new StudentCourseClassAdapter(listener, classList, this);
                         recyclerViewClass.setAdapter(adapter);
                     }
 

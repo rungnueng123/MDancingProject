@@ -27,6 +27,11 @@ public class StudentCourseClassDetailActivity extends AppCompatActivity {
     private void initInstance() {
         initFindViewByID();
         initToolbar();
+        initLoadClassDetail();
+    }
+
+    private void initLoadClassDetail() {
+
     }
 
     private void initToolbar() {
