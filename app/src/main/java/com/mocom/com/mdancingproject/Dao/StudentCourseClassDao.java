@@ -6,9 +6,9 @@ public class StudentCourseClassDao {
 
     }
 
-    private String eventID, imgUrl, eventTitle, playlist, eventDate, eventTime, eventDesc, coin;
+    private String eventID, imgUrl, eventTitle, playlist, eventDate, eventTime, eventDesc, coin, eventStart;
 
-    public StudentCourseClassDao(String eventID, String imgUrl, String eventTitle, String playlist, String eventDate, String eventTime, String eventDesc, String coin) {
+    public StudentCourseClassDao(String eventID, String imgUrl, String eventTitle, String playlist, String eventDate, String eventTime, String eventDesc, String coin, String eventStart) {
         this.eventID = eventID;
         this.imgUrl = imgUrl;
         this.eventTitle = eventTitle;
@@ -17,6 +17,7 @@ public class StudentCourseClassDao {
         this.eventTime = eventTime;
         this.eventDesc = eventDesc;
         this.coin = coin;
+        this.eventStart = eventStart;
     }
 
     public String getEventID() {
@@ -49,5 +50,9 @@ public class StudentCourseClassDao {
 
     public String getCoin() {
         return coin;
+    }
+
+    public String getEventStart() {
+        return eventStart;
     }
 }

@@ -1,5 +1,6 @@
 package com.mocom.com.mdancingproject.Adapter;
 
+
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.support.annotation.NonNull;
@@ -15,6 +16,9 @@ import com.mocom.com.mdancingproject.Dao.StudentCourseClassDao;
 import com.mocom.com.mdancingproject.Holder.StudentCourseClassHolder;
 import com.mocom.com.mdancingproject.R;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 import static com.mocom.com.mdancingproject.config.config.HOST_URL;
@@ -65,6 +69,18 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
                 .into(holder.getImgUrl());
 
         //click button
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date strDate = null;
+        try {
+            strDate = sdf.parse(studentCourseClassDao.getEventDate());
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        if (new Date().after(strDate)) {
+            holder.getBtnPayment().setVisibility(View.GONE);
+        }else{
+            holder.getBtnPayment().setVisibility(View.VISIBLE);
+        }
         holder.getBtnDetail().setOnClickListener(v -> Toast.makeText(context,studentCourseClassDao.getEventID()+"Detail",Toast.LENGTH_LONG).show());
         holder.getBtnPayment().setOnClickListener(v -> Toast.makeText(context,studentCourseClassDao.getEventID()+"Payment",Toast.LENGTH_LONG).show());
     }

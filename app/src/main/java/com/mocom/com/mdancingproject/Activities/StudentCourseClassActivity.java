@@ -104,7 +104,8 @@ public class StudentCourseClassActivity extends AppCompatActivity {
                                 objGallery.getString("eventDate"),
                                 objGallery.getString("eventTime"),
                                 objGallery.getString("description"),
-                                objGallery.getString("coin")
+                                objGallery.getString("coin"),
+                                objGallery.getString("eventStart")
                         );
 
                         txtCoin.setText(objGallery.getString("coin")+" Coins/Time");
