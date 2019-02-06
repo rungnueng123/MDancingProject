@@ -15,9 +15,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.StudentCourseClassDetailActivity"></activity>
-        <activity android:name=".Activities.StudentCourseClassActivity" />
-        <activity android:name=".Activities.StudentCourseActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -32,6 +29,9 @@
         <activity android:name=".QRCode.ScannedActivity" />
         <activity android:name=".QRCode.StudentQRCodeActivity" />
         <activity android:name=".Activities.ForgotPasswordActivity" />
+        <activity android:name=".Activities.StudentCourseClassDetailActivity"/>
+        <activity android:name=".Activities.StudentCourseClassActivity" />
+        <activity android:name=".Activities.StudentCourseActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

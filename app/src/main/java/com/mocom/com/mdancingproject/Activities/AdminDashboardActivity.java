@@ -13,6 +13,7 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
@@ -33,6 +34,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        sharedPreferences = getSharedPreferences("dancing",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        Log.d("preference",sharedPreferences.getString(getString(R.string.Groups),""));
         checkLogin();
 
         initInstance(savedInstanceState);

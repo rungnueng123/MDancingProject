@@ -14,6 +14,7 @@ import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
@@ -28,6 +29,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private DrawerLayout drawerLayout;
+    String UserID, User, Email, GroupID, Groups;
     NavigationView navigationView;
     String name, goBuyCoin;
 
@@ -38,6 +40,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        sharedPreferences = getSharedPreferences("dancing",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        Log.d("preference",sharedPreferences.getString(getString(R.string.User),""));
         checkLogin();
         Intent intent = getIntent();
         goBuyCoin = intent.getStringExtra("goBuyCoin");
@@ -116,6 +119,21 @@ public class StudentDashboardActivity extends AppCompatActivity {
         }
     }
 
+    private void SavePreferences() {
+        sharedPreferences = getPreferences(MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putString(getString(R.string.UserID), UserID);
+        editor.putString(getString(R.string.User), User);
+        editor.putString(getString(R.string.Email), Email);
+        editor.putString(getString(R.string.GroupID), GroupID);
+        editor.putString(getString(R.string.Groups), Groups);
+        editor.apply();
+    }
+
+    private void LoadPreferences() {
+
+    }
+
     private void checkLogin() {
         String UserID = sharedPreferences.getString(getString(R.string.UserID), "");
 //        Toast.makeText(this,UserID,Toast.LENGTH_LONG).show();
@@ -140,5 +158,11 @@ public class StudentDashboardActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        SavePreferences();
+        super.onBackPressed();
     }
 }
