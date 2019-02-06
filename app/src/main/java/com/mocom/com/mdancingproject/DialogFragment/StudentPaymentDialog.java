@@ -1,6 +1,7 @@
 package com.mocom.com.mdancingproject.DialogFragment;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -9,6 +10,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.DialogFragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -38,9 +40,11 @@ public class StudentPaymentDialog extends DialogFragment implements View.OnClick
 
     private static final String TAG = "StudentPaymentDialog";
     String checkCoinUrl = DATA_URL + "check_coin_for_payment.php";
+    String canBuyClassUrl = DATA_URL + "buy_class_by_coin.php";
     private TextView actionBuy, actionCancel, txtCoinPrice;
     private String coin, eventID, userID;
     private SharedPreferences sharedPreferences;
+    ProgressDialog progressDialog;
 
     @Nullable
     @Override
@@ -82,6 +86,13 @@ public class StudentPaymentDialog extends DialogFragment implements View.OnClick
     }
 
     private void checkCoinCanPayment() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setMessage("Loading..."); // Setting Message
+        progressDialog.setTitle("ProgressDialog"); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+        progressDialog.show(); // Display Progress Dialog
+        progressDialog.setCancelable(false);
+
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, checkCoinUrl, response -> {
@@ -89,24 +100,30 @@ public class StudentPaymentDialog extends DialogFragment implements View.OnClick
             try {
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("Your coin don't enough! Please go to shop!")) {
-                    if(getActivity() != null) {
+                    progressDialog.dismiss();
+                    if (getActivity() != null) {
                         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
                         builder.setMessage(obj.getString("message"))
-                                .setNegativeButton("ok", new DialogInterface.OnClickListener() {
+                                .setPositiveButton("ok", new DialogInterface.OnClickListener() {
                                     @Override
                                     public void onClick(DialogInterface dialog, int which) {
                                         Intent intent = new Intent(getActivity(), StudentDashboardActivity.class);
 //                                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP |  Intent.FLAG_ACTIVITY_SINGLE_TOP);
-                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  |  Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        intent.putExtra("goBuyCoin","goBuyCoin");
+                                        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        intent.putExtra("goBuyCoin", "goBuyCoin");
                                         startActivity(intent);
                                     }
-                                });
+                                }).setNegativeButton("cancel", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                                getDialog().dismiss();
+                            }
+                        });
                         AlertDialog alert = builder.create();
                         alert.show();
                     }
                 } else {
-                    goBuyClass(userID,coin);
+                    goBuyClass(userID, eventID);
                     getDialog().dismiss();
                 }
             } catch (JSONException e) {
@@ -115,6 +132,7 @@ public class StudentPaymentDialog extends DialogFragment implements View.OnClick
 
         }, error -> {
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
             getDialog().dismiss();
         }) {
             @Override
@@ -130,8 +148,27 @@ public class StudentPaymentDialog extends DialogFragment implements View.OnClick
         requestQueue.add(stringRequest);
     }
 
-    private void goBuyClass(String userID, String coin) {
+    private void goBuyClass(String userID, String eventID) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, canBuyClassUrl, response -> {
+            Log.d("response", response);
+            progressDialog.dismiss();
+        }, error -> {
+            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("eventID", eventID);
+                params.put("userID", userID);
 
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+        requestQueue.add(stringRequest);
+//        Intent intent = new Intent(getActivity(), StudentDashboardActivity.class);
+//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  |  Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
     }
 
 }

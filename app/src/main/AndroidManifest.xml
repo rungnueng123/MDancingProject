@@ -22,7 +22,9 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.StudentDashboardActivity" />
+        <activity android:name=".Activities.StudentDashboardActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.AdminDashboardActivity" />
         <activity android:name=".QRCode.AdminQRCodeScannedActivity" />
