@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:orientation="vertical">
+
+        <TextView
+            android:id="@+id/txt_coin_pack_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp" />
+
+        <ImageView
+            android:id="@+id/img_coin_pack"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:layout_margin="4dp"
+            android:scaleType="centerCrop" />
+
+        <TextView
+            android:id="@+id/txt_coin_pack_coin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp" />
+
+        <Button
+            android:id="@+id/btn_coin_pack_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="4dp" />
+
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

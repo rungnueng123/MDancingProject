@@ -95,7 +95,7 @@ public class StudentCoinFragment extends Fragment {
 
     @Override
     public void  onCreateOptionsMenu(Menu menu, MenuInflater inflater) {
-        inflater.inflate(R.menu.menu_toolbar_coin, menu);
+//        inflater.inflate(R.menu.menu_toolbar_coin, menu);
         super.onCreateOptionsMenu(menu,inflater);
     }
 }

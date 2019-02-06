@@ -3,12 +3,15 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical"
     tools:context=".Fragments.StudentCoinPackageFragment">
 
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recycler_student_coin_package"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="package" />
+        android:background="@android:color/white"
+        tools:listitem="@layout/student_coin_package" />
 
 </LinearLayout>

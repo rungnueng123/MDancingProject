@@ -8,7 +8,7 @@ import android.support.v4.app.FragmentStatePagerAdapter;
 import android.util.SparseArray;
 
 import com.mocom.com.mdancingproject.Fragments.StudentCoinPackageFragment;
-import com.mocom.com.mdancingproject.Fragments.StudentCoinStoreFragment;
+import com.mocom.com.mdancingproject.Fragments.StudentStylePackageFragment;
 
 public class StudentCoinAdapter extends FragmentStatePagerAdapter {
 
@@ -26,7 +26,7 @@ public class StudentCoinAdapter extends FragmentStatePagerAdapter {
             case 0: // Fragment # 0 - This will show FirstFragment
                 return StudentCoinPackageFragment.newInstance(0, "Page # 1");
             case 1: // Fragment # 0 - This will show FirstFragment different title
-                return StudentCoinStoreFragment.newInstance(1, "Page # 2");
+                return StudentStylePackageFragment.newInstance(1, "Page # 2");
             default:
                 return null;
         }
@@ -41,9 +41,9 @@ public class StudentCoinAdapter extends FragmentStatePagerAdapter {
     @Override
     public CharSequence getPageTitle(int position) {
         if(position == 0){
-            title = "Package";
+            title = "Package Coin";
         }else if(position == 1){
-            title = "Coin Store";
+            title = "Package Style";
         }
         return title;
     }
