@@ -31,7 +31,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
     private DrawerLayout drawerLayout;
     String UserID, User, Email, GroupID, Groups;
     NavigationView navigationView;
-    String name, goBuyCoin;
+    String name, goBuyCoin, goProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -44,6 +44,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
         checkLogin();
         Intent intent = getIntent();
         goBuyCoin = intent.getStringExtra("goBuyCoin");
+        goProfile = intent.getStringExtra("goProfile");
         initInstance(savedInstanceState);
 
     }
@@ -110,6 +111,10 @@ public class StudentDashboardActivity extends AppCompatActivity {
             if (!TextUtils.isEmpty(goBuyCoin)) {
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.fragment_dashboard, StudentCoinFragment.newInstance())
+                        .commit();
+            } else if(!TextUtils.isEmpty(goProfile)){
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_dashboard, StudentProfileFragment.newInstance())
                         .commit();
             } else {
                 getSupportFragmentManager().beginTransaction()

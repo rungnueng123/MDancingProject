@@ -124,7 +124,6 @@ public class StudentPaymentDialog extends DialogFragment implements View.OnClick
                     }
                 } else {
                     goBuyClass(userID, eventID);
-                    getDialog().dismiss();
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -151,7 +150,21 @@ public class StudentPaymentDialog extends DialogFragment implements View.OnClick
     private void goBuyClass(String userID, String eventID) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, canBuyClassUrl, response -> {
             Log.d("response", response);
-            progressDialog.dismiss();
+            try {
+                JSONObject obj = new JSONObject(response);
+                if (obj.getString("message").equals("Payment Success")) {
+                    progressDialog.dismiss();
+                    Intent intent = new Intent(getActivity(), StudentDashboardActivity.class);
+                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    intent.putExtra("goProfile", "goProfile");
+                    startActivity(intent);
+                } else {
+                    goBuyClass(userID, eventID);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+//            progressDialog.dismiss();
         }, error -> {
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
@@ -160,6 +173,7 @@ public class StudentPaymentDialog extends DialogFragment implements View.OnClick
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("eventID", eventID);
                 params.put("userID", userID);
+                params.put("coin", coin);
 
                 return params;
             }
