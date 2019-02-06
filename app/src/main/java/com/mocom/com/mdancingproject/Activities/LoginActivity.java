@@ -91,7 +91,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(this, StudentDashboardActivity.class);
                 startActivity(intent);
                 finish();
-            } else {
+            } else if(!Groups.equals("")) {
                 Intent intent = new Intent(this, AdminDashboardActivity.class);
                 startActivity(intent);
                 finish();
@@ -111,8 +111,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-                        Log.e(TAG, object.toString());
-                        Log.e(TAG, response.toString());
+//                        Log.e(TAG, object.toString());
+//                        Log.e(TAG, response.toString());
                         try {
 //                            Toast.makeText(getApplicationContext(),object.getString("first_name"),Toast.LENGTH_LONG).show();
                             id = object.getString("id");
@@ -332,7 +332,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                        courseList.add(item);
                     }
                     //TODO
-                    if (Groups.equals("Boss")) {
+                    if (!Groups.equals("student")) {
                         Intent intent = new Intent(this, AdminDashboardActivity.class);
                         startActivity(intent);
                         finish();
@@ -375,8 +375,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     @Override
     public void onResume() {
+        checkLogin();
         super.onResume();
-
     }
 
 

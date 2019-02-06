@@ -10,6 +10,21 @@
     <string name="GroupID">com.mocom.com.mdancingproject.Activities.GroupID</string>
     <string name="Groups">com.mocom.com.mdancingproject.Activities.Groups</string>
 
+    <string name="txt_recycler_home_empty">Today dont have class</string>
+    <string name="course">Course Name</string>
+    <string name="coin">Coin</string>
+    <string name="hour">Hour</string>
+    <string name="gallery">Gallery</string>
+    <string name="description">Description</string>
+    <string name="style">Style</string>
+    <string name="watch_class">Watch Class</string>
+    <string name="payment">Payment</string>
+    <string name="detail">Detail</string>
+    <string name="class_list">Class List</string>
+    <string name="class_detail_title">Class Detail</string>
+    <string name="course_title">Course</string>
+
+
     //facebook
     <string name="facebook_app_id">1094329207415724</string>
     <string name="fb_login_protocol_scheme">fb1094329207415724</string>
@@ -32,5 +47,7 @@
     <string name="barcode_reader">QrCode Reader</string>
     <string name="scanned_qr_code_result">Scanned Qr Code result</string>
     <string name="app_needs_your_camera_permission_in_order_to_scan_qr_code">App needs your camera permission in order to scan qr code.</string>
+    <string name="buy">BUY</string>
+    <string name="cancel">CANCEL</string>
 
 </resources>

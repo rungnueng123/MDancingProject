@@ -13,7 +13,8 @@
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -21,13 +22,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.StudentDashboardActivity" />
+        <activity android:name=".Activities.StudentDashboardActivity"
+            android:screenOrientation="portrait"
+            android:configChanges="orientation|keyboardHidden"/>
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.AdminDashboardActivity" />
         <activity android:name=".QRCode.AdminQRCodeScannedActivity" />
         <activity android:name=".QRCode.ScannedActivity" />
         <activity android:name=".QRCode.StudentQRCodeActivity" />
-        <activity android:name=".Activities.ForgotPasswordActivity"></activity>
+        <activity android:name=".Activities.ForgotPasswordActivity" />
+        <activity android:name=".Activities.StudentCourseClassDetailActivity"/>
+        <activity android:name=".Activities.StudentCourseClassActivity" />
+        <activity android:name=".Activities.StudentCourseActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

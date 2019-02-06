@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <TextView
+                android:id="@+id/txt_class_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Class" />
+
+            <ImageView
+                android:id="@+id/img_class_home"
+                android:layout_width="80dp"
+                android:layout_height="80dp"
+                android:layout_below="@id/txt_class_name"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/txt_start"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_class_name"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/img_class_home"
+                android:text="start" />
+
+            <TextView
+                android:id="@+id/txt_end"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_class_name"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/txt_start"
+                android:text="end" />
+
+            <TextView
+                android:id="@+id/txt_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_class_name"
+                android:layout_alignParentEnd="true"
+                android:layout_marginStart="8dp"
+                android:text="style" />
+
+            <TextView
+                android:id="@+id/txt_course"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_start"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/img_class_home"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="course" />
+
+            <TextView
+                android:id="@+id/txt_playlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_course"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/img_class_home"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="playlist" />
+
+            <TextView
+                android:id="@+id/txt_description"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_playlist"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/img_class_home"
+                android:ellipsize="end"
+                android:maxLines="3"
+                android:text="description" />
+
+            <TextView
+                android:id="@+id/txt_courseID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone"/>
+
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+
+</LinearLayout>

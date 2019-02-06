@@ -45,6 +45,9 @@ dependencies {
     implementation files('libs/YouTubeAndroidPlayerApi.jar')
     //Facebook
     implementation 'com.facebook.android:facebook-login:4.40.0'
+    //Glide
+    implementation 'com.github.bumptech.glide:glide:4.8.0'
+    annotationProcessor 'com.github.bumptech.glide:compiler:4.8.0'
 
     testImplementation 'junit:junit:4.12'
     androidTestImplementation 'com.android.support.test:runner:1.0.2'

@@ -13,6 +13,8 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
+import android.util.Log;
 import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
@@ -27,8 +29,9 @@ public class StudentDashboardActivity extends AppCompatActivity {
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private DrawerLayout drawerLayout;
+    String UserID, User, Email, GroupID, Groups;
     NavigationView navigationView;
-    String name;
+    String name, goBuyCoin, goProfile;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,11 @@ public class StudentDashboardActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        sharedPreferences = getSharedPreferences("dancing",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
+        Log.d("preference",sharedPreferences.getString(getString(R.string.User),""));
         checkLogin();
+        Intent intent = getIntent();
+        goBuyCoin = intent.getStringExtra("goBuyCoin");
+        goProfile = intent.getStringExtra("goProfile");
         initInstance(savedInstanceState);
 
     }
@@ -61,28 +68,28 @@ public class StudentDashboardActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 Fragment fragment = null;
                 Class fragmentClass = null;
-               if(id == R.id.nav_home){
-                   fragmentClass = StudentHomeFragment.class;
-                   actionbar.setTitle("Home");
-               }else if(id == R.id.nav_course){
-                   fragmentClass = StudentCourseFragment.class;
-                   actionbar.setTitle("Course");
-               }else if(id == R.id.nav_coin){
-                   fragmentClass = StudentCoinFragment.class;
-                   actionbar.setTitle("Coin");
-               }else if(id == R.id.nav_profile){
-                   fragmentClass = StudentProfileFragment.class;
-                   actionbar.setTitle("Profile");
-               }else if(id == R.id.nav_logout){
-                   editor.clear();
-                   editor.commit();
-                   LoginManager.getInstance().logOut();
-                   Intent intentLogout = new Intent(getApplicationContext(), LoginActivity.class);
-                   intentLogout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
-                   startActivity(intentLogout);
-                   finish();
-                   return true;
-               }
+                if (id == R.id.nav_home) {
+                    fragmentClass = StudentHomeFragment.class;
+                    actionbar.setTitle("Home");
+                } else if (id == R.id.nav_course) {
+                    fragmentClass = StudentCourseFragment.class;
+                    actionbar.setTitle("Course");
+                } else if (id == R.id.nav_coin) {
+                    fragmentClass = StudentCoinFragment.class;
+                    actionbar.setTitle("Coin");
+                } else if (id == R.id.nav_profile) {
+                    fragmentClass = StudentProfileFragment.class;
+                    actionbar.setTitle("Profile");
+                } else if (id == R.id.nav_logout) {
+                    editor.clear();
+                    editor.commit();
+                    LoginManager.getInstance().logOut();
+                    Intent intentLogout = new Intent(getApplicationContext(), LoginActivity.class);
+                    intentLogout.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_CLEAR_TASK | Intent.FLAG_ACTIVITY_NEW_TASK);
+                    startActivity(intentLogout);
+                    finish();
+                    return true;
+                }
                 try {
                     fragment = (Fragment) fragmentClass.newInstance();
                 } catch (Exception e) {
@@ -99,18 +106,43 @@ public class StudentDashboardActivity extends AppCompatActivity {
     }
 
     private void checkFragmentShow(Bundle savedInstanceState) {
-        String Groups = sharedPreferences.getString(getString(R.string.Groups),"");
+        String Groups = sharedPreferences.getString(getString(R.string.Groups), "");
         if (savedInstanceState == null) {
+            if (!TextUtils.isEmpty(goBuyCoin)) {
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_dashboard, StudentCoinFragment.newInstance())
+                        .commit();
+            } else if(!TextUtils.isEmpty(goProfile)){
+                getSupportFragmentManager().beginTransaction()
+                        .add(R.id.fragment_dashboard, StudentProfileFragment.newInstance())
+                        .commit();
+            } else {
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.fragment_dashboard, StudentHomeFragment.newInstance())
                         .commit();
+            }
         }
     }
 
+    private void SavePreferences() {
+        sharedPreferences = getPreferences(MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putString(getString(R.string.UserID), UserID);
+        editor.putString(getString(R.string.User), User);
+        editor.putString(getString(R.string.Email), Email);
+        editor.putString(getString(R.string.GroupID), GroupID);
+        editor.putString(getString(R.string.Groups), Groups);
+        editor.apply();
+    }
+
+    private void LoadPreferences() {
+
+    }
+
     private void checkLogin() {
-        String UserID = sharedPreferences.getString(getString(R.string.UserID),"");
+        String UserID = sharedPreferences.getString(getString(R.string.UserID), "");
 //        Toast.makeText(this,UserID,Toast.LENGTH_LONG).show();
-        if(UserID.equals("")){
+        if (UserID.equals("")) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
@@ -131,5 +163,11 @@ public class StudentDashboardActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onBackPressed() {
+        SavePreferences();
+        super.onBackPressed();
     }
 }
