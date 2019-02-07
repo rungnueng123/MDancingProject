@@ -1,15 +1,17 @@
 package com.mocom.com.mdancingproject.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Toast;
 
 import com.bumptech.glide.Glide;
 import com.mocom.com.mdancingproject.Dao.StudentCoinPackageDao;
+import com.mocom.com.mdancingproject.DialogFragment.StudentCoinPackPaymentDialog;
 import com.mocom.com.mdancingproject.Holder.StudentCoinPackageHolder;
 import com.mocom.com.mdancingproject.R;
 
@@ -21,6 +23,9 @@ public class StudentCoinPackageAdapter extends RecyclerView.Adapter<StudentCoinP
 
     private List<StudentCoinPackageDao> studentCoinPackageList;
     private Context context;
+//    ArrayList<String> typePayList = new ArrayList<>();
+//    String[] items;
+//    boolean[] checkedItem;
 
     public StudentCoinPackageAdapter(List<StudentCoinPackageDao> studentCoinPackageList, Context context) {
         this.studentCoinPackageList = studentCoinPackageList;
@@ -49,9 +54,47 @@ public class StudentCoinPackageAdapter extends RecyclerView.Adapter<StudentCoinP
         holder.getBtnBuy().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, studentCoinPackageDao.getNamePack(), Toast.LENGTH_SHORT).show();
+//                items = context.getResources().getStringArray(R.array.type_pay);
+//                checkedItem = new boolean[items.length];
+//                AlertDialog.Builder builder = new AlertDialog.Builder(context);
+//                builder.setTitle("Payment").setMultiChoiceItems(R.array.type_pay, null, new DialogInterface.OnMultiChoiceClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which, boolean isChecked) {
+//                        if (isChecked) {
+//                            for (int i = 0; i<checkedItem.length;i++){
+//                                typePayList.remove(items[i]);
+//                            }
+//                            typePayList.add(items[which]);
+//                        } else {
+//                            typePayList.remove(items[which]);
+//                        }
+//                    }
+//                }).setPositiveButton("SELECT", new DialogInterface.OnClickListener() {
+//                    @Override
+//                    public void onClick(DialogInterface dialog, int which) {
+//                        String selection = "";
+//                        for (String ms : typePayList) {
+//                            selection = selection + "\n" + ms;
+//                        }
+//                        Toast.makeText(context, selection, Toast.LENGTH_LONG).show();
+//                    }
+//                });
+//                AlertDialog dialog = builder.create();
+//                dialog.show();
+                openDialogFragment(studentCoinPackageDao.getCoinPackID(),studentCoinPackageDao.getCoin(),studentCoinPackageDao.getBaht(),studentCoinPackageDao.getNamePack());
             }
         });
+    }
+
+    private void openDialogFragment(String coinPackID, String coin, String baht, String namePack) {
+        Bundle bundle = new Bundle();
+        bundle.putString("namePack", namePack);
+        bundle.putString("baht", baht);
+        bundle.putString("coin", coin);
+        bundle.putString("coinPackID", coinPackID);
+        StudentCoinPackPaymentDialog dialog = new StudentCoinPackPaymentDialog();
+        dialog.setArguments(bundle);
+        dialog.show(((AppCompatActivity) context).getSupportFragmentManager(), "StudentCoinPackPaymentDialog");
     }
 
     @Override

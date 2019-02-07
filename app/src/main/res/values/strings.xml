@@ -50,4 +50,11 @@
     <string name="buy">BUY</string>
     <string name="cancel">CANCEL</string>
 
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="ok">OK</string>
+    <string name="type_pay">TYPE PAY</string>
+    <string name="payment_gateway">PAYMENT GATEWAY</string>
+    <string name="qr_code">QRCode</string>
+
 </resources>
