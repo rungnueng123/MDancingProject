@@ -7,15 +7,13 @@ import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.R;
 
-public class StudentCourseClassHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
+public class StudentCourseClassHolder extends RecyclerView.ViewHolder {
 
     private ImageView imgUrl;
     private TextView eventID, eventTitle, playlist, eventDate, eventTime, eventDesc;
     private Button btnPayment, btnDetail;
-    private ItemClickCallBack mListener;
 
 
     public ImageView getImgUrl() {
@@ -54,10 +52,8 @@ public class StudentCourseClassHolder extends RecyclerView.ViewHolder implements
         return btnDetail;
     }
 
-    public StudentCourseClassHolder(@NonNull View itemView, ItemClickCallBack listener) {
+    public StudentCourseClassHolder(@NonNull View itemView) {
         super(itemView);
-        mListener = listener;
-        itemView.setOnClickListener(this);
 
         imgUrl = itemView.findViewById(R.id.img_class);
         eventTitle = itemView.findViewById(R.id.txt_title);
@@ -67,10 +63,5 @@ public class StudentCourseClassHolder extends RecyclerView.ViewHolder implements
         eventDesc = itemView.findViewById(R.id.txt_desc);
         btnPayment = itemView.findViewById(R.id.btn_payment);
         btnDetail = itemView.findViewById(R.id.btn_detail);
-    }
-
-    @Override
-    public void onClick(View v) {
-        mListener.onClick(v, getAdapterPosition());
     }
 }

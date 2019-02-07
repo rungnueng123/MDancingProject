@@ -39,7 +39,6 @@ public class StudentCourseClassActivity extends AppCompatActivity {
     TextView txtCoin;
     private RecyclerView recyclerViewClass;
     private RecyclerView.Adapter adapter;
-    private ItemClickCallBack listener;
     private List<StudentCourseClassDao> classList;
 
     @Override
@@ -114,7 +113,7 @@ public class StudentCourseClassActivity extends AppCompatActivity {
 
                     if (classList.size() == 0) {
                     } else {
-                        adapter = new StudentCourseClassAdapter(listener, classList, this);
+                        adapter = new StudentCourseClassAdapter(classList, this);
                         recyclerViewClass.setAdapter(adapter);
                     }
 
