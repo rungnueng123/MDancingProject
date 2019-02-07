@@ -99,7 +99,7 @@ public class StudentCoinPackageFragment extends Fragment {
     }
 
     private void loadCoinPack() {
-        if (coinPackageList != null && coinPackageList.size() > 0) {
+        if (coinPackageList != null || coinPackageList.size() > 0) {
             coinPackageList.clear();
         }
         StringRequest stringRequest = new StringRequest(Request.Method.GET, coinPackUrl, response -> {
@@ -113,7 +113,7 @@ public class StudentCoinPackageFragment extends Fragment {
                         StudentCoinPackageDao item = new StudentCoinPackageDao(
                                 obj.getString("coinPackID"),
                                 obj.getString("namePack"),
-                                obj.getString("bath"),
+                                obj.getString("baht"),
                                 obj.getString("coin"),
                                 obj.getString("imgUrl")
                         );
@@ -121,7 +121,7 @@ public class StudentCoinPackageFragment extends Fragment {
                         adapter = new StudentCoinPackageAdapter(coinPackageList, getContext());
                         recyclerView.setAdapter(adapter);
                     }
-                }else{
+                } else {
                     AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
                     builder.setMessage(jsonObject.getString("message"))
                             .setNegativeButton("ok", null);
@@ -143,6 +143,11 @@ public class StudentCoinPackageFragment extends Fragment {
 
     private void initFindViewByID(View rootView) {
         recyclerView = rootView.findViewById(R.id.recycler_student_coin_package);
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
     }
 
     @Override

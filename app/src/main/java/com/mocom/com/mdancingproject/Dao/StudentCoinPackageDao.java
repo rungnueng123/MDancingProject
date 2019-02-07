@@ -6,12 +6,12 @@ public class StudentCoinPackageDao {
 
     }
 
-    private String coinPackID, namePack, bath, coin, imgUrl;
+    private String coinPackID, namePack, baht, coin, imgUrl;
 
-    public StudentCoinPackageDao(String coinPackID, String namePack, String bath, String coin, String imgUrl) {
+    public StudentCoinPackageDao(String coinPackID, String namePack, String baht, String coin, String imgUrl) {
         this.coinPackID = coinPackID;
         this.namePack = namePack;
-        this.bath = bath;
+        this.baht = baht;
         this.coin = coin;
         this.imgUrl = imgUrl;
     }
@@ -24,8 +24,8 @@ public class StudentCoinPackageDao {
         return namePack;
     }
 
-    public String getBath() {
-        return bath;
+    public String getBaht() {
+        return baht;
     }
 
     public String getCoin() {

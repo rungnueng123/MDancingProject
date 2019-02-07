@@ -39,7 +39,7 @@ public class StudentCoinPackageAdapter extends RecyclerView.Adapter<StudentCoinP
         StudentCoinPackageDao studentCoinPackageDao = studentCoinPackageList.get(position);
         holder.getTxtName().setText(studentCoinPackageDao.getNamePack());
         holder.getTxtCoin().setText(studentCoinPackageDao.getCoin());
-        holder.getBtnBuy().setText(studentCoinPackageDao.getBath());
+        holder.getBtnBuy().setText(studentCoinPackageDao.getBaht());
 
         String imgUrl = HOST_URL + studentCoinPackageDao.getImgUrl();
         Glide.with(context)
