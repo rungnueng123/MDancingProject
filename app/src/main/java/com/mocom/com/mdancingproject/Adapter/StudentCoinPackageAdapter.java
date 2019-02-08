@@ -90,7 +90,7 @@ public class StudentCoinPackageAdapter extends RecyclerView.Adapter<StudentCoinP
         Bundle bundle = new Bundle();
         bundle.putString("namePack", namePack);
         bundle.putString("baht", baht);
-        bundle.putString("coin", coin);
+        bundle.putString("coinAmt", coin);
         bundle.putString("coinPackID", coinPackID);
         StudentCoinPackPaymentDialog dialog = new StudentCoinPackPaymentDialog();
         dialog.setArguments(bundle);

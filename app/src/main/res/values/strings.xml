@@ -56,5 +56,7 @@
     <string name="type_pay">TYPE PAY</string>
     <string name="payment_gateway">PAYMENT GATEWAY</string>
     <string name="qr_code">QRCode</string>
+    <string name="baht">Bath</string>
+    <string name="pack">Package</string>
 
 </resources>

@@ -108,7 +108,7 @@ class AdminQRCodeScannedActivity : AppCompatActivity(), ZXingScannerView.ResultH
 
     override fun handleResult(result: Result?) {
         if (result != null) {
-            startActivity(ScannedActivity.getScannedActivity(this, result.text))
+            startActivity(AdminQRCodeScannedResultActivity.getScannedActivity(this, result.text))
             resumeCamera()
         }
     }

@@ -28,7 +28,7 @@
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.AdminDashboardActivity" />
         <activity android:name=".QRCode.AdminQRCodeScannedActivity" />
-        <activity android:name=".QRCode.ScannedActivity" />
+        <activity android:name=".QRCode.AdminQRCodeScannedResultActivity" />
         <activity android:name=".QRCode.StudentQRCodeActivity" />
         <activity android:name=".Activities.ForgotPasswordActivity" />
         <activity android:name=".Activities.StudentCourseClassDetailActivity"/>
