@@ -20,6 +20,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mocom.com.mdancingproject.PaymentGateway.PaymentGatewayTestActivity;
 import com.mocom.com.mdancingproject.QRCode.StudentQRCodeActivity;
 import com.mocom.com.mdancingproject.R;
 
@@ -130,7 +131,9 @@ public class StudentCoinPackPaymentDialog extends DialogFragment implements View
 
 
             } else if (selectRadioButton.getText().toString().equals(getResources().getString(R.string.payment_gateway))) {
-                Toast.makeText(getContext(), selectRadioButton.getText().toString(), Toast.LENGTH_LONG).show();
+                Intent intent = new Intent(getContext(), PaymentGatewayTestActivity.class);
+                intent.putExtra("coinPackID",coinPackID);
+                startActivity(intent);
             }
         }
     }
