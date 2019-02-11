@@ -6,6 +6,8 @@
     <uses-permission android:name="android.permission.CAMERA" />
     <uses-permission android:name="android.hardware.camera" />
     <uses-permission android:name="android.hardware.camera.autofocus" />
+    <uses-permission android:name="android.permission.BLUETOOTH" />
+    <uses-permission android:name="android.permission.BLUETOOTH_ADMIN" />
 
     <application
         android:allowBackup="true"
@@ -22,18 +24,20 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Activities.StudentDashboardActivity"
-            android:screenOrientation="portrait"
-            android:configChanges="orientation|keyboardHidden"/>
+        <activity
+            android:name=".Activities.StudentDashboardActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.AdminDashboardActivity" />
         <activity android:name=".QRCode.AdminQRCodeScannedActivity" />
-        <activity android:name=".QRCode.ScannedActivity" />
+        <activity android:name=".QRCode.AdminQRCodeScannedResultActivity" />
         <activity android:name=".QRCode.StudentQRCodeActivity" />
         <activity android:name=".Activities.ForgotPasswordActivity" />
-        <activity android:name=".Activities.StudentCourseClassDetailActivity"/>
+        <activity android:name=".Activities.StudentCourseClassDetailActivity" />
         <activity android:name=".Activities.StudentCourseClassActivity" />
         <activity android:name=".Activities.StudentCourseActivity" />
+        <activity android:name=".PaymentGateway.PaymentGatewayTestActivity"></activity>
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

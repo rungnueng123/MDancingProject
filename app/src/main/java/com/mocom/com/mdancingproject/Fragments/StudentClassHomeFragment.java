@@ -132,7 +132,7 @@ public class StudentClassHomeFragment extends Fragment {
     }
 
     private void loadClassData() {
-        if (classList != null && classList.size() > 0) {
+        if (classList != null || classList.size() > 0) {
             classList.clear();
         }
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {

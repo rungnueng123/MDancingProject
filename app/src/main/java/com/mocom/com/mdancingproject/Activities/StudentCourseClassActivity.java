@@ -16,7 +16,6 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mocom.com.mdancingproject.Adapter.StudentCourseClassAdapter;
-import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentCourseClassDao;
 import com.mocom.com.mdancingproject.R;
 
@@ -39,7 +38,6 @@ public class StudentCourseClassActivity extends AppCompatActivity {
     TextView txtCoin;
     private RecyclerView recyclerViewClass;
     private RecyclerView.Adapter adapter;
-    private ItemClickCallBack listener;
     private List<StudentCourseClassDao> classList;
 
     @Override
@@ -114,7 +112,7 @@ public class StudentCourseClassActivity extends AppCompatActivity {
 
                     if (classList.size() == 0) {
                     } else {
-                        adapter = new StudentCourseClassAdapter(listener, classList, this);
+                        adapter = new StudentCourseClassAdapter(classList, this);
                         recyclerViewClass.setAdapter(adapter);
                     }
 

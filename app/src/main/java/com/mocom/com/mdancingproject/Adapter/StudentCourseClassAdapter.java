@@ -14,7 +14,6 @@ import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
 import com.mocom.com.mdancingproject.Activities.StudentCourseClassDetailActivity;
-import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentCourseClassDao;
 import com.mocom.com.mdancingproject.DialogFragment.StudentPaymentDialog;
 import com.mocom.com.mdancingproject.Holder.StudentCourseClassHolder;
@@ -26,12 +25,10 @@ import static com.mocom.com.mdancingproject.config.config.HOST_URL;
 
 public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCourseClassHolder> {
 
-    private ItemClickCallBack listener;
     private List<StudentCourseClassDao> studentCourseClassList;
     private Context context;
 
-    public StudentCourseClassAdapter(ItemClickCallBack listener, List<StudentCourseClassDao> studentCourseClassList, Context context) {
-        this.listener = listener;
+    public StudentCourseClassAdapter(List<StudentCourseClassDao> studentCourseClassList, Context context) {
         this.studentCourseClassList = studentCourseClassList;
         this.context = context;
     }
@@ -51,7 +48,7 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
     @Override
     public StudentCourseClassHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         View v = LayoutInflater.from(parent.getContext()).inflate(R.layout.course_class_detail_item, parent, false);
-        return new StudentCourseClassHolder(v, listener);
+        return new StudentCourseClassHolder(v);
     }
 
     @SuppressLint("SetTextI18n")
