@@ -11,7 +11,7 @@ import com.mocom.com.mdancingproject.R;
 
 public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private TextView classID, classStart, classEnd, description, className, courseName, playlist, style, courseID;
+    private TextView classID, className, playlist, style, teacher, time, courseID;
     private ImageView imgUrl;
     private ItemClickCallBack mListener;
 
@@ -19,24 +19,8 @@ public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements V
         return classID;
     }
 
-    public TextView getClassStart() {
-        return classStart;
-    }
-
-    public TextView getClassEnd() {
-        return classEnd;
-    }
-
-    public TextView getDescription() {
-        return description;
-    }
-
     public TextView getClassName() {
         return className;
-    }
-
-    public TextView getCourseName() {
-        return courseName;
     }
 
     public TextView getPlaylist() {
@@ -45,6 +29,14 @@ public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements V
 
     public TextView getStyle() {
         return style;
+    }
+
+    public TextView getTeacher() {
+        return teacher;
+    }
+
+    public TextView getTime() {
+        return time;
     }
 
     public TextView getCourseID() {
@@ -60,15 +52,13 @@ public class StudentClassHomeHolder extends RecyclerView.ViewHolder implements V
         mListener = listener;
         itemView.setOnClickListener(this);
 
-        classStart = itemView.findViewById(R.id.txt_start);
-        classEnd = itemView.findViewById(R.id.txt_end);
-        description = itemView.findViewById(R.id.txt_description);
         className = itemView.findViewById(R.id.txt_class_name);
-        courseName = itemView.findViewById(R.id.txt_course);
         imgUrl = itemView.findViewById(R.id.img_class_home);
         playlist = itemView.findViewById(R.id.txt_playlist);
         style = itemView.findViewById(R.id.txt_style);
         courseID = itemView.findViewById(R.id.txt_courseID);
+        teacher = itemView.findViewById(R.id.txt_teacher);
+        time = itemView.findViewById(R.id.txt_time);
 
 
     }

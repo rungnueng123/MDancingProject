@@ -47,7 +47,7 @@ public class StudentClassHomeFragment extends Fragment {
     View layoutShowEmpty;
     CollapsibleCalendar collapsibleCalendar;
     Integer year, month, date;
-    TextView txtRecyclerDateEmpty;
+    TextView txtRecyclerDate;
     String monthName;
     private List<StudentEventHomeDao> eventList;
 
@@ -92,7 +92,7 @@ public class StudentClassHomeFragment extends Fragment {
         classList = new ArrayList<>();
         initCalendarListener();
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
         listener = (view, position) -> {
             Intent intent = new Intent(getActivity(), StudentCourseActivity.class);
@@ -142,7 +142,7 @@ public class StudentClassHomeFragment extends Fragment {
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 monthName = jsonObject.getString("monthName");
-                txtRecyclerDateEmpty.setText(date + " " + monthName + " " + year);
+                txtRecyclerDate.setText(date + " " + monthName + " " + year);
 //                Toast.makeText(getContext(), jsonObject.getString("monthName"), Toast.LENGTH_LONG).show();
                 if (jsonObject.getString("msg").equals("have class")) {
                     JSONArray array = jsonObject.getJSONArray("data");
@@ -153,13 +153,12 @@ public class StudentClassHomeFragment extends Fragment {
                                 obj.getString("eventID"),
                                 obj.getString("eventStart"),
                                 obj.getString("eventEnd"),
-                                obj.getString("description"),
                                 obj.getString("title"),
                                 obj.getString("CourseID"),
-                                obj.getString("Course"),
                                 obj.getString("gallery1"),
                                 obj.getString("playlistTitle"),
-                                obj.getString("courseStyleName")
+                                obj.getString("courseStyleName"),
+                                obj.getString("teacher")
                         );
 //                        Toast.makeText(getContext(), jsonObject.getString("monthName"), Toast.LENGTH_LONG).show();
                         classList.add(item);
@@ -258,7 +257,7 @@ public class StudentClassHomeFragment extends Fragment {
         swipeRefreshLayout = rootView.findViewById(R.id.pullToRefresh);
         collapsibleCalendar = rootView.findViewById(R.id.calendarView);
         layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
-        txtRecyclerDateEmpty = rootView.findViewById(R.id.txt_recycler_home_date_empty);
+        txtRecyclerDate = rootView.findViewById(R.id.txt_recycler_home_date);
 
     }
 

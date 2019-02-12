@@ -21,26 +21,27 @@
         app:todayItem_background="@drawable/circle_white_stroke_background"
         app:todayItem_textColor="@android:color/white" />
 
+    <TextView
+        android:id="@+id/txt_recycler_home_date"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        android:paddingTop="6dp"
+        android:paddingBottom="6dp"
+        android:textColor="@color/txt_color_all"
+        android:textSize="18sp" />
+
     <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:id="@+id/layout_show_empty"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
             android:orientation="vertical"
             android:visibility="gone">
-
-            <TextView
-                android:id="@+id/txt_recycler_home_date_empty"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingTop="6dp"
-                android:paddingBottom="6dp"
-                android:textColor="@color/txt_color_all"
-                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txt_recycler_home_empty"

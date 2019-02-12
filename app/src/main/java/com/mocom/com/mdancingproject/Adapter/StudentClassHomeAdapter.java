@@ -51,13 +51,11 @@ public class StudentClassHomeAdapter extends RecyclerView.Adapter<StudentClassHo
     @Override
     public void onBindViewHolder(@NonNull StudentClassHomeHolder holder, int position) {
         StudentClassHomeDao studentClassHomeDao = studentClassList.get(position);
-        holder.getClassName().setText(studentClassHomeDao.getTitle());
-        holder.getClassStart().setText(studentClassHomeDao.getEventStart());
-        holder.getClassEnd().setText(studentClassHomeDao.getEventEnd());
-        holder.getCourseName().setText(studentClassHomeDao.getCourse());
-        holder.getPlaylist().setText(studentClassHomeDao.getPlaylistTitle());
-        holder.getStyle().setText(studentClassHomeDao.getCourseStyleName());
-        holder.getDescription().setText(studentClassHomeDao.getDescription());
+        holder.getClassName().setText("คลาส : "+studentClassHomeDao.getTitle());
+        holder.getPlaylist().setText("เพลง : "+studentClassHomeDao.getPlaylistTitle());
+        holder.getStyle().setText("สไตล์ : "+studentClassHomeDao.getCourseStyleName());
+        holder.getTeacher().setText("ผู้สอน : "+studentClassHomeDao.getTeacher());
+        holder.getTime().setText("เวลา : "+studentClassHomeDao.getEventStart()+" - "+studentClassHomeDao.getEventEnd());
         holder.getCourseID().setText(studentClassHomeDao.getCourseID());
         String imgUrl = HOST_URL + studentClassHomeDao.getImgUrl();
         Glide.with(context)
