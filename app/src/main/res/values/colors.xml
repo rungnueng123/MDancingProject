@@ -8,6 +8,7 @@
     <color name="signupColor">#066e8a</color>
     <color name="nav_item_profile">#FFFFFF</color>
     <color name="calendar">#3F51B5</color>
+    <color name="select_calendar">#FF3D9F</color>
     <color name="littleWhite">#efe3e3</color>
     <color name="colorDivider">#BDBDBD</color>
 </resources>
