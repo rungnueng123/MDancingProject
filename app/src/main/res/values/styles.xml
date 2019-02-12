@@ -11,4 +11,9 @@
         parent="@android:style/Widget.TextView.SpinnerItem">
         <item name="android:textSize">20sp</item>
     </style>
+    <style name="FacebookLoginButton">
+        <item name="android:background">@drawable/shapeloginfacebook</item>
+        <item name="android:layout_marginTop">16.31dp</item>
+        <item name="android:layout_gravity">center_horizontal</item>
+    </style>
 </resources>

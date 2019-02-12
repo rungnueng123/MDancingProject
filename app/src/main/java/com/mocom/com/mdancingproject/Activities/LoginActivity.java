@@ -1,6 +1,7 @@
 package com.mocom.com.mdancingproject.Activities;
 
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -54,12 +55,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     AccessTokenTracker accessTokenTracker;
     private ProfileTracker profileTracker;
 
-    private TextView txtForgotPass;
+    private TextView txtForgotPass, txtCreateAccount;
     private EditText edtUsername, edtPassword;
-    private Button btnLogin, btnSignUp;
+    private Button btnLogin, btnFBCustom;
     private CheckBox chkRemember;
     String UserID, User, Email, GroupID, Groups, firstName = "", lastName = "", email = "", id = "", birthday = "", gender = "";
     private URL profilePicture;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -74,12 +76,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         edtPassword = findViewById(R.id.edt_pass);
         btnLogin = findViewById(R.id.btn_login);
         btnLogin.setOnClickListener(this);
-        btnSignUp = findViewById(R.id.btn_signup);
-        btnSignUp.setOnClickListener(this);
-        chkRemember = findViewById(R.id.chk_remember);
         btnLoginFB = findViewById(R.id.btn_login_fb);
         txtForgotPass = findViewById(R.id.txt_forgot);
         txtForgotPass.setOnClickListener(this);
+        txtCreateAccount = findViewById(R.id.txt_create_account);
+        txtCreateAccount.setOnClickListener(this);
+        btnFBCustom = findViewById(R.id.btn_fb_custom);
+        btnFBCustom.setOnClickListener(this);
 
     }
 
@@ -199,7 +202,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 editor.putString(getString(R.string.password), "");
             }
         }
-        if (v == btnSignUp) {
+        if (v == txtCreateAccount) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
             finish();
@@ -208,6 +211,9 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             Intent intent = new Intent(this, ForgotPasswordActivity.class);
             startActivity(intent);
             finish();
+        }
+        if (v == btnFBCustom){
+            btnLoginFB.performClick();
         }
     }
 
@@ -225,6 +231,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void goLogin(String username, String pass) {
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading..."); // Setting Message
+        progressDialog.setTitle("ProgressDialog"); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+        progressDialog.show(); // Display Progress Dialog
+        progressDialog.setCancelable(false);
+
         if (!username.isEmpty()) {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
             StringRequest request = new StringRequest(Request.Method.POST, loginUrl, response -> {
@@ -255,6 +268,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.commit();
 //                        courseList.add(item);
                         }
+                        progressDialog.dismiss();
                         //TODO
                         if (Groups.equals("student")) {
                             Intent intent = new Intent(this, StudentDashboardActivity.class);
@@ -266,6 +280,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                         }
                     } else if (jsonObject.getString("msg").equals("verify email")) {
+                        progressDialog.dismiss();
 //                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setMessage(jsonObject.getString("msg"))
@@ -286,6 +301,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }, error -> {
 //                    Log.d("onError", error.toString());
 //                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }) {
                 @Override
@@ -303,7 +319,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void goMainScreenWithFB(String id, String firstName, String lastName, String email, String birthday, String gender) {
-
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setMessage("Loading..."); // Setting Message
+        progressDialog.setTitle("ProgressDialog"); // Setting Title
+        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+        progressDialog.show(); // Display Progress Dialog
+        progressDialog.setCancelable(false);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, loginFBUrl, response -> {
             Log.d("onResponse", response);
@@ -331,6 +352,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         editor.commit();
 //                        courseList.add(item);
                     }
+                    progressDialog.dismiss();
                     //TODO
                     if (!Groups.equals("student")) {
                         Intent intent = new Intent(this, AdminDashboardActivity.class);
@@ -354,6 +376,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }, error -> {
 //                    Log.d("onError", error.toString());
+            progressDialog.dismiss();
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

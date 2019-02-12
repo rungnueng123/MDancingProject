@@ -10,6 +10,7 @@
     <string name="GroupID">com.mocom.com.mdancingproject.Activities.GroupID</string>
     <string name="Groups">com.mocom.com.mdancingproject.Activities.Groups</string>
 
+    <string name="login">Log In</string>
     <string name="txt_recycler_home_empty">Today dont have class</string>
     <string name="course">Course Name</string>
     <string name="coin">Coin</string>
@@ -28,6 +29,7 @@
     //facebook
     <string name="facebook_app_id">1094329207415724</string>
     <string name="fb_login_protocol_scheme">fb1094329207415724</string>
+    <string name="com_facebook_loginview_log_in_button_long">CONTINUE WITH FACEBOOK</string>
 
     //dropdown register
     <string name="sex_prompt">Choose a sex</string>
@@ -58,5 +60,8 @@
     <string name="qr_code">QRCode</string>
     <string name="baht">Bath</string>
     <string name="pack">Package</string>
+    <string name="or">----- OR -----</string>
+    <string name="ForgetPassword">FORGET PASSWORD?</string>
+    <string name="create_account">CREATE ACCOUNT</string>
 
 </resources>

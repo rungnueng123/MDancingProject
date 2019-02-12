@@ -1,10 +1,15 @@
 package com.mocom.com.mdancingproject.PaymentGateway;
 
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.http.SslError;
 import android.os.Bundle;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.webkit.SslErrorHandler;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -44,7 +49,16 @@ public class PaymentGatewayTestActivity extends AppCompatActivity {
 
     private void initInstance() {
         initFindViewByID();
-        callWebViewShow();
+//        webView.getSettings().setJavaScriptEnabled(true);
+//        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+//        //webview.setWebViewClient(new MyBrowser());
+//        webView.setWebChromeClient(new WebChromeClient());
+//        webView.getSettings().setLoadWithOverviewMode(true);
+//        webView.getSettings().setUseWideViewPort(true);
+//        webView.getSettings().setBuiltInZoomControls(true);
+//        webView.setWebViewClient(new SSLTolerentWebViewClient());
+//        webView.loadUrl("https://danceschool.matchbox-station.com/MDancingPHP/get_url_2c2p.php?coinPackID=1");
+//        callWebViewShow();
 
     }
 
@@ -110,5 +124,27 @@ public class PaymentGatewayTestActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
+    }
+
+    private class SSLTolerentWebViewClient extends WebViewClient {
+        public void onReceivedSslError(WebView view, final SslErrorHandler handler, SslError error) {
+            final AlertDialog.Builder builder = new AlertDialog.Builder(getApplicationContext());
+            builder.setMessage(R.string.ok);
+            builder.setPositiveButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    handler.proceed();
+                }
+            });
+            builder.setNegativeButton(getString(R.string.ok), new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    handler.cancel();
+                    finish();
+                }
+            });
+            final AlertDialog dialog = builder.create();
+            dialog.show();
+        }
     }
 }
