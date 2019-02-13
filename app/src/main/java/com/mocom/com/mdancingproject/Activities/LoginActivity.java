@@ -11,7 +11,6 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
-import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -58,7 +57,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private TextView txtForgotPass, txtCreateAccount;
     private EditText edtUsername, edtPassword;
     private Button btnLogin, btnFBCustom;
-    private CheckBox chkRemember;
     String UserID, User, Email, GroupID, Groups, firstName = "", lastName = "", email = "", id = "", birthday = "", gender = "";
     private URL profilePicture;
     ProgressDialog progressDialog;
@@ -164,21 +162,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     }
 
-    private void checkSharedPreferences() {
-        String checkbox = sharedPreferences.getString(getString(R.string.checkbox), "False");
-        String username = sharedPreferences.getString(getString(R.string.username), "");
-        String password = sharedPreferences.getString(getString(R.string.password), "");
-
-        edtUsername.setText(username);
-        edtPassword.setText(password);
-        if (checkbox.equals("True")) {
-            chkRemember.setChecked(true);
-        } else {
-            chkRemember.setChecked(false);
-        }
-
-    }
-
     @Override
     public void onClick(View v) {
         if (v == btnLogin) {
@@ -186,21 +169,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String username = edtUsername.getText().toString();
             String pass = edtPassword.getText().toString();
             goLogin(username, pass);
-            if (chkRemember.isChecked()) {
-                editor.putString(getString(R.string.checkbox), "True");
-                editor.commit();
-
-                editor.putString(getString(R.string.username), username);
-
-                editor.putString(getString(R.string.password), pass);
-            } else {
-                editor.putString(getString(R.string.checkbox), "False");
-                editor.commit();
-
-                editor.putString(getString(R.string.username), "");
-
-                editor.putString(getString(R.string.password), "");
-            }
         }
         if (v == txtCreateAccount) {
             Intent intent = new Intent(this, RegisterActivity.class);

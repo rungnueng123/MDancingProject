@@ -1,8 +1,7 @@
 <resources>
     <string name="app_name">MDancing</string>
-    <string name="checkbox">com.mocom.com.mdancingproject.Activities.checkbox</string>
-    <string name="username">com.mocom.com.mdancingproject.Activities.username</string>
-    <string name="password">com.mocom.com.mdancingproject.Activities.password</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
     //เก็บ User Login
     <string name="UserID">com.mocom.com.mdancingproject.Activities.userID</string>
     <string name="User">com.mocom.com.mdancingproject.Activities.User</string>
@@ -63,5 +62,12 @@
     <string name="or">----- OR -----</string>
     <string name="ForgetPassword">FORGET PASSWORD?</string>
     <string name="create_account">CREATE ACCOUNT</string>
+    <string name="send_request_pass">REQUEST PASSWORD</string>
+    <string name="email">Email</string>
+    <string name="back">Back</string>
+    <string name="confirm_pass">Confirm Password</string>
+    <string name="phone">Phone</string>
+    <string name="birth">Birth</string>
+    <string name="register">Register</string>
 
 </resources>

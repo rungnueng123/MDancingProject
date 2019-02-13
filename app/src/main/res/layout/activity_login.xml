@@ -26,7 +26,7 @@
         android:layout_marginTop="29.88dp"
         android:background="@drawable/shapeemail"
         android:fontFamily="@font/kanit_regular"
-        android:hint="Username"
+        android:hint="@string/username"
         android:inputType="textEmailAddress"
         android:paddingStart="43.46dp"
         android:paddingEnd="43.46dp"
@@ -42,7 +42,7 @@
         android:layout_marginTop="19dp"
         android:background="@drawable/shapeemail"
         android:fontFamily="@font/kanit_regular"
-        android:hint="Password"
+        android:hint="@string/password"
         android:inputType="textPassword"
         android:paddingStart="43.46dp"
         android:paddingEnd="43.46dp"
@@ -98,9 +98,9 @@
         android:padding="12.5dp"
         android:paddingStart="33.14dp"
         android:paddingEnd="33.14dp"
-        android:textSize="11sp"
         android:text="@string/com_facebook_loginview_log_in_button_long"
-        android:textColor="@color/white" />
+        android:textColor="@color/white"
+        android:textSize="11sp" />
 
     <RelativeLayout
         android:layout_width="match_parent"
