@@ -16,83 +16,186 @@
         app:title="@string/course_title"
         app:titleTextColor="@color/white" />
 
-    <fragment
-        android:id="@+id/youtube_player"
-        android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="200dp" />
+        android:layout_height="match_parent">
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
-
-        <TextView
-            android:id="@+id/txt_course_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginStart="4dp"
-            android:text="@string/course" />
-
-        <TextView
-            android:id="@+id/txt_coin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_marginEnd="4dp"
-            android:text="@string/coin" />
-
-        <TextView
-            android:id="@+id/txt_hour"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_course_name"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/hour" />
-
-        <TextView
-            android:id="@+id/txt_style"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/txt_hour"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/style" />
+            android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/txt_description"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_style"
-            android:layout_marginStart="4dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/description" />
+            <fragment
+                android:id="@+id/youtube_player"
+                android:name="com.google.android.youtube.player.YouTubePlayerFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp" />
 
-        <Button
-            android:id="@+id/btn_watch_class"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_description"
-            android:text="@string/watch_class" />
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp">
 
-        <TextView
-            android:id="@+id/txt_gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btn_watch_class"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="8dp"
-            android:text="@string/gallery" />
+                <TextView
+                    android:id="@+id/txt_course_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/kanit_medium"
+                    android:text="@string/course"
+                    android:textSize="18sp" />
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_student_course_gallery"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_gallery"
-            android:background="@android:color/white"
-            tools:listitem="@layout/course_gallery_item" />
+                <TextView
+                    android:id="@+id/txt_coin"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/shapelogin"
+                    android:fontFamily="@font/kanit_regular"
+                    android:shadowColor="@android:color/transparent"
+                    android:text="@string/coin"
+                    android:textColor="@color/white"
+                    android:textSize="14sp" />
 
-    </RelativeLayout>
+                <TextView
+                    android:id="@+id/txt_hour"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_course_name"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/kanit_regular"
+                    android:text="@string/hour"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_style"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_hour"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/kanit_regular"
+                    android:text="@string/style"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_style"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/kanit_regular"
+                    android:text="@string/description"
+                    android:textSize="14sp" />
+
+                <Button
+                    android:id="@+id/btn_watch_class"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_description"
+                    android:layout_marginTop="20dp"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/shapelogin"
+                    android:fontFamily="@font/kanit_medium"
+                    android:shadowColor="@android:color/transparent"
+                    android:text="@string/watch_class"
+                    android:textColor="@color/white" />
+
+                <TextView
+                    android:id="@+id/divider"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="16dp"
+                    android:layout_below="@id/btn_watch_class"
+                    android:background="@android:color/darker_gray"
+                    android:layout_gravity="bottom"/>
+
+                <TextView
+                    android:id="@+id/txt_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/divider"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginTop="8dp"
+                    android:fontFamily="@font/kanit_medium"
+                    android:textSize="18sp"
+                    android:text="@string/gallery" />
+
+                <LinearLayout
+                    android:id="@+id/linear_1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_gallery"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="17dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_gal_1"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/img_gal_2"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/linear_2"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/linear_1"
+                    android:layout_marginStart="5dp"
+                    android:layout_marginEnd="5dp"
+                    android:layout_marginTop="11dp"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:id="@+id/img_gal_3"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginEnd="5dp"
+                        android:layout_weight="1" />
+
+                    <ImageView
+                        android:id="@+id/img_gal_4"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginStart="5dp"
+                        android:layout_weight="1" />
+
+                </LinearLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_student_course_gallery"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/txt_gallery"
+                    android:background="@android:color/white"
+                    android:visibility="gone"
+                    tools:listitem="@layout/course_gallery_item" />
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+    </ScrollView>
 
 </LinearLayout>

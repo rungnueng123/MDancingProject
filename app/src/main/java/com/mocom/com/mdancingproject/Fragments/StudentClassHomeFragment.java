@@ -44,9 +44,11 @@ public class StudentClassHomeFragment extends Fragment {
     private String jsonUrl = DATA_URL + "json_get_class_home_student.php";
     private String jsonEventUrl = DATA_URL + "json_get_event_home_student.php";
 
+    View layoutShowEmpty;
     CollapsibleCalendar collapsibleCalendar;
     Integer year, month, date;
-    TextView txtRecyclerEmpty;
+    TextView txtRecyclerDate;
+    String monthName;
     private List<StudentEventHomeDao> eventList;
 
 
@@ -90,7 +92,7 @@ public class StudentClassHomeFragment extends Fragment {
         classList = new ArrayList<>();
         initCalendarListener();
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getContext()));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getContext(),LinearLayoutManager.VERTICAL,false));
 
         listener = (view, position) -> {
             Intent intent = new Intent(getActivity(), StudentCourseActivity.class);
@@ -136,9 +138,12 @@ public class StudentClassHomeFragment extends Fragment {
             classList.clear();
         }
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
-//            Log.d("Onresponse", response);
+            Log.d("Onresponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
+                monthName = jsonObject.getString("monthName");
+                txtRecyclerDate.setText(date + " " + monthName + " " + year);
+//                Toast.makeText(getContext(), jsonObject.getString("monthName"), Toast.LENGTH_LONG).show();
                 if (jsonObject.getString("msg").equals("have class")) {
                     JSONArray array = jsonObject.getJSONArray("data");
 
@@ -148,29 +153,29 @@ public class StudentClassHomeFragment extends Fragment {
                                 obj.getString("eventID"),
                                 obj.getString("eventStart"),
                                 obj.getString("eventEnd"),
-                                obj.getString("description"),
                                 obj.getString("title"),
                                 obj.getString("CourseID"),
-                                obj.getString("Course"),
                                 obj.getString("gallery1"),
                                 obj.getString("playlistTitle"),
-                                obj.getString("courseStyleName")
+                                obj.getString("courseStyleName"),
+                                obj.getString("teacher")
                         );
+//                        Toast.makeText(getContext(), jsonObject.getString("monthName"), Toast.LENGTH_LONG).show();
                         classList.add(item);
                     }
 
                     if (classList.size() == 0) {
-                        txtRecyclerEmpty.setVisibility(View.VISIBLE);
+                        layoutShowEmpty.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     } else {
-                        txtRecyclerEmpty.setVisibility(View.GONE);
+                        layoutShowEmpty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         adapter = new StudentClassHomeAdapter(listener, classList, getContext());
                         recyclerView.setAdapter(adapter);
                     }
 
                 } else {
-                    txtRecyclerEmpty.setVisibility(View.VISIBLE);
+                    layoutShowEmpty.setVisibility(View.VISIBLE);
                     recyclerView.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
@@ -214,8 +219,8 @@ public class StudentClassHomeFragment extends Fragment {
                                 Integer.parseInt(obj.getString("month")),
                                 Integer.parseInt(obj.getString("day"))
                         );
-                        Log.d("aaaa",item.getYear().toString());
-                        collapsibleCalendar.addEventTag(item.getYear(),item.getMonth()-1,item.getDay());
+//                        Log.d("aaaa", item.getYear().toString());
+                        collapsibleCalendar.addEventTag(item.getYear(), item.getMonth() - 1, item.getDay());
 
 //                        eventList.add(item);
 //                        Log.d("Member name: ", obj.getString("UserID"));
@@ -251,7 +256,8 @@ public class StudentClassHomeFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler_student_class_home);
         swipeRefreshLayout = rootView.findViewById(R.id.pullToRefresh);
         collapsibleCalendar = rootView.findViewById(R.id.calendarView);
-        txtRecyclerEmpty = rootView.findViewById(R.id.txt_recycler_home_empty);
+        layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
+        txtRecyclerDate = rootView.findViewById(R.id.txt_recycler_home_date);
 
     }
 
@@ -262,7 +268,7 @@ public class StudentClassHomeFragment extends Fragment {
         month = (day.getMonth());
         date = day.getDay();
         loadEventData();
-//        loadClassData();
+        loadClassData();
 //        Toast.makeText(getActivity(),year + "/" + month + "/" + date,Toast.LENGTH_LONG).show();
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
@@ -271,6 +277,8 @@ public class StudentClassHomeFragment extends Fragment {
                 year = day.getYear();
                 month = day.getMonth() + 1;
                 date = day.getDay();
+//                monthName = new SimpleDateFormat("MMMM").format(day.getMonth());
+//                Toast.makeText(getActivity(), monthName + " " + month, Toast.LENGTH_LONG).show();
                 loadClassData();
 //                Toast.makeText(getActivity(),year + "/" + month + "/" + date,Toast.LENGTH_LONG).show();
             }
