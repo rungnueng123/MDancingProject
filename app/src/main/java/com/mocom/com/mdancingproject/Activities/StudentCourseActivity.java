@@ -3,12 +3,13 @@ package com.mocom.com.mdancingproject.Activities;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -17,6 +18,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.bumptech.glide.Glide;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
@@ -36,6 +38,7 @@ import java.util.List;
 import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
+import static com.mocom.com.mdancingproject.config.config.HOST_URL;
 
 public class StudentCourseActivity extends AppCompatActivity implements View.OnClickListener {
 
@@ -43,6 +46,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
     String getCourseUrl = DATA_URL + "json_get_course_detail_student.php";
     String courseID, youtubeUrl;
     TextView txtCourse, txtCoin, txtHour, txtStyle, txtDesc;
+    ImageView gal1, gal2, gal3, gal4;
     Button btnWatchClass;
     private RecyclerView recyclerViewGallery;
     private RecyclerView.Adapter adapter;
@@ -72,7 +76,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
         galleryList = new ArrayList<>();
 
         recyclerViewGallery.setHasFixedSize(true);
-        recyclerViewGallery.setLayoutManager(new LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false));
+        recyclerViewGallery.setLayoutManager(new GridLayoutManager(this, 2));
 
 
         loadCourseDetail();
@@ -115,31 +119,11 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
                     JSONArray classArray = jsonObject.getJSONArray("class");
                     for (int i = 0; i < classArray.length(); i++) {
                         JSONObject objClass = classArray.getJSONObject(i);
-                        if (objClass.getString("Course").equals("null")) {
-                            txtCourse.setText("Course: ");
-                        } else {
-                            txtCourse.setText("Course: " + objClass.getString("Course"));
-                        }
-                        if (objClass.getString("CoinAmt").equals("null")) {
-                            txtCoin.setText("Coins: ");
-                        } else {
-                            txtCoin.setText(objClass.getString("CoinAmt") + " Coins/Class");
-                        }
-                        if (objClass.getString("CourseLength").equals("null")) {
-                            txtHour.setText("Hours: ");
-                        } else {
-                            txtHour.setText(objClass.getString("CourseLength") + " Hours");
-                        }
-                        if (objClass.getString("courseStyleName").equals("null")) {
-                            txtStyle.setText("Style: ");
-                        } else {
-                            txtStyle.setText("Style: " + objClass.getString("courseStyleName"));
-                        }
-                        if (objClass.getString("Description").equals("null")) {
-                            txtDesc.setText("Description: ");
-                        } else {
-                            txtDesc.setText("Description: " + objClass.getString("Description"));
-                        }
+                        txtCourse.setText(objClass.getString("Course"));
+                        txtCoin.setText(objClass.getString("CoinAmt") + " Coins/Class");
+                        txtHour.setText("จำนวนชั่วโมง : " + objClass.getString("CourseLength"));
+                        txtStyle.setText("Style : " + objClass.getString("courseStyleName"));
+                        txtDesc.setText("Description : \n\n" + objClass.getString("Description"));
                         if (objClass.getString("ClipLink").equals("null")) {
                             youtubeUrl = "";
                         } else {
@@ -152,7 +136,27 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
                         StudentCourseGalleryDao item = new StudentCourseGalleryDao(
                                 objGallery.getString("gallery")
                         );
-                        galleryList.add(item);
+                        String imgUrl = HOST_URL + objGallery.getString("gallery");
+                        if(i == 0){
+                            Glide.with(getApplicationContext())
+                                    .load(imgUrl)
+                                    .into(gal1);
+                        }
+                        if(i == 1){
+                            Glide.with(getApplicationContext())
+                                    .load(imgUrl)
+                                    .into(gal2);
+                        }
+                        if(i == 2){
+                            Glide.with(getApplicationContext())
+                                    .load(imgUrl)
+                                    .into(gal3);
+                        }
+                        if(i == 3){
+                            Glide.with(getApplicationContext())
+                                    .load(imgUrl)
+                                    .into(gal4);
+                        }
                     }
 
                     if (galleryList.size() == 0) {
@@ -196,6 +200,10 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
         btnWatchClass = findViewById(R.id.btn_watch_class);
         btnWatchClass.setOnClickListener(this);
         toolbar = findViewById(R.id.toolbar_course_detail);
+        gal1 = findViewById(R.id.img_gal_1);
+        gal2 = findViewById(R.id.img_gal_2);
+        gal3 = findViewById(R.id.img_gal_3);
+        gal4 = findViewById(R.id.img_gal_4);
 
 
     }
