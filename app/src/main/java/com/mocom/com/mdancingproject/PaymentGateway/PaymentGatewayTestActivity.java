@@ -2,12 +2,15 @@ package com.mocom.com.mdancingproject.PaymentGateway;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.http.SslError;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.webkit.SslErrorHandler;
+import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
 import android.widget.Toast;
@@ -28,13 +31,17 @@ import java.util.HashMap;
 import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
+import static com.mocom.com.mdancingproject.config.config.OMISE_API_VERSION;
+import static com.mocom.com.mdancingproject.config.config.OMISE_PUBLIC_KEY;
+import static com.mocom.com.mdancingproject.config.config.OMISE_SECRET_KEY;
 
 public class PaymentGatewayTestActivity extends AppCompatActivity {
 
-    String callWebViewUrl = DATA_URL + "get_url_2c2p.php";
-    String coinPackID;
+    String callWebViewUrl = DATA_URL + "get_url_omise.php";
+    String coinPackID, userID;
     WebView webView;
     StudentPaymentGatewayDao item;
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -49,15 +56,19 @@ public class PaymentGatewayTestActivity extends AppCompatActivity {
 
     private void initInstance() {
         initFindViewByID();
-//        webView.getSettings().setJavaScriptEnabled(true);
-//        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
-//        //webview.setWebViewClient(new MyBrowser());
-//        webView.setWebChromeClient(new WebChromeClient());
-//        webView.getSettings().setLoadWithOverviewMode(true);
-//        webView.getSettings().setUseWideViewPort(true);
-//        webView.getSettings().setBuiltInZoomControls(true);
-//        webView.setWebViewClient(new SSLTolerentWebViewClient());
-//        webView.loadUrl("https://danceschool.matchbox-station.com/MDancingPHP/get_url_2c2p.php?coinPackID=1");
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        userID = sharedPreferences.getString(getString(R.string.UserID), "");
+
+        webView.getSettings().setJavaScriptEnabled(true);
+        webView.setScrollBarStyle(WebView.SCROLLBARS_OUTSIDE_OVERLAY);
+        //webview.setWebViewClient(new MyBrowser());
+        webView.setWebChromeClient(new WebChromeClient());
+        webView.getSettings().setLoadWithOverviewMode(true);
+        webView.getSettings().setUseWideViewPort(true);
+        webView.getSettings().setBuiltInZoomControls(true);
+        webView.setWebViewClient(new SSLTolerentWebViewClient());
+        webView.loadUrl(callWebViewUrl + "?userID="+userID+"&coinPackID="+coinPackID+"&public_key_omise="+OMISE_PUBLIC_KEY+"&secret_key_omise="+OMISE_SECRET_KEY+"&api_version_omise="+OMISE_API_VERSION);
 //        callWebViewShow();
 
     }
@@ -116,7 +127,11 @@ public class PaymentGatewayTestActivity extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
+                params.put("userID", userID);
                 params.put("coinPackID", coinPackID);
+                params.put("public_key_omise", OMISE_PUBLIC_KEY);
+                params.put("secret_key_omise", OMISE_SECRET_KEY);
+                params.put("api_version_omise", OMISE_API_VERSION);
 
                 return params;
             }
