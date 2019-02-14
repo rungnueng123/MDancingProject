@@ -99,11 +99,14 @@ public class StudentCourseClassActivity extends AppCompatActivity {
                                 objGallery.getString("imgUrl"),
                                 objGallery.getString("eventTitle"),
                                 objGallery.getString("playlist"),
+                                objGallery.getString("eventStyle"),
+                                objGallery.getString("eventTeacher"),
                                 objGallery.getString("eventDate"),
                                 objGallery.getString("eventTime"),
+                                objGallery.getString("eventEmpty"),
+                                objGallery.getString("eventBranch"),
                                 objGallery.getString("description"),
-                                objGallery.getString("coin"),
-                                objGallery.getString("eventStart")
+                                objGallery.getString("coin")
                         );
 
                         txtCoin.setText(objGallery.getString("coin")+" Coins/Time");
