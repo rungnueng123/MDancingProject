@@ -25,6 +25,7 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.mocom.com.mdancingproject.Adapter.StudentCourseGalleryAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentCourseGalleryDao;
+import com.mocom.com.mdancingproject.DialogFragment.ShowPictureFromUrlDialog;
 import com.mocom.com.mdancingproject.R;
 import com.mocom.com.mdancingproject.config.config;
 
@@ -44,7 +45,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
 
     private static final String TAG = "StudentCourseActivity";
     String getCourseUrl = DATA_URL + "json_get_course_detail_student.php";
-    String courseID, youtubeUrl;
+    String courseID, youtubeUrl, gal1Url, gal2Url, gal3Url, gal4Url;
     TextView txtCourse, txtCoin, txtHour, txtStyle, txtDesc;
     ImageView gal1, gal2, gal3, gal4;
     Button btnWatchClass;
@@ -138,21 +139,25 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
                         );
                         String imgUrl = HOST_URL + objGallery.getString("gallery");
                         if(i == 0){
+                            gal1Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal1);
                         }
                         if(i == 1){
+                            gal2Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal2);
                         }
                         if(i == 2){
+                            gal3Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal3);
                         }
                         if(i == 3){
+                            gal4Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal4);
@@ -204,6 +209,10 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
         gal2 = findViewById(R.id.img_gal_2);
         gal3 = findViewById(R.id.img_gal_3);
         gal4 = findViewById(R.id.img_gal_4);
+        gal1.setOnClickListener(this);
+        gal2.setOnClickListener(this);
+        gal3.setOnClickListener(this);
+        gal4.setOnClickListener(this);
 
 
     }
@@ -215,5 +224,25 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
             intent.putExtra("courseID", courseID);
             startActivity(intent);
         }
+        if (v == gal1) {
+            showGalleryDialogFragment(gal1Url);
+        }
+        if (v == gal2) {
+            showGalleryDialogFragment(gal2Url);
+        }
+        if (v == gal3) {
+            showGalleryDialogFragment(gal3Url);
+        }
+        if (v == gal4) {
+            showGalleryDialogFragment(gal4Url);
+        }
+    }
+
+    private void showGalleryDialogFragment(String imageUrl) {
+        Bundle bundle = new Bundle();
+        bundle.putString("imageUrl",imageUrl);
+        ShowPictureFromUrlDialog dialog = new ShowPictureFromUrlDialog();
+        dialog.setArguments(bundle);
+        dialog.show(getSupportFragmentManager().beginTransaction(),"ShowPictureFromUrlDialog");
     }
 }
