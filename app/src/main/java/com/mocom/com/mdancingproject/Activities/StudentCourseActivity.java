@@ -25,7 +25,6 @@ import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.mocom.com.mdancingproject.Adapter.StudentCourseGalleryAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentCourseGalleryDao;
-import com.mocom.com.mdancingproject.DialogFragment.ShowPictureFromUrlDialog;
 import com.mocom.com.mdancingproject.R;
 import com.mocom.com.mdancingproject.config.config;
 
@@ -138,25 +137,25 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
                                 objGallery.getString("gallery")
                         );
                         String imgUrl = HOST_URL + objGallery.getString("gallery");
-                        if(i == 0){
+                        if (i == 0) {
                             gal1Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal1);
                         }
-                        if(i == 1){
+                        if (i == 1) {
                             gal2Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal2);
                         }
-                        if(i == 2){
+                        if (i == 2) {
                             gal3Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal3);
                         }
-                        if(i == 3){
+                        if (i == 3) {
                             gal4Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
@@ -219,30 +218,41 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
 
     @Override
     public void onClick(View v) {
+//        Bundle bundle = new Bundle();
+        Intent intentShowPic = new Intent(this, ShowPictureActivity.class);
         if (v == btnWatchClass) {
             Intent intent = new Intent(this, StudentCourseClassActivity.class);
             intent.putExtra("courseID", courseID);
             startActivity(intent);
         }
         if (v == gal1) {
-            showGalleryDialogFragment(gal1Url);
+            intentShowPic.putExtra("imageUrl", gal1Url);
+            startActivity(intentShowPic);
+//            bundle.putString("imageUrl", gal1Url);
+//            Toast.makeText(getApplicationContext(),gal1Url,Toast.LENGTH_LONG).show();
         }
         if (v == gal2) {
-            showGalleryDialogFragment(gal2Url);
+            intentShowPic.putExtra("imageUrl", gal2Url);
+            startActivity(intentShowPic);
+//            bundle.putString("imageUrl", gal2Url);
+//            Toast.makeText(getApplicationContext(),gal2Url,Toast.LENGTH_LONG).show();
         }
         if (v == gal3) {
-            showGalleryDialogFragment(gal3Url);
+            intentShowPic.putExtra("imageUrl", gal3Url);
+            startActivity(intentShowPic);
+//            bundle.putString("imageUrl", gal3Url);
+//            Toast.makeText(getApplicationContext(),gal3Url,Toast.LENGTH_LONG).show();
         }
         if (v == gal4) {
-            showGalleryDialogFragment(gal4Url);
+            intentShowPic.putExtra("imageUrl", gal4Url);
+            startActivity(intentShowPic);
+//            bundle.putString("imageUrl", gal4Url);
+//            Toast.makeText(getApplicationContext(),gal4Url,Toast.LENGTH_LONG).show();
         }
-    }
 
-    private void showGalleryDialogFragment(String imageUrl) {
-        Bundle bundle = new Bundle();
-        bundle.putString("imageUrl",imageUrl);
-        ShowPictureFromUrlDialog dialog = new ShowPictureFromUrlDialog();
-        dialog.setArguments(bundle);
-        dialog.show(getSupportFragmentManager().beginTransaction(),"ShowPictureFromUrlDialog");
+//        Fragment fragment = new ShowPictureFragment();
+//        fragment.setArguments(bundle);
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.for_show_picture, fragment).commit();
     }
 }

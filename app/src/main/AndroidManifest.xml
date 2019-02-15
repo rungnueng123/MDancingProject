@@ -37,8 +37,11 @@
         <activity android:name=".Activities.StudentCourseClassDetailActivity" />
         <activity android:name=".Activities.StudentCourseClassActivity" />
         <activity android:name=".Activities.StudentCourseActivity" />
-        <activity android:name=".PaymentGateway.PaymentGatewayTestActivity"
-            android:windowSoftInputMode="adjustPan"></activity>
+        <activity android:name=".Activities.ShowPictureActivity"
+            android:theme="@style/TransparentCompat"></activity>
+        <activity
+            android:name=".PaymentGateway.PaymentGatewayTestActivity"
+            android:windowSoftInputMode="adjustPan" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
