@@ -3,6 +3,7 @@ package com.mocom.com.mdancingproject.Adapter;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
@@ -12,6 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
+import com.mocom.com.mdancingproject.Activities.ShowPictureActivity;
 import com.mocom.com.mdancingproject.Dao.StudentCourseClassDao;
 import com.mocom.com.mdancingproject.DialogFragment.StudentPaymentDialog;
 import com.mocom.com.mdancingproject.Holder.StudentCourseClassHolder;
@@ -82,6 +84,12 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
 //        }else{
 //            holder.getBtnPayment().setVisibility(View.VISIBLE);
 //        }
+
+        holder.getImgUrl().setOnClickListener(v ->{
+            Intent intentShowPic = new Intent(context, ShowPictureActivity.class);
+            intentShowPic.putExtra("imageUrl", imgUrl);
+            context.startActivity(intentShowPic);
+        });
 
         holder.getImgArrow().setOnClickListener(v -> {
             if(holder.getEventDesc().getVisibility() == View.GONE){
