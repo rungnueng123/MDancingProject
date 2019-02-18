@@ -44,7 +44,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
 
     private static final String TAG = "StudentCourseActivity";
     String getCourseUrl = DATA_URL + "json_get_course_detail_student.php";
-    String courseID, youtubeUrl;
+    String courseID, youtubeUrl, gal1Url, gal2Url, gal3Url, gal4Url;
     TextView txtCourse, txtCoin, txtHour, txtStyle, txtDesc;
     ImageView gal1, gal2, gal3, gal4;
     Button btnWatchClass;
@@ -121,7 +121,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
                         JSONObject objClass = classArray.getJSONObject(i);
                         txtCourse.setText(objClass.getString("Course"));
                         txtCoin.setText(objClass.getString("CoinAmt") + " Coins/Class");
-                        txtHour.setText("จำนวนชั่วโมง : " + objClass.getString("CourseLength"));
+                        txtHour.setText("จำนวนครั้งที่เรียน : " + objClass.getString("CourseLength"));
                         txtStyle.setText("Style : " + objClass.getString("courseStyleName"));
                         txtDesc.setText("Description : \n\n" + objClass.getString("Description"));
                         if (objClass.getString("ClipLink").equals("null")) {
@@ -137,22 +137,26 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
                                 objGallery.getString("gallery")
                         );
                         String imgUrl = HOST_URL + objGallery.getString("gallery");
-                        if(i == 0){
+                        if (i == 0) {
+                            gal1Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal1);
                         }
-                        if(i == 1){
+                        if (i == 1) {
+                            gal2Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal2);
                         }
-                        if(i == 2){
+                        if (i == 2) {
+                            gal3Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal3);
                         }
-                        if(i == 3){
+                        if (i == 3) {
+                            gal4Url = imgUrl;
                             Glide.with(getApplicationContext())
                                     .load(imgUrl)
                                     .into(gal4);
@@ -204,16 +208,51 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
         gal2 = findViewById(R.id.img_gal_2);
         gal3 = findViewById(R.id.img_gal_3);
         gal4 = findViewById(R.id.img_gal_4);
+        gal1.setOnClickListener(this);
+        gal2.setOnClickListener(this);
+        gal3.setOnClickListener(this);
+        gal4.setOnClickListener(this);
 
 
     }
 
     @Override
     public void onClick(View v) {
+//        Bundle bundle = new Bundle();
+        Intent intentShowPic = new Intent(this, ShowPictureActivity.class);
         if (v == btnWatchClass) {
             Intent intent = new Intent(this, StudentCourseClassActivity.class);
             intent.putExtra("courseID", courseID);
             startActivity(intent);
         }
+        if (v == gal1) {
+            intentShowPic.putExtra("imageUrl", gal1Url);
+            startActivity(intentShowPic);
+//            bundle.putString("imageUrl", gal1Url);
+//            Toast.makeText(getApplicationContext(),gal1Url,Toast.LENGTH_LONG).show();
+        }
+        if (v == gal2) {
+            intentShowPic.putExtra("imageUrl", gal2Url);
+            startActivity(intentShowPic);
+//            bundle.putString("imageUrl", gal2Url);
+//            Toast.makeText(getApplicationContext(),gal2Url,Toast.LENGTH_LONG).show();
+        }
+        if (v == gal3) {
+            intentShowPic.putExtra("imageUrl", gal3Url);
+            startActivity(intentShowPic);
+//            bundle.putString("imageUrl", gal3Url);
+//            Toast.makeText(getApplicationContext(),gal3Url,Toast.LENGTH_LONG).show();
+        }
+        if (v == gal4) {
+            intentShowPic.putExtra("imageUrl", gal4Url);
+            startActivity(intentShowPic);
+//            bundle.putString("imageUrl", gal4Url);
+//            Toast.makeText(getApplicationContext(),gal4Url,Toast.LENGTH_LONG).show();
+        }
+
+//        Fragment fragment = new ShowPictureFragment();
+//        fragment.setArguments(bundle);
+//        FragmentManager fragmentManager = getSupportFragmentManager();
+//        fragmentManager.beginTransaction().replace(R.id.for_show_picture, fragment).commit();
     }
 }

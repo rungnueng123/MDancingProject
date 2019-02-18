@@ -1,98 +1,160 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="8dp">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="8dp">
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="34.5dp">
 
             <ImageView
                 android:id="@+id/img_class"
-                android:layout_width="80dp"
-                android:layout_height="80dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
                 android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:id="@+id/txt_title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/img_class"
-                android:text="Title" />
+                android:layout_below="@id/img_class"
+                android:layout_marginTop="12.37dp"
+                android:fontFamily="@font/kanit_regular"
+                android:textColor="@color/txt_color_class_list"
+                android:text="คลาส"
+                android:textSize="24sp" />
 
             <TextView
                 android:id="@+id/txt_playlist"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt_title"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/img_class"
-                android:ellipsize="end"
-                android:maxLines="1"
-                android:text="Playlist" />
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="เพลง"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_playlist"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="สไตล์"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_style"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="ผู้สอน"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/txt_playlist"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/img_class"
-                android:text="Date" />
+                android:layout_below="@id/txt_teacher"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="วันที่เรียน"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_time"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/txt_date"
-                android:layout_marginStart="8dp"
-                android:layout_toEndOf="@id/img_class"
-                android:text="Time" />
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="เวลา"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_time"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="ว่าง"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_branch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_empty"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="สาขา"
+                android:textSize="14sp" />
 
             <TextView
                 android:id="@+id/txt_desc"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/img_class"
-                android:layout_marginTop="8dp"
-                android:ellipsize="end"
-                android:maxLines="3"
-                android:text="Description : " />
+                android:layout_below="@id/txt_branch"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="Description : "
+                android:textSize="14sp" />
 
-            <LinearLayout
+            <ImageView
+                android:id="@+id/img_arrow"
+                android:layout_width="15dp"
+                android:layout_height="15dp"
+                android:layout_below="@id/txt_branch"
+                android:layout_alignParentEnd="true"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="5dp"
+                android:src="@drawable/ic_arrow_drop_down_close" />
+
+            <TextView
+                android:id="@+id/txt_show_desc"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_below="@id/txt_desc">
+                android:layout_below="@id/txt_desc"
+                android:layout_marginTop="20dp"
+                android:fontFamily="@font/kanit_regular"
+                android:textSize="14sp"
+                android:visibility="gone" />
 
-                <Button
-                    android:id="@+id/btn_payment"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/payment"/>
-
-                <Button
-                    android:id="@+id/btn_detail"
-                    android:layout_width="0dp"
-                    android:layout_height="wrap_content"
-                    android:layout_weight="1"
-                    android:text="@string/detail"/>
-
-            </LinearLayout>
+            <Button
+                android:id="@+id/btn_payment"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_show_desc"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shapelogin"
+                android:fontFamily="@font/kanit_medium"
+                android:shadowColor="@android:color/transparent"
+                android:text="@string/payment"
+                android:textColor="@color/white"
+                android:textSize="18sp" />
 
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@android:color/darker_gray" />
 
     </android.support.v7.widget.CardView>
 
 
-</FrameLayout>
+</LinearLayout>

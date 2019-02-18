@@ -13,7 +13,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.bumptech.glide.Glide;
-import com.mocom.com.mdancingproject.Activities.StudentCourseClassDetailActivity;
+import com.mocom.com.mdancingproject.Activities.ShowPictureActivity;
 import com.mocom.com.mdancingproject.Dao.StudentCourseClassDao;
 import com.mocom.com.mdancingproject.DialogFragment.StudentPaymentDialog;
 import com.mocom.com.mdancingproject.Holder.StudentCourseClassHolder;
@@ -55,11 +55,15 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
     @Override
     public void onBindViewHolder(@NonNull StudentCourseClassHolder holder, int position) {
         StudentCourseClassDao studentCourseClassDao = studentCourseClassList.get(position);
-        holder.getEventTitle().setText("Class : " + studentCourseClassDao.getEventTitle());
-        holder.getPlaylist().setText("PlayList : " + studentCourseClassDao.getPlaylist());
-        holder.getEventDate().setText("Date : " + studentCourseClassDao.getEventDate());
-        holder.getEventTime().setText("Time : " + studentCourseClassDao.getEventTime());
-        holder.getEventDesc().setText("Description : " + studentCourseClassDao.getEventDesc());
+        holder.getEventTitle().setText("คลาส : " + studentCourseClassDao.getEventTitle());
+        holder.getPlaylist().setText("เพลง : " + studentCourseClassDao.getPlaylist());
+        holder.getEventStyle().setText("สไตล์ : " + studentCourseClassDao.getEventStyle());
+        holder.getEventTeacher().setText("ผู้สอน : " + studentCourseClassDao.getEventTeacher());
+        holder.getEventDate().setText("วันที่เรียน : " + studentCourseClassDao.getEventDate());
+        holder.getEventTime().setText("เวลา : " + studentCourseClassDao.getEventTime());
+        holder.getEventEmpty().setText("ว่าง : " + studentCourseClassDao.getEventEmpty());
+        holder.getEventBranch().setText("สาขา : "+studentCourseClassDao.getEventBranch());
+        holder.getEventDesc().setText(studentCourseClassDao.getEventDesc());
 
         String imgUrl = HOST_URL + studentCourseClassDao.getImgUrl();
         Glide.with(context)
@@ -81,38 +85,23 @@ public class StudentCourseClassAdapter extends RecyclerView.Adapter<StudentCours
 //            holder.getBtnPayment().setVisibility(View.VISIBLE);
 //        }
 
-        //set click listener
-        holder.getBtnDetail().setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent intent = new Intent(context, StudentCourseClassDetailActivity.class);
-                intent.putExtra("eventID", studentCourseClassDao.getEventID());
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
+        holder.getImgUrl().setOnClickListener(v ->{
+            Intent intentShowPic = new Intent(context, ShowPictureActivity.class);
+            intentShowPic.putExtra("imageUrl", imgUrl);
+            context.startActivity(intentShowPic);
+        });
+
+        holder.getImgArrow().setOnClickListener(v -> {
+            if(holder.getEventDesc().getVisibility() == View.GONE){
+                holder.getImgArrow().setImageResource(R.drawable.ic_arrow_drop_down_open);
+                holder.getEventDesc().setVisibility(View.VISIBLE);
+            }else{
+                holder.getImgArrow().setImageResource(R.drawable.ic_arrow_drop_down_close);
+                holder.getEventDesc().setVisibility(View.GONE);
             }
         });
 
         holder.getBtnPayment().setOnClickListener(v -> {
-//            AlertDialog.Builder alertDialog = new AlertDialog.Builder(context);
-//            alertDialog.setTitle("Are you sure to buy this class");
-//            alertDialog.setMessage("Coins: " + studentCourseClassDao.getCoin());
-//            alertDialog.setPositiveButton("CANCEL", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//                    dialog.cancel();
-//                }
-//            });
-//            alertDialog.setNegativeButton("YES", new DialogInterface.OnClickListener() {
-//                @Override
-//                public void onClick(DialogInterface dialog, int which) {
-//
-//                    Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_SHORT).show();
-//
-//                }
-//            });
-//
-//            AlertDialog dialog = alertDialog.create();
-//            dialog.show();
             openDialogFragment(studentCourseClassDao.getCoin(),studentCourseClassDao.getEventID());
         });
     }

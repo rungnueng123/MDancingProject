@@ -6,18 +6,21 @@ public class StudentCourseClassDao {
 
     }
 
-    private String eventID, imgUrl, eventTitle, playlist, eventDate, eventTime, eventDesc, coin, eventStart;
+    private String eventID, imgUrl, eventTitle, playlist, eventStyle, eventTeacher, eventDate, eventTime, eventEmpty, eventBranch, eventDesc, coin;
 
-    public StudentCourseClassDao(String eventID, String imgUrl, String eventTitle, String playlist, String eventDate, String eventTime, String eventDesc, String coin, String eventStart) {
+    public StudentCourseClassDao(String eventID, String imgUrl, String eventTitle, String playlist, String eventStyle, String eventTeacher, String eventDate, String eventTime, String eventEmpty, String eventBranch, String eventDesc, String coin) {
         this.eventID = eventID;
         this.imgUrl = imgUrl;
         this.eventTitle = eventTitle;
         this.playlist = playlist;
+        this.eventStyle = eventStyle;
+        this.eventTeacher = eventTeacher;
         this.eventDate = eventDate;
         this.eventTime = eventTime;
+        this.eventEmpty = eventEmpty;
+        this.eventBranch = eventBranch;
         this.eventDesc = eventDesc;
         this.coin = coin;
-        this.eventStart = eventStart;
     }
 
     public String getEventID() {
@@ -36,6 +39,14 @@ public class StudentCourseClassDao {
         return playlist;
     }
 
+    public String getEventStyle() {
+        return eventStyle;
+    }
+
+    public String getEventTeacher() {
+        return eventTeacher;
+    }
+
     public String getEventDate() {
         return eventDate;
     }
@@ -44,15 +55,19 @@ public class StudentCourseClassDao {
         return eventTime;
     }
 
+    public String getEventEmpty() {
+        return eventEmpty;
+    }
+
+    public String getEventBranch() {
+        return eventBranch;
+    }
+
     public String getEventDesc() {
         return eventDesc;
     }
 
     public String getCoin() {
         return coin;
-    }
-
-    public String getEventStart() {
-        return eventStart;
     }
 }

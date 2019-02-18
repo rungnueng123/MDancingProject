@@ -69,5 +69,6 @@
     <string name="phone">Phone</string>
     <string name="birth">Birth</string>
     <string name="register">Register</string>
+    <string name="btn_finish_pgw">กดเมื่อชำระเงินเสร็จ</string>
 
 </resources>
