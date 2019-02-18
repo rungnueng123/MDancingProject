@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginBottom="34.5dp">
+
+            <ImageView
+                android:id="@+id/img_class"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_class"
+                android:layout_marginTop="12.37dp"
+                android:fontFamily="@font/kanit_regular"
+                android:textColor="@color/txt_color_class_list"
+                android:text="คลาส"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/txt_playlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_title"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="เพลง"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_playlist"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="สไตล์"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_style"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="ผู้สอน"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_teacher"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="วันที่เรียน"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_date"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="เวลา"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_branch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_time"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="สาขา"
+                android:textSize="14sp" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
