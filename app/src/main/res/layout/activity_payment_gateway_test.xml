@@ -12,12 +12,15 @@
         android:layout_height="match_parent" />
 
     <Button
+        android:id="@+id/btn_pgw_finish"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentBottom="true"
         android:layout_marginBottom="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginEnd="8dp"
-        android:text="กดเมื่อชำระเงินเสร็จ"/>
+        android:textColor="@color/white"
+        android:background="@color/colorPrimaryDark"
+        android:text="@string/btn_finish_pgw"/>
 
 </RelativeLayout>

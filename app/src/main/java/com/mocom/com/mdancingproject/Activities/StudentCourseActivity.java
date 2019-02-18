@@ -121,7 +121,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
                         JSONObject objClass = classArray.getJSONObject(i);
                         txtCourse.setText(objClass.getString("Course"));
                         txtCoin.setText(objClass.getString("CoinAmt") + " Coins/Class");
-                        txtHour.setText("จำนวนชั่วโมง : " + objClass.getString("CourseLength"));
+                        txtHour.setText("จำนวนครั้งที่เรียน : " + objClass.getString("CourseLength"));
                         txtStyle.setText("Style : " + objClass.getString("courseStyleName"));
                         txtDesc.setText("Description : \n\n" + objClass.getString("Description"));
                         if (objClass.getString("ClipLink").equals("null")) {

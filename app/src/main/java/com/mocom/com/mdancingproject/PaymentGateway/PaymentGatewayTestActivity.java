@@ -9,10 +9,12 @@ import android.preference.PreferenceManager;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 import android.webkit.SslErrorHandler;
 import android.webkit.WebChromeClient;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Button;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -20,6 +22,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mocom.com.mdancingproject.Activities.StudentDashboardActivity;
 import com.mocom.com.mdancingproject.Dao.StudentPaymentGatewayDao;
 import com.mocom.com.mdancingproject.R;
 
@@ -35,11 +38,12 @@ import static com.mocom.com.mdancingproject.config.config.OMISE_API_VERSION;
 import static com.mocom.com.mdancingproject.config.config.OMISE_PUBLIC_KEY;
 import static com.mocom.com.mdancingproject.config.config.OMISE_SECRET_KEY;
 
-public class PaymentGatewayTestActivity extends AppCompatActivity {
+public class PaymentGatewayTestActivity extends AppCompatActivity implements View.OnClickListener {
 
     String callWebViewUrl = DATA_URL + "get_url_omise.php";
     String coinPackID, userID;
     WebView webView;
+    Button btnFinishPGW;
     StudentPaymentGatewayDao item;
     private SharedPreferences sharedPreferences;
 
@@ -75,6 +79,9 @@ public class PaymentGatewayTestActivity extends AppCompatActivity {
 
     private void initFindViewByID() {
         webView = findViewById(R.id.web_view);
+        btnFinishPGW = findViewById(R.id.btn_pgw_finish);
+        btnFinishPGW.setOnClickListener(this);
+
     }
 
     private void callWebViewShow() {
@@ -139,6 +146,16 @@ public class PaymentGatewayTestActivity extends AppCompatActivity {
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
+    }
+
+    @Override
+    public void onClick(View v) {
+        if(v == btnFinishPGW){
+            Intent intent = new Intent(this, StudentDashboardActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            intent.putExtra("goProfile", "goProfile");
+            startActivity(intent);
+        }
     }
 
     private class SSLTolerentWebViewClient extends WebViewClient {
