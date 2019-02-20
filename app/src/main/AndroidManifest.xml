@@ -17,6 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
+        <activity android:name=".Activities.StudentApplicantDetailActivity"></activity>
+        <activity android:name=".Activities.StudentHistoryDetailActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,8 +39,9 @@
         <activity android:name=".Activities.StudentCourseClassDetailActivity" />
         <activity android:name=".Activities.StudentCourseClassActivity" />
         <activity android:name=".Activities.StudentCourseActivity" />
-        <activity android:name=".Activities.ShowPictureActivity"
-            android:theme="@style/TransparentCompat"></activity>
+        <activity
+            android:name=".Activities.ShowPictureActivity"
+            android:theme="@style/TransparentCompat" />
         <activity
             android:name=".PaymentGateway.PaymentGatewayTestActivity"
             android:windowSoftInputMode="adjustPan" />

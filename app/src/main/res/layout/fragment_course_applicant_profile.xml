@@ -5,10 +5,39 @@
     android:layout_height="match_parent"
     tools:context=".Fragments.CourseApplicantProfileFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <LinearLayout
+        android:id="@+id/layout_show_empty"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="ccc" />
+        android:layout_margin="8dp"
+        android:orientation="vertical"
+        android:visibility="gone">
+
+        <TextView
+            android:id="@+id/txt_recycler_home_empty"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="6dp"
+            android:paddingTop="6dp"
+            android:paddingBottom="6dp"
+            android:text="@string/txt_recycler_home_empty"
+            android:textColor="@color/txt_color_all"
+            android:textSize="16sp" />
+
+    </LinearLayout>
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/pullToRefresh"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_student_class_applicant"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@android:color/white"
+            tools:listitem="@layout/student_class_applicant" />
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </FrameLayout>
