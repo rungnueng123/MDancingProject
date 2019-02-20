@@ -46,6 +46,7 @@ public class StudentClassHistoryProfileAdapter extends RecyclerView.Adapter<Stud
         holder.getEventDate().setText(studentClassHistoryProfileDao.getEventDate());
         holder.getEventTime().setText(studentClassHistoryProfileDao.getEventTime());
         holder.getEventBranch().setText(studentClassHistoryProfileDao.getBranch());
+        holder.getActive().setText(studentClassHistoryProfileDao.getActive());
 
 
         String imgUrl = HOST_URL + studentClassHistoryProfileDao.getImgUrl();

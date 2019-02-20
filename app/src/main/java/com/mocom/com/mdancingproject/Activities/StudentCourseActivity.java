@@ -169,7 +169,7 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
                         recyclerViewGallery.setAdapter(adapter);
                     }
 //                    Glide.with(context)
-//                            .load(imgUrl)
+//                            .load(imgClass)
 //                            .into(holder.getImgUrl());
                 }
             } catch (JSONException e) {

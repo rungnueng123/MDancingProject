@@ -11,7 +11,7 @@ import com.mocom.com.mdancingproject.R;
 
 public class StudentClassHistoryProfileHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private TextView eventTitle, playlist, eventStyle, eventTeacher, eventDate, eventTime, eventBranch;
+    private TextView eventTitle, playlist, eventStyle, eventTeacher, eventDate, eventTime, eventBranch, active;
     private ImageView imgUrl;
     private ItemClickCallBack mListener;
 
@@ -47,6 +47,10 @@ public class StudentClassHistoryProfileHolder extends RecyclerView.ViewHolder im
         return imgUrl;
     }
 
+    public TextView getActive() {
+        return active;
+    }
+
     public StudentClassHistoryProfileHolder(@NonNull View itemView, ItemClickCallBack listener) {
         super(itemView);
         mListener = listener;
@@ -60,6 +64,7 @@ public class StudentClassHistoryProfileHolder extends RecyclerView.ViewHolder im
         eventDate = itemView.findViewById(R.id.txt_date);
         eventTime = itemView.findViewById(R.id.txt_time);
         eventBranch = itemView.findViewById(R.id.txt_branch);
+        active = itemView.findViewById(R.id.txt_active);
     }
 
     @Override

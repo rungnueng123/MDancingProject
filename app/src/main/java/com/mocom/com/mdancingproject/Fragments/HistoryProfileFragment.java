@@ -1,6 +1,7 @@
 package com.mocom.com.mdancingproject.Fragments;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
@@ -20,6 +21,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mocom.com.mdancingproject.Activities.StudentHistoryDetailActivity;
 import com.mocom.com.mdancingproject.Adapter.StudentClassHistoryProfileAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentClassHistoryProfileDao;
@@ -86,6 +88,15 @@ public class HistoryProfileFragment extends Fragment {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false));
 
+        listener = (view, position) -> {
+            Intent intent = new Intent(getContext(), StudentHistoryDetailActivity.class);
+            String eventID = classList.get(position).getEventID();
+            String active = classList.get(position).getActive();
+            intent.putExtra("eventID", eventID);
+            intent.putExtra("active", active);
+            startActivity(intent);
+        };
+
         swipeRefreshLayout.setOnRefreshListener(() -> {
             classList.clear();
             loadClassHistoryData();
@@ -117,6 +128,7 @@ public class HistoryProfileFragment extends Fragment {
                                 objClass.getString("playlist"),
                                 objClass.getString("eventStyle"),
                                 objClass.getString("eventTeacher"),
+                                objClass.getString("active"),
                                 objClass.getString("eventDate"),
                                 objClass.getString("eventTime"),
                                 objClass.getString("eventBranch"),
