@@ -18,9 +18,9 @@ import android.util.Log;
 import android.view.MenuItem;
 
 import com.facebook.login.LoginManager;
+import com.mocom.com.mdancingproject.Fragments.HomeFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentCourseFragment;
-import com.mocom.com.mdancingproject.Fragments.StudentHomeFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentProfileFragment;
 import com.mocom.com.mdancingproject.R;
 
@@ -69,7 +69,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                 Fragment fragment = null;
                 Class fragmentClass = null;
                 if (id == R.id.nav_home) {
-                    fragmentClass = StudentHomeFragment.class;
+                    fragmentClass = HomeFragment.class;
                     actionbar.setTitle("Home");
                 } else if (id == R.id.nav_course) {
                     fragmentClass = StudentCourseFragment.class;
@@ -118,7 +118,7 @@ public class StudentDashboardActivity extends AppCompatActivity {
                         .commit();
             } else {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragment_dashboard, StudentHomeFragment.newInstance())
+                        .add(R.id.fragment_dashboard, HomeFragment.newInstance())
                         .commit();
             }
         }

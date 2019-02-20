@@ -1,5 +1,7 @@
 package com.mocom.com.mdancingproject.Activities;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -166,7 +168,16 @@ public class StudentApplicantDetailActivity extends AppCompatActivity implements
             if(txtActive.getText().toString().equals("1")) {
                 Toast.makeText(getApplicationContext(), txtActive.getText().toString(), Toast.LENGTH_LONG).show();
             }else{
-                Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_LONG).show();
+                AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
+                alertDialog.setTitle("Alert");
+                alertDialog.setMessage("เช็คชื่อแล้ว");
+                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                        new DialogInterface.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
+                                dialog.dismiss();
+                            }
+                        });
+                alertDialog.show();
             }
         }
     }
