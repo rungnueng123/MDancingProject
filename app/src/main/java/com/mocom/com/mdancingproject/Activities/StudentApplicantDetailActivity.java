@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -30,27 +31,27 @@ import java.util.Map;
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 import static com.mocom.com.mdancingproject.config.config.HOST_URL;
 
-public class StudentHistoryDetailActivity extends AppCompatActivity implements View.OnClickListener {
+public class StudentApplicantDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
-    private String dataUrl = DATA_URL + "get_class_for_history.php";
+    private String dataUrl = DATA_URL + "get_class_for_applicant.php";
 
     String eventID, active, userID;
     Toolbar toolbar;
     ImageView imgClass;
-    TextView txtTitle, txtPlaylist, txtStyle, txtTeacher, txtDate, txtTime, txtRoom, txtBranch, txtStatus, txtDesc;
+    TextView txtTitle, txtPlaylist, txtStyle, txtTeacher, txtDate, txtTime, txtRoom, txtBranch, txtStatus, txtDesc, txtActive;
+    Button btnQrCheck;
     private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_student_history_detail);
+        setContentView(R.layout.activity_student_applicant_detail);
 
         Intent intent = getIntent();
         eventID = intent.getStringExtra("eventID");
         active = intent.getStringExtra("active");
 
         initInstance();
-
     }
 
     private void initInstance() {
@@ -107,6 +108,9 @@ public class StudentHistoryDetailActivity extends AppCompatActivity implements V
                                     .load(imgUrl)
                                     .into(imgClass);
                         }
+                        if (!obj.getString("Active").equals("null")) {
+                            txtActive.setText(obj.getString("Active"));
+                        }
                     }
                 }
             } catch (JSONException e) {
@@ -151,10 +155,19 @@ public class StudentHistoryDetailActivity extends AppCompatActivity implements V
         txtBranch = findViewById(R.id.txt_branch);
         txtStatus = findViewById(R.id.txt_status);
         txtDesc = findViewById(R.id.txt_desc);
+        txtActive = findViewById(R.id.txt_active);
+        btnQrCheck = findViewById(R.id.btn_qr_check);
+        btnQrCheck.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-
+        if (v == btnQrCheck) {
+            if(txtActive.getText().toString().equals("1")) {
+                Toast.makeText(getApplicationContext(), txtActive.getText().toString(), Toast.LENGTH_LONG).show();
+            }else{
+                Toast.makeText(getApplicationContext(), "aaa", Toast.LENGTH_LONG).show();
+            }
+        }
     }
 }

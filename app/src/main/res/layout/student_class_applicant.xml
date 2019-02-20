@@ -105,6 +105,18 @@
                 android:textSize="14sp" />
 
             <TextView
+                android:id="@+id/txt_active_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_branch"
+                android:layout_toEndOf="@id/img_class"
+                android:ellipsize="end"
+                android:fontFamily="@font/kanit_regular"
+                android:maxLines="1"
+                android:text="สถานะ"
+                android:textSize="14sp" />
+
+            <TextView
                 android:id="@+id/txt_active"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

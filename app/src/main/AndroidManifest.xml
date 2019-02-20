@@ -17,7 +17,8 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.StudentHistoryDetailActivity"></activity>
+        <activity android:name=".Activities.StudentApplicantDetailActivity"></activity>
+        <activity android:name=".Activities.StudentHistoryDetailActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
