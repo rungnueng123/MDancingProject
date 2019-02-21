@@ -2,8 +2,10 @@ package com.mocom.com.mdancingproject.Fragments;
 
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -17,6 +19,7 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mocom.com.mdancingproject.Activities.ClassActivity;
 import com.mocom.com.mdancingproject.Adapter.CourseHomeAdapter;
 import com.mocom.com.mdancingproject.Adapter.StyleHomeAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
@@ -40,6 +43,7 @@ public class HomeFragment extends Fragment {
     private String styleUrl = DATA_URL + "get_style_all.php";
     private String courseUrl = DATA_URL + "get_course_style_all.php";
     ProgressDialog progressDialog;
+    View layoutShowFirstOpen, layoutShowEmpty;
 
     private RecyclerView recyclerStyleView, recyclerCourseView;
     private RecyclerView.Adapter adapterStyle, adapterCourse;
@@ -73,6 +77,8 @@ public class HomeFragment extends Fragment {
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
 
+        ViewCompat.setNestedScrollingEnabled(recyclerCourseView, false);
+
         styleList = new ArrayList<>();
         recyclerStyleView.setHasFixedSize(true);
         recyclerStyleView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
@@ -91,11 +97,19 @@ public class HomeFragment extends Fragment {
 
         };
 
+        courseListener = (view, position) ->{
+            Intent intent = new Intent(getContext(), ClassActivity.class);
+            intent.putExtra("courseID", courseList.get(position).getCourseID());
+            startActivity(intent);
+        };
+
     }
 
     private void initFindViewByID(View rootView) {
         recyclerStyleView = rootView.findViewById(R.id.recycler_style_home);
         recyclerCourseView = rootView.findViewById(R.id.recycler_course_home);
+        layoutShowFirstOpen = rootView.findViewById(R.id.layout_show_first_open);
+        layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
     }
 
     private void loadStyle() {
@@ -174,11 +188,23 @@ public class HomeFragment extends Fragment {
                         courseList.add(item);
                     }
 
-                    adapterCourse = new CourseHomeAdapter(courseListener, courseList, getContext());
-                    recyclerCourseView.setAdapter(adapterCourse);
+                    if (courseList.size() == 0) {
+                        layoutShowEmpty.setVisibility(View.VISIBLE);
+                        recyclerCourseView.setVisibility(View.GONE);
+                        layoutShowFirstOpen.setVisibility(View.GONE);
+                    } else {
+                        layoutShowEmpty.setVisibility(View.GONE);
+                        layoutShowFirstOpen.setVisibility(View.GONE);
+                        recyclerCourseView.setVisibility(View.VISIBLE);
+                        adapterCourse = new CourseHomeAdapter(courseListener, courseList, getContext());
+                        recyclerCourseView.setAdapter(adapterCourse);
+                    }
 
                     progressDialog.dismiss();
                 }else{
+                    layoutShowEmpty.setVisibility(View.VISIBLE);
+                    recyclerCourseView.setVisibility(View.GONE);
+                    layoutShowFirstOpen.setVisibility(View.GONE);
                     progressDialog.dismiss();
                 }
             } catch (JSONException e) {

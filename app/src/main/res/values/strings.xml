@@ -32,6 +32,7 @@
 
     //dropdown register
     <string name="sex_prompt">Choose a sex</string>
+    <string name="branch_prompt">Choose branch</string>
 
     //drawer menu
     <string name="nav_home">Home</string>
@@ -50,9 +51,6 @@
     <string name="app_needs_your_camera_permission_in_order_to_scan_qr_code">App needs your camera permission in order to scan qr code.</string>
     <string name="buy">BUY</string>
     <string name="cancel">CANCEL</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="ok">OK</string>
     <string name="type_pay">TYPE PAY</string>
     <string name="payment_gateway">PAYMENT GATEWAY</string>
@@ -70,5 +68,7 @@
     <string name="birth">Birth</string>
     <string name="register">Register</string>
     <string name="btn_finish_pgw">กดเมื่อชำระเงินเสร็จ</string>
+    <string name="txt_show_first_open">choose style</string>
+    <string name="txt_recycler_course_style_empty">dont have course</string>
 
 </resources>
