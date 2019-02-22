@@ -39,7 +39,6 @@ public class CourseHomeHolder extends RecyclerView.ViewHolder implements View.On
         imgUrl = itemView.findViewById(R.id.img_course_home);
         courseName = itemView.findViewById(R.id.txt_course_name);
         courseStyle = itemView.findViewById(R.id.txt_course_style);
-        courseDesc = itemView.findViewById(R.id.txt_course_desc);
     }
 
     @Override

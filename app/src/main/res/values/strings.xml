@@ -11,12 +11,12 @@
 
     <string name="login">Log In</string>
     <string name="txt_recycler_home_empty">Today dont have class</string>
-    <string name="course">Course Name</string>
+    <string name="course">คอร์ส</string>
     <string name="coin">Coin</string>
     <string name="hour">Hour</string>
     <string name="gallery">Gallery</string>
     <string name="description">Description</string>
-    <string name="style">Style</string>
+    <string name="style">สไตล์</string>
     <string name="watch_class">Watch Class</string>
     <string name="payment">Payment</string>
     <string name="detail">Detail</string>
@@ -70,5 +70,6 @@
     <string name="btn_finish_pgw">กดเมื่อชำระเงินเสร็จ</string>
     <string name="txt_show_first_open">choose style</string>
     <string name="txt_recycler_course_style_empty">dont have course</string>
+    <string name="style_show">สไตล์ :</string>
 
 </resources>

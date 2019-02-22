@@ -16,71 +16,94 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <FrameLayout
-                android:layout_width="match_parent"
-                android:layout_height="120dp" />
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_style_home"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                tools:listitem="@layout/style_home_item" />
+                android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:layout_marginTop="8dp"
-                android:fontFamily="@font/kanit_medium"
-                android:text="@string/course"
-                android:textSize="18sp" />
+                <FrameLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="164dp" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="15dp"
+                    android:layout_marginTop="16dp"
+                    android:fontFamily="@font/kanit_medium"
+                    android:text="@string/style"
+                    android:textSize="24sp" />
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_style_home"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="8dp"
+                    tools:listitem="@layout/style_home_item" />
+
+            </LinearLayout>
 
             <LinearLayout
-                android:id="@+id/layout_show_first_open"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="8dp"
+                android:layout_marginTop="15dp"
+                android:background="@android:color/white"
                 android:orientation="vertical">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:text="@string/txt_show_first_open"
-                    android:textColor="@color/txt_color_all"
-                    android:textSize="16sp" />
+                    android:layout_marginStart="5dp"
+                    android:fontFamily="@font/kanit_medium"
+                    android:text="@string/course"
+                    android:textSize="24sp" />
 
-            </LinearLayout>
+                <FrameLayout
+                    android:id="@+id/layout_show_first_open"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical">
 
-            <LinearLayout
-                android:id="@+id/layout_show_empty"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_margin="8dp"
-                android:orientation="vertical"
-                android:visibility="gone">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/txt_show_first_open"
+                        android:textColor="@color/txt_color_all"
+                        android:textSize="16sp" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                </FrameLayout>
+
+                <FrameLayout
+                    android:id="@+id/layout_show_empty"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_margin="8dp"
+                    android:orientation="vertical"
+                    android:visibility="gone">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="6dp"
+                        android:paddingTop="6dp"
+                        android:paddingBottom="6dp"
+                        android:text="@string/txt_recycler_course_style_empty"
+                        android:textColor="@color/txt_color_all"
+                        android:textSize="16sp" />
+
+                </FrameLayout>
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycler_course_home"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="6dp"
-                    android:paddingTop="6dp"
-                    android:paddingBottom="6dp"
-                    android:text="@string/txt_recycler_course_style_empty"
-                    android:textColor="@color/txt_color_all"
-                    android:textSize="16sp" />
+                    tools:listitem="@layout/course_home_item" />
 
             </LinearLayout>
-
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/recycler_course_home"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@android:color/white"
-                tools:listitem="@layout/course_home_item" />
 
         </LinearLayout>
 

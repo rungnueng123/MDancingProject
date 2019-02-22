@@ -41,7 +41,6 @@ public class CourseHomeAdapter extends RecyclerView.Adapter<CourseHomeHolder> {
         CourseHomeDao courseHomeDao = courseHomeDaoList.get(position);
 
         holder.getCourseName().setText(courseHomeDao.getCourseName());
-        holder.getCourseDesc().setText(courseHomeDao.getCourseDesc());
         holder.getCourseStyle().setText(courseHomeDao.getCourseStyle());
 
         String imgUrl = HOST_URL + courseHomeDao.getImgUrl();
