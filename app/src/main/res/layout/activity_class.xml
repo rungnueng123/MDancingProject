@@ -35,21 +35,20 @@
 
             <Spinner
                 android:id="@+id/spinner_branch"
+                style="@style/SpinnerTheme"
                 android:layout_width="match_parent"
-                android:layout_height="41dp"
-                android:background="@android:drawable/btn_dropdown"
-                android:fontFamily="@font/kanit_regular"
                 android:prompt="@string/branch_prompt"
                 android:spinnerMode="dialog"
-                android:textColor="@color/white"
-                android:textColorHighlight="@color/white"
-                android:textColorHint="@color/white"
-                android:textSize="16sp" />
+                android:layout_height="46dp"
+                android:layout_marginStart="15dp"
+                android:layout_marginTop="28dp"
+                android:layout_marginEnd="15dp" />
 
             <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
                 android:id="@+id/calendarView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginTop="49dp"
                 app:buttonLeft_drawableTintColor="@android:color/white"
                 app:buttonRight_drawableTintColor="@android:color/white"
                 app:expandIconColor="@android:color/white"
@@ -64,10 +63,10 @@
                 android:id="@+id/txt_recycler_class_activity_empty"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_gravity="center"
                 android:layout_marginTop="20dp"
                 android:paddingTop="6dp"
                 android:paddingBottom="6dp"
-                android:layout_gravity="center"
                 android:text="@string/txt_recycler_home_empty"
                 android:textColor="@color/txt_color_all"
                 android:textSize="16sp" />

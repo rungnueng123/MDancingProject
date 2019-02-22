@@ -91,9 +91,9 @@ public class ClassActivity extends AppCompatActivity {
         ViewCompat.setNestedScrollingEnabled(recyclerView, false);
         classList = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
-        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(),LinearLayoutManager.VERTICAL,false));
+        recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         listener = (view, position) -> {
-            Toast.makeText(getApplicationContext(),classList.get(position).getTitle(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(), classList.get(position).getTitle(), Toast.LENGTH_LONG).show();
         };
 
         loadVideoYoutube();
@@ -150,7 +150,7 @@ public class ClassActivity extends AppCompatActivity {
         progressDialog.show(); // Display Progress Dialog
         progressDialog.setCancelable(false);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, loadBranchUrl, response -> {
-//            Log.d("Onresponse", response);
+            Log.d("Onresponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("msg").equals("success")) {
@@ -179,7 +179,8 @@ public class ClassActivity extends AppCompatActivity {
 
     private void setSpinner() {
         ArrayAdapter<String> adapterBranch = new ArrayAdapter<String>(this,
-                android.R.layout.simple_dropdown_item_1line, branch);
+                R.layout.spinner_text_layout, branch);
+        adapterBranch.setDropDownViewResource(R.layout.branch_dropdown_item);
         spinnerBranch.setAdapter(adapterBranch);
 //        Toast.makeText(this, "a", Toast.LENGTH_SHORT).show();
         spinnerBranch.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
@@ -222,7 +223,7 @@ public class ClassActivity extends AppCompatActivity {
             @Override
             public void onDataUpdate() {
 //                collapsibleCalendar = new CollapsibleCalendar(getApplicationContext());
-                Toast.makeText(getApplicationContext(),"sss",Toast.LENGTH_LONG).show();
+//                Toast.makeText(getApplicationContext(), "sss", Toast.LENGTH_LONG).show();
             }
 
             @Override
@@ -335,21 +336,21 @@ public class ClassActivity extends AppCompatActivity {
 //                        Toast.makeText(getContext(), jsonObject.getString("monthName"), Toast.LENGTH_LONG).show();
                         classList.add(item);
                     }
-                    if(classList.size() == 0){
+                    if (classList.size() == 0) {
                         txtEmpty.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         txtEmpty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         adapter = new StudentClassHomeAdapter(listener, classList, getApplicationContext());
                         recyclerView.setAdapter(adapter);
                     }
 
-                }else{
-                    if(classList.size() == 0){
+                } else {
+                    if (classList.size() == 0) {
                         txtEmpty.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                    }else {
+                    } else {
                         txtEmpty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         adapter = new StudentClassHomeAdapter(listener, classList, getApplicationContext());

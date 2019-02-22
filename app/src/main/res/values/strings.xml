@@ -32,7 +32,7 @@
 
     //dropdown register
     <string name="sex_prompt">Choose a sex</string>
-    <string name="branch_prompt">Choose branch</string>
+    <string name="branch_prompt">เลือกสาขา</string>
 
     //drawer menu
     <string name="nav_home">Home</string>
