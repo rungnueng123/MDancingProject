@@ -188,6 +188,7 @@ public class HomeFragment extends Fragment {
                                 objClass.getString("courseID"),
                                 objClass.getString("courseName"),
                                 objClass.getString("courseStyle"),
+                                objClass.getString("courseLength"),
                                 objClass.getString("courseDesc")
                         );
 
