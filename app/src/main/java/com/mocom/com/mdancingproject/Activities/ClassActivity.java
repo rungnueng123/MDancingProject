@@ -24,9 +24,9 @@ import com.android.volley.toolbox.Volley;
 import com.google.android.youtube.player.YouTubeInitializationResult;
 import com.google.android.youtube.player.YouTubePlayer;
 import com.google.android.youtube.player.YouTubePlayerFragment;
-import com.mocom.com.mdancingproject.Adapter.StudentClassHomeAdapter;
+import com.mocom.com.mdancingproject.Adapter.ClassAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
-import com.mocom.com.mdancingproject.Dao.StudentClassHomeDao;
+import com.mocom.com.mdancingproject.Dao.ClassDao;
 import com.mocom.com.mdancingproject.Dao.StudentEventHomeDao;
 import com.mocom.com.mdancingproject.R;
 import com.mocom.com.mdancingproject.config.config;
@@ -67,7 +67,7 @@ public class ClassActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
-    private List<StudentClassHomeDao> classList;
+    private List<ClassDao> classList;
     private ItemClickCallBack listener;
     TextView txtEmpty;
     String monthName;
@@ -322,7 +322,7 @@ public class ClassActivity extends AppCompatActivity {
 
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject obj = array.getJSONObject(i);
-                        StudentClassHomeDao item = new StudentClassHomeDao(
+                        ClassDao item = new ClassDao(
                                 obj.getString("eventID"),
                                 obj.getString("eventStart"),
                                 obj.getString("eventEnd"),
@@ -342,7 +342,7 @@ public class ClassActivity extends AppCompatActivity {
                     } else {
                         txtEmpty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
-                        adapter = new StudentClassHomeAdapter(listener, classList, getApplicationContext());
+                        adapter = new ClassAdapter(listener, classList, getApplicationContext());
                         recyclerView.setAdapter(adapter);
                     }
 
@@ -353,7 +353,7 @@ public class ClassActivity extends AppCompatActivity {
                     } else {
                         txtEmpty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
-                        adapter = new StudentClassHomeAdapter(listener, classList, getApplicationContext());
+                        adapter = new ClassAdapter(listener, classList, getApplicationContext());
                         recyclerView.setAdapter(adapter);
                     }
                 }
