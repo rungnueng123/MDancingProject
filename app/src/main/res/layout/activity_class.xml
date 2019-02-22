@@ -8,23 +8,23 @@
     tools:context=".Activities.ClassActivity">
 
     <android.support.v7.widget.Toolbar
-    android:id="@+id/toolbar_course_class_detail"
-    android:layout_width="match_parent"
-    android:layout_height="?attr/actionBarSize"
-    android:background="?attr/colorPrimary"
-    android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
-    android:fontFamily="@font/kanit_regular"
-    app:title="@string/class_list"
-    app:titleTextColor="@color/white" />
-
-    <ScrollView
+        android:id="@+id/toolbar_course_class_detail"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:fontFamily="@font/kanit_regular"
+        android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
+        app:title="@string/course_title"
+        app:titleTextColor="@color/white" />
+
+    <android.support.v4.widget.NestedScrollView
+        android:id="@+id/nestedScrollView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:orientation="vertical">
 
             <fragment
@@ -37,20 +37,52 @@
                 android:id="@+id/spinner_branch"
                 android:layout_width="match_parent"
                 android:layout_height="41dp"
+                android:background="@android:drawable/btn_dropdown"
                 android:fontFamily="@font/kanit_regular"
                 android:prompt="@string/branch_prompt"
                 android:spinnerMode="dialog"
-                android:background="@android:drawable/btn_dropdown"
                 android:textColor="@color/white"
                 android:textColorHighlight="@color/white"
                 android:textColorHint="@color/white"
                 android:textSize="16sp" />
 
+            <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
+                android:id="@+id/calendarView"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                app:buttonLeft_drawableTintColor="@android:color/white"
+                app:buttonRight_drawableTintColor="@android:color/white"
+                app:expandIconColor="@android:color/white"
+                app:primaryColor="@color/colorPrimary"
+                app:selectedItem_background="@drawable/circle_pink_stroke_background"
+                app:selectedItem_textColor="@color/white"
+                app:textColor="@android:color/white"
+                app:todayItem_background="@drawable/circle_white_stroke_background"
+                app:todayItem_textColor="@android:color/white" />
+
+            <TextView
+                android:id="@+id/txt_recycler_class_activity_empty"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:paddingTop="6dp"
+                android:paddingBottom="6dp"
+                android:layout_gravity="center"
+                android:text="@string/txt_recycler_home_empty"
+                android:textColor="@color/txt_color_all"
+                android:textSize="16sp" />
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_class_activity"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@android:color/white"
+                tools:listitem="@layout/student_class_home" />
+
         </LinearLayout>
 
 
-    </ScrollView>
-
+    </android.support.v4.widget.NestedScrollView>
 
 
 </LinearLayout>

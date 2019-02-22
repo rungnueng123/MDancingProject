@@ -44,6 +44,7 @@ public class HomeFragment extends Fragment {
     private String courseUrl = DATA_URL + "get_course_style_all.php";
     ProgressDialog progressDialog;
     View layoutShowFirstOpen, layoutShowEmpty;
+    String styleID = "";
 
     private RecyclerView recyclerStyleView, recyclerCourseView;
     private RecyclerView.Adapter adapterStyle, adapterCourse;
@@ -92,14 +93,15 @@ public class HomeFragment extends Fragment {
 
         styleListener = (view, position) -> {
 //            Toast.makeText(getContext(),styleList.get(position).getStyleID(),Toast.LENGTH_LONG).show();
-
-            loadCourse(styleList.get(position).getStyleID());
+            styleID = styleList.get(position).getStyleID();
+            loadCourse();
 
         };
 
         courseListener = (view, position) ->{
             Intent intent = new Intent(getContext(), ClassActivity.class);
             intent.putExtra("courseID", courseList.get(position).getCourseID());
+            intent.putExtra("courseName", courseList.get(position).getCourseName());
             startActivity(intent);
         };
 
@@ -143,6 +145,7 @@ public class HomeFragment extends Fragment {
                     recyclerStyleView.setAdapter(adapterStyle);
 
                     progressDialog.dismiss();
+                    loadCourse();
 
                 }else{
                     progressDialog.dismiss();
@@ -151,14 +154,17 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-        }, error -> Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show());
+        }, error -> {
+            progressDialog.dismiss();
+            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        });
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
 
     }
 
-    private void loadCourse(String styleID) {
+    private void loadCourse() {
         progressDialog = new ProgressDialog(getContext());
         progressDialog.setMessage("Loading..."); // Setting Message
         progressDialog.setTitle("ProgressDialog"); // Setting Title
@@ -211,9 +217,8 @@ public class HomeFragment extends Fragment {
                 e.printStackTrace();
             }
         }, error -> {
-//                    Log.d("onError", error.toString());
-//                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
-            Toast.makeText(getActivity(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            progressDialog.dismiss();
+            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
