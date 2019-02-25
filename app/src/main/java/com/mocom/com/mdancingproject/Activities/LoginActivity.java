@@ -92,7 +92,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 Intent intent = new Intent(this, StudentDashboardActivity.class);
                 startActivity(intent);
                 finish();
-            } else if(!Groups.equals("")) {
+            } else if (!Groups.equals("")) {
                 Intent intent = new Intent(this, AdminDashboardActivity.class);
                 startActivity(intent);
                 finish();
@@ -112,21 +112,26 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 GraphRequest request = GraphRequest.newMeRequest(loginResult.getAccessToken(), new GraphRequest.GraphJSONObjectCallback() {
                     @Override
                     public void onCompleted(JSONObject object, GraphResponse response) {
-//                        Log.e(TAG, object.toString());
-//                        Log.e(TAG, response.toString());
+                        Log.e(TAG, object.toString());
+                        Log.e(TAG, response.toString());
                         try {
 //                            Toast.makeText(getApplicationContext(),object.getString("first_name"),Toast.LENGTH_LONG).show();
                             id = object.getString("id");
-                            if (object.has("first_name"))
+                            if (object.has("first_name")) {
                                 firstName = object.getString("first_name");
-                            if (object.has("last_name"))
+                            }
+                            if (object.has("last_name")) {
                                 lastName = object.getString("last_name");
-                            if (object.has("email"))
+                            }
+                            if (object.has("email")) {
                                 email = object.getString("email");
-                            if (object.has("gender"))
-                                gender = object.getString("gender");
-                            if (object.has("birthday"))
-                                birthday = object.getString("birthday");
+                            }
+//                            if (object.has("gender")){
+//                                gender = object.getString("gender");
+//                            }
+//                            if (object.has("birthday")) {
+//                                birthday = object.getString("birthday");
+//                            }
 
                             goMainScreenWithFB(id, firstName, lastName, email, birthday, gender);
 //                            finish();
@@ -136,7 +141,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 });
                 Bundle parameters = new Bundle();
-                parameters.putString("fields", "id, first_name, last_name, email, gender, birthday");
+                parameters.putString("fields", "email, first_name, last_name");
+//                parameters.putString("fields", "id, first_name, last_name, email, gender, birthday");
                 request.setParameters(parameters);
                 request.executeAsync();
             }
@@ -148,10 +154,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             @Override
             public void onError(FacebookException error) {
-
+                Log.d("aaa", error.toString());
             }
         };
-        btnLoginFB.setReadPermissions("email", "user_birthday", "user_posts", "user_gender");
+        btnLoginFB.setReadPermissions("email");
+//        btnLoginFB.setReadPermissions("email", "user_birthday", "user_posts", "user_gender");
         btnLoginFB.registerCallback(callbackManager, callback);
 
 
@@ -175,12 +182,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             startActivity(intent);
             finish();
         }
-        if(v == txtForgotPass){
+        if (v == txtForgotPass) {
             Intent intent = new Intent(this, ForgotPasswordActivity.class);
             startActivity(intent);
             finish();
         }
-        if (v == btnFBCustom){
+        if (v == btnFBCustom) {
             btnLoginFB.performClick();
         }
     }

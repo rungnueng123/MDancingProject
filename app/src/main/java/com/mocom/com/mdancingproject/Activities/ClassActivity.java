@@ -93,7 +93,9 @@ public class ClassActivity extends AppCompatActivity {
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
         listener = (view, position) -> {
-            Toast.makeText(getApplicationContext(), classList.get(position).getTitle(), Toast.LENGTH_LONG).show();
+            Intent intent = new Intent(this,ClassDetailActivity.class);
+            intent.putExtra("eventID", classList.get(position).getEventID());
+            startActivity(intent);
         };
 
         loadVideoYoutube();
