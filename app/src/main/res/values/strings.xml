@@ -82,5 +82,8 @@
     <string name="coin_payment_dialog">จำนวน Coin</string>
     <string name="confirm">ตกลง</string>
     <string name="txt_class">คลาส</string>
+    <string name="style_pack">Style</string>
+    <string name="txt_type_payment_coin">Coin</string>
+    <string name="txt_type_payment_style_pack">Style</string>
 
 </resources>

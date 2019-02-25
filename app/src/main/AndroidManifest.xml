@@ -17,10 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ClassDetailActivity"></activity>
-        <activity android:name=".Activities.ClassActivity" />
-        <activity android:name=".Activities.StudentApplicantDetailActivity" />
-        <activity android:name=".Activities.StudentHistoryDetailActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -47,6 +43,13 @@
         <activity
             android:name=".PaymentGateway.PaymentGatewayTestActivity"
             android:windowSoftInputMode="adjustPan" />
+        <activity android:name=".Activities.StyleTypePaymentClassActivity"/>
+        <activity android:name=".Activities.CoinTypePaymentClassActivity"
+            android:theme="@style/TransparentCompat" />
+        <activity android:name=".Activities.ClassDetailActivity" />
+        <activity android:name=".Activities.ClassActivity" />
+        <activity android:name=".Activities.StudentApplicantDetailActivity" />
+        <activity android:name=".Activities.StudentHistoryDetailActivity" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
