@@ -75,7 +75,7 @@ public class CoinTypePaymentClassActivity extends AppCompatActivity implements V
             message = "Cancel";
             Intent intent = new Intent();
             intent.putExtra("message", message);
-            setResult(1, intent);
+            setResult(COIN_CAN_PAY_CODE, intent);
             finish();//finishing activity
         }
         if (v == actionBuy) {
@@ -118,7 +118,7 @@ public class CoinTypePaymentClassActivity extends AppCompatActivity implements V
             message = "Cancel";
             Intent intent = new Intent();
             intent.putExtra("message", message);//Put Message to pass over intent
-            setResult(1, intent);//Set result OK
+            setResult(COIN_CAN_PAY_CODE, intent);//Set result OK
             finish();//finish activity
         }) {
             @Override

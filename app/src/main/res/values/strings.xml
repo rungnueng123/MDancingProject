@@ -85,5 +85,8 @@
     <string name="style_pack">Style</string>
     <string name="txt_type_payment_coin">Coin</string>
     <string name="txt_type_payment_style_pack">Style</string>
+    <string name="txt_type_payment_coin_by_coin">coin</string>
+    <string name="txt_type_payment_coin_by_pack">package</string>
+    <string name="txt_type_payment_coin_by_qr">QR CODE</string>
 
 </resources>

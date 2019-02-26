@@ -168,7 +168,6 @@ public class PaymentClassDialog extends DialogFragment implements View.OnClickLi
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-//            progressDialog.dismiss();
         }, error -> {
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
@@ -184,8 +183,5 @@ public class PaymentClassDialog extends DialogFragment implements View.OnClickLi
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
-//        Intent intent = new Intent(getActivity(), StudentDashboardActivity.class);
-//        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  |  Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
     }
 }

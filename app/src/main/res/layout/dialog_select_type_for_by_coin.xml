@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    xmlns:tools="http://schemas.android.com/tools"
-    tools:context=".DialogFragment.TypePaymentClassDialog">
+    tools:context=".DialogFragment.SelectTypeForByCoinDialog">
 
     <TextView
         android:id="@+id/txt_title"
@@ -22,17 +22,23 @@
         android:orientation="vertical">
 
         <RadioButton
-            android:id="@+id/radio_payment_coin"
+            android:id="@+id/radio_payment_coin_by_coin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="true"
-            android:text="@string/txt_type_payment_coin" />
+            android:text="@string/txt_type_payment_coin_by_coin" />
 
         <RadioButton
-            android:id="@+id/radio_payment_style"
+            android:id="@+id/radio_payment_coin_by_package"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/txt_type_payment_style_pack" />
+            android:text="@string/txt_type_payment_coin_by_pack" />
+
+        <RadioButton
+            android:id="@+id/radio_payment_coin_by_qr"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/txt_type_payment_coin_by_qr" />
 
     </RadioGroup>
 

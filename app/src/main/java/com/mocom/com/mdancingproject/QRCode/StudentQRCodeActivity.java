@@ -42,7 +42,7 @@ public class StudentQRCodeActivity extends AppCompatActivity implements View.OnC
         baht = intent.getStringExtra("baht");
         coinAmt = intent.getStringExtra("coinAmt");
 
-        Toast.makeText(this, secret_key, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, secret_key, Toast.LENGTH_LONG).show();
 
         initInstance();
     }
