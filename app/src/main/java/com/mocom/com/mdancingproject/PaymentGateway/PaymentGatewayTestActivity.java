@@ -22,7 +22,6 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
-import com.mocom.com.mdancingproject.Activities.StudentDashboardActivity;
 import com.mocom.com.mdancingproject.Dao.StudentPaymentGatewayDao;
 import com.mocom.com.mdancingproject.R;
 
@@ -151,10 +150,10 @@ public class PaymentGatewayTestActivity extends AppCompatActivity implements Vie
     @Override
     public void onClick(View v) {
         if(v == btnFinishPGW){
-            Intent intent = new Intent(this, StudentDashboardActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            intent.putExtra("goProfile", "goProfile");
-            startActivity(intent);
+            Intent intent = new Intent();
+            intent.putExtra("message","goProfile");
+            setResult(2,intent);
+            finish();
         }
     }
 

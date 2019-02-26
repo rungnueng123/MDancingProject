@@ -1,29 +1,88 @@
 package com.mocom.com.mdancingproject.Activities;
 
+import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
 
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.mocom.com.mdancingproject.DialogFragment.StudentCoinPackPaymentDialog;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
+import com.mocom.com.mdancingproject.PaymentGateway.PaymentGatewayTestActivity;
+import com.mocom.com.mdancingproject.QRCode.StudentQRCodeActivity;
 import com.mocom.com.mdancingproject.R;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
+
+import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
 public class PaymentPackageActivity extends AppCompatActivity implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener {
 
     public static final int PAY_PACKAGE = 2;
 
+    private SharedPreferences sharedPreferences;
+    private String namePack, baht, coinAmt, secret_key;
+    String queryGenQrUrl = DATA_URL + "query_for_gen_qr.php";
     Toolbar toolbar;
-    String payPackage;
+    String sharedUserID;
 
 
 
     @Override
     public void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID) {
         if(typePay.equals(getResources().getString(R.string.payment_gateway))){
-            Toast.makeText(getApplicationContext(), typePay, Toast.LENGTH_SHORT).show();
+            Intent intent = new Intent(getApplicationContext(), PaymentGatewayTestActivity.class);
+            intent.putExtra("coinPackID", coinPackID);
+            startActivity(intent);
         } else if(typePay.equals(getResources().getString(R.string.qr_code))){
-            Toast.makeText(getApplicationContext(), typePay, Toast.LENGTH_SHORT).show();
+            sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+            sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
+
+            StringRequest stringRequest = new StringRequest(Request.Method.POST, queryGenQrUrl, response -> {
+//                    Log.d("Onresponse", response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("msg").equals("success")) {
+                        JSONArray array = jsonObject.getJSONArray("data");
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject obj = array.getJSONObject(i);
+                            secret_key = obj.getString("key");
+                        }
+                        Intent intent = new Intent(getApplicationContext(), StudentQRCodeActivity.class);
+                        intent.putExtra("secret_key", secret_key);
+                        intent.putExtra("baht", baht);
+                        intent.putExtra("coinAmt", coinAmt);
+                        startActivity(intent);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }, error -> {
+                Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("coinPackID", coinPackID);
+                    params.put("userID", sharedUserID);
+
+                    return params;
+                }
+            };
+            RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+            requestQueue.add(stringRequest);
         }
     }
 

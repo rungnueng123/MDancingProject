@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -44,6 +45,7 @@ import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
 public class StudentDashboardActivity extends AppCompatActivity implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener {
 
+    public static final int PAY_PACKAGE = 2;
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private DrawerLayout drawerLayout;
@@ -52,13 +54,14 @@ public class StudentDashboardActivity extends AppCompatActivity implements Stude
     NavigationView navigationView;
     String name, goBuyCoin, goProfile, sharedUserID;
     String queryGenQrUrl = DATA_URL + "query_for_gen_qr.php";
+    ActionBar actionbar;
 
     @Override
     public void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID) {
         if (typePay.equals(getResources().getString(R.string.payment_gateway))) {
             Intent intent = new Intent(getApplicationContext(), PaymentGatewayTestActivity.class);
-                intent.putExtra("coinPackID",coinPackID);
-                startActivity(intent);
+            intent.putExtra("coinPackID", coinPackID);
+            startActivityForResult(intent, PAY_PACKAGE);
         } else if (typePay.equals(getResources().getString(R.string.qr_code))) {
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
@@ -120,7 +123,7 @@ public class StudentDashboardActivity extends AppCompatActivity implements Stude
         Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        ActionBar actionbar = getSupportActionBar();
+        actionbar = getSupportActionBar();
         actionbar.setDisplayHomeAsUpEnabled(true);
         actionbar.setHomeAsUpIndicator(R.drawable.ic_menu_black_24dp);
 
@@ -235,5 +238,19 @@ public class StudentDashboardActivity extends AppCompatActivity implements Stude
     public void onBackPressed() {
         SavePreferences();
         super.onBackPressed();
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PAY_PACKAGE){
+            goProfile = data.getStringExtra("message");
+            if (!TextUtils.isEmpty(goProfile)) {
+                getSupportFragmentManager().beginTransaction()
+                        .replace(R.id.fragment_dashboard, StudentProfileFragment.newInstance())
+                        .commit();
+                actionbar.setTitle("Profile");
+            }
+        }
     }
 }
