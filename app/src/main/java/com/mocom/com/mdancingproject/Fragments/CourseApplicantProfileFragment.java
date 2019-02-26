@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -112,7 +111,7 @@ public class CourseApplicantProfileFragment extends Fragment {
         }
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
-            Log.d("Onresponse", response);
+//            Log.d("Onresponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("msg").equals("success")) {

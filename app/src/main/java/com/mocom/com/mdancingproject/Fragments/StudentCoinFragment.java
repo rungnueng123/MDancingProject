@@ -22,7 +22,6 @@ public class StudentCoinFragment extends Fragment {
 
     private TabLayout tabLayout;
     private ViewPager viewPager;
-    ViewPagerAdapter viewPagerAdapter;
 
     public static StudentCoinFragment newInstance() {
         StudentCoinFragment fragment = new StudentCoinFragment();
@@ -53,17 +52,21 @@ public class StudentCoinFragment extends Fragment {
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
-
         addTabs(viewPager);
 
         tabLayout.setupWithViewPager(viewPager);
     }
 
+    private void initFindViewByID(View rootView) {
+        viewPager = rootView.findViewById(R.id.view_pager);
+        tabLayout = rootView.findViewById(R.id.tab_layout);
+    }
+
     private void addTabs(ViewPager viewPager) {
-        viewPagerAdapter = new ViewPagerAdapter(getFragmentManager());
-        viewPagerAdapter.addFrag(new StudentCoinPackageFragment(), "COIN PACKAGE");
-        viewPagerAdapter.addFrag(new StudentStylePackageFragment(), "STYLE PACKAGE");
-        viewPager.setAdapter(viewPagerAdapter);
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFrag(new StudentCoinPackageFragment(), "PACKAGE COIN");
+        adapter.addFrag(new StudentStylePackageFragment(), "PACKAGE STYLE");
+        viewPager.setAdapter(adapter);
     }
 
     class ViewPagerAdapter extends FragmentPagerAdapter {
@@ -93,11 +96,6 @@ public class StudentCoinFragment extends Fragment {
         public CharSequence getPageTitle(int position) {
             return mFragmentTitleList.get(position);
         }
-    }
-
-    private void initFindViewByID(View rootView) {
-        viewPager = rootView.findViewById(R.id.view_pager);
-        tabLayout = rootView.findViewById(R.id.tab_layout);
     }
 
     @Override
