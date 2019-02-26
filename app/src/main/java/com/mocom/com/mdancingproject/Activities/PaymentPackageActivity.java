@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
+import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.widget.Toast;
@@ -45,7 +46,7 @@ public class PaymentPackageActivity extends AppCompatActivity implements Student
         if(typePay.equals(getResources().getString(R.string.payment_gateway))){
             Intent intent = new Intent(getApplicationContext(), PaymentGatewayTestActivity.class);
             intent.putExtra("coinPackID", coinPackID);
-            startActivity(intent);
+            startActivityForResult(intent,PAY_PACKAGE);
         } else if(typePay.equals(getResources().getString(R.string.qr_code))){
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
@@ -120,5 +121,13 @@ public class PaymentPackageActivity extends AppCompatActivity implements Student
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         toolbar.setNavigationIcon(R.drawable.ic_arrow_back_black_24dp);
         toolbar.setNavigationOnClickListener(v -> finish());
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(requestCode == PAY_PACKAGE){
+//            Toast.makeText(this, "aaa", Toast.LENGTH_SHORT).show();
+        }
     }
 }

@@ -40,11 +40,9 @@ public class StudentCoinPackageFragment extends Fragment {
     private RecyclerView.Adapter adapter;
     private List<StudentCoinPackageDao> coinPackageList;
 
-    public static StudentCoinPackageFragment newInstance(int position, String title) {
+    public static StudentCoinPackageFragment newInstance() {
         StudentCoinPackageFragment fragment = new StudentCoinPackageFragment();
         Bundle args = new Bundle();
-        args.putInt("position", position);
-        args.putString("title", title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,8 +68,6 @@ public class StudentCoinPackageFragment extends Fragment {
     }
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
-        position = getArguments().getInt("position");
-        title = getArguments().getString("someTitle");
         initFindViewByID(rootView);
 
         coinPackageList = new ArrayList<>();

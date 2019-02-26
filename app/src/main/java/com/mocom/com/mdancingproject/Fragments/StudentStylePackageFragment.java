@@ -12,14 +12,10 @@ import com.mocom.com.mdancingproject.R;
 public class StudentStylePackageFragment extends Fragment {
 
     private static final String TAG = "fragment";
-    private int position;
-    private String title;
 
-    public static StudentStylePackageFragment newInstance(int position, String title) {
+    public static StudentStylePackageFragment newInstance() {
         StudentStylePackageFragment fragment = new StudentStylePackageFragment();
         Bundle args = new Bundle();
-        args.putInt("position", position);
-        args.putString("title", title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -45,8 +41,6 @@ public class StudentStylePackageFragment extends Fragment {
     }
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
-        position = getArguments().getInt("position");
-        title = getArguments().getString("someTitle");
 //        Log.d(TAG,"onCreateView"+ position);
     }
 
