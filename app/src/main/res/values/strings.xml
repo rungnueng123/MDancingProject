@@ -91,5 +91,7 @@
     <string name="txt_type_payment_coin_by_pack">ซื้อ PACKAGE</string>
     <string name="txt_type_payment_coin_by_qr">QR CODE</string>
     <string name="type_pay_thai">เลือกช่องทางการชำระเงิน</string>
+    <string name="title_confirm_buy_style_pack">คุณแน่ใจที่จะซื้อหรือไม่?</string>
+    <string name="coin_dont_enough">Your coin don\'t enough! Please go to shop!</string>
 
 </resources>

@@ -14,6 +14,9 @@ import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.mocom.com.mdancingproject.DialogFragment.CoinDontEnoughDialog;
+import com.mocom.com.mdancingproject.DialogFragment.ConfirmPayStyleDialog;
+import com.mocom.com.mdancingproject.DialogFragment.PaymentClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.StudentCoinPackPaymentDialog;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
 import com.mocom.com.mdancingproject.PaymentGateway.PaymentGatewayTestActivity;
@@ -29,7 +32,7 @@ import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
-public class PaymentPackageActivity extends AppCompatActivity implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener {
+public class PaymentPackageActivity extends AppCompatActivity implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener, CoinDontEnoughDialog.OnBackListener, PaymentClassDialog.OnCancelBuyListener, ConfirmPayStyleDialog.OnConfirmStyleListener {
 
     public static final int PAY_PACKAGE = 2;
 
@@ -40,6 +43,30 @@ public class PaymentPackageActivity extends AppCompatActivity implements Student
     String sharedUserID;
 
 
+
+    @Override
+    public void sendConfirmStyle(String confirm, String stylePackID, String coin) {
+        if (confirm.equals(getResources().getString(R.string.cancel))){
+            Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
+        }
+        if (confirm.equals(getResources().getString(R.string.confirm))){
+            Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void sendOnCancelBuyListener(String cancel) {
+        if (cancel.equals(getResources().getString(R.string.cancel))){
+            Toast.makeText(this, cancel, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void sendOnBackListener(String close) {
+        if (close.equals(getResources().getString(R.string.close))){
+            Toast.makeText(this, close, Toast.LENGTH_LONG).show();
+        }
+    }
 
     @Override
     public void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID) {

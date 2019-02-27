@@ -25,6 +25,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.facebook.login.LoginManager;
+import com.mocom.com.mdancingproject.DialogFragment.CoinDontEnoughDialog;
+import com.mocom.com.mdancingproject.DialogFragment.ConfirmPayStyleDialog;
 import com.mocom.com.mdancingproject.DialogFragment.StudentCoinPackPaymentDialog;
 import com.mocom.com.mdancingproject.Fragments.HomeFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
@@ -43,7 +45,7 @@ import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
-public class StudentDashboardActivity extends AppCompatActivity implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener {
+public class StudentDashboardActivity extends AppCompatActivity implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener, ConfirmPayStyleDialog.OnConfirmStyleListener, CoinDontEnoughDialog.OnBackListener {
 
     public static final int PAY_PACKAGE = 2;
     private SharedPreferences sharedPreferences;
@@ -54,7 +56,62 @@ public class StudentDashboardActivity extends AppCompatActivity implements Stude
     NavigationView navigationView;
     String name, goBuyCoin, goProfile, sharedUserID;
     String queryGenQrUrl = DATA_URL + "query_for_gen_qr.php";
+    String checkCanByStyle = DATA_URL + "check_coin_for_pay_style_pack.php";
     ActionBar actionbar;
+
+
+    @Override
+    public void sendOnBackListener(String close) {
+        if (close.equals(getResources().getString(R.string.close))){
+            Toast.makeText(this, close, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void sendConfirmStyle(String confirm, String stylePackID, String coin) {
+        if (confirm.equals(getResources().getString(R.string.confirm))) {
+//            Toast.makeText(this, coin, Toast.LENGTH_SHORT).show();
+            checkCanByStyle(coin);
+        } else if (confirm.equals(getResources().getString(R.string.cancel))) {
+            Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    private void checkCanByStyle(String coinStyle) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, checkCanByStyle, response -> {
+            Log.d("checkCoinStyle", response);
+            try {
+                JSONObject obj = new JSONObject(response);
+                if (obj.getString("message").equals("Your coin don't enough! Please go to shop!")) {
+                    openDialogDontEnough();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("coin", coinStyle);
+                params.put("userID", sharedUserID);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+
+    }
+
+    private void openDialogDontEnough() {
+        CoinDontEnoughDialog dialog = new CoinDontEnoughDialog();
+        dialog.show(getSupportFragmentManager(), "CoinDontEnoughDialog");
+    }
 
     @Override
     public void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID) {
@@ -243,13 +300,15 @@ public class StudentDashboardActivity extends AppCompatActivity implements Stude
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PAY_PACKAGE){
-            goProfile = data.getStringExtra("message");
-            if (!TextUtils.isEmpty(goProfile)) {
-                getSupportFragmentManager().beginTransaction()
-                        .replace(R.id.fragment_dashboard, StudentProfileFragment.newInstance())
-                        .commit();
-                actionbar.setTitle("Profile");
+        if (data != null) {
+            if (requestCode == PAY_PACKAGE) {
+                goProfile = data.getStringExtra("message");
+                if (!TextUtils.isEmpty(goProfile)) {
+                    getSupportFragmentManager().beginTransaction()
+                            .replace(R.id.fragment_dashboard, StudentProfileFragment.newInstance())
+                            .commit();
+                    actionbar.setTitle("Profile");
+                }
             }
         }
     }

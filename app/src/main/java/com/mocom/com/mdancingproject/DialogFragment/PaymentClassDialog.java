@@ -2,6 +2,7 @@ package com.mocom.com.mdancingproject.DialogFragment;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -37,6 +38,11 @@ import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 public class PaymentClassDialog extends DialogFragment implements View.OnClickListener {
 
     public ClassDetailActivity activity;
+    public OnCancelBuyListener onCancelBuyListener;
+
+    public interface OnCancelBuyListener {
+        void sendOnCancelBuyListener(String cancel);
+    }
 
     private static final String TAG = "StudentPaymentDialog";
     String checkCoinUrl = DATA_URL + "check_coin_for_payment.php";
@@ -85,6 +91,7 @@ public class PaymentClassDialog extends DialogFragment implements View.OnClickLi
         }
         if (v == actionCancel) {
 //            Log.d(TAG, "onClick: closing dialog");
+            onCancelBuyListener.sendOnCancelBuyListener(actionCancel.getText().toString());
             getDialog().dismiss();
         }
     }
@@ -183,5 +190,16 @@ public class PaymentClassDialog extends DialogFragment implements View.OnClickLi
         };
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
+    }
+
+    @Override
+    public void onAttach(Context context) {
+        super.onAttach(context);
+        try {
+            onCancelBuyListener = (OnCancelBuyListener) getActivity();
+        } catch (ClassCastException e) {
+            Log.d("TAG", "onAttach: ClassCastException: " + e.getMessage());
+        }
+
     }
 }

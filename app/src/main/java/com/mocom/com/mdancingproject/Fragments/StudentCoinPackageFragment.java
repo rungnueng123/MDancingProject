@@ -33,8 +33,6 @@ public class StudentCoinPackageFragment extends Fragment {
 
     private static final String TAG = "fragment";
     private String coinPackUrl = DATA_URL + "json_get_coin_pack_student.php";
-    private int position;
-    private String title;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
