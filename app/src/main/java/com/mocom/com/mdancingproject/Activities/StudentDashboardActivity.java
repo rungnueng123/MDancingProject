@@ -27,7 +27,9 @@ import com.android.volley.toolbox.Volley;
 import com.facebook.login.LoginManager;
 import com.mocom.com.mdancingproject.DialogFragment.CoinDontEnoughDialog;
 import com.mocom.com.mdancingproject.DialogFragment.ConfirmPayStyleDialog;
+import com.mocom.com.mdancingproject.DialogFragment.FailDialog;
 import com.mocom.com.mdancingproject.DialogFragment.StudentCoinPackPaymentDialog;
+import com.mocom.com.mdancingproject.DialogFragment.SuccessDialog;
 import com.mocom.com.mdancingproject.Fragments.HomeFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentCourseFragment;
@@ -45,7 +47,12 @@ import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
-public class StudentDashboardActivity extends AppCompatActivity implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener, ConfirmPayStyleDialog.OnConfirmStyleListener, CoinDontEnoughDialog.OnBackListener {
+public class StudentDashboardActivity extends AppCompatActivity
+        implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener,
+        ConfirmPayStyleDialog.OnConfirmStyleListener,
+        CoinDontEnoughDialog.OnBackListener,
+        SuccessDialog.OnBackSuccessListener,
+        FailDialog.OnBackFailListener {
 
     public static final int PAY_PACKAGE = 2;
     private SharedPreferences sharedPreferences;
@@ -57,12 +64,27 @@ public class StudentDashboardActivity extends AppCompatActivity implements Stude
     String name, goBuyCoin, goProfile, sharedUserID;
     String queryGenQrUrl = DATA_URL + "query_for_gen_qr.php";
     String checkCanByStyle = DATA_URL + "check_coin_for_pay_style_pack.php";
+    String buyPackStyleUrl = DATA_URL + "buy_pack_style.php";
     ActionBar actionbar;
 
 
     @Override
+    public void sendOnBackFailListener(String back) {
+        if (back.equals(getResources().getString(R.string.txt_payment_fail))) {
+            Toast.makeText(this, back, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void sendOnBackSuccessListener(String back) {
+        if (back.equals(getResources().getString(R.string.txt_payment_success))) {
+            Toast.makeText(this, back, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
     public void sendOnBackListener(String close) {
-        if (close.equals(getResources().getString(R.string.close))){
+        if (close.equals(getResources().getString(R.string.close))) {
             Toast.makeText(this, close, Toast.LENGTH_LONG).show();
         }
     }
@@ -71,13 +93,13 @@ public class StudentDashboardActivity extends AppCompatActivity implements Stude
     public void sendConfirmStyle(String confirm, String stylePackID, String coin) {
         if (confirm.equals(getResources().getString(R.string.confirm))) {
 //            Toast.makeText(this, coin, Toast.LENGTH_SHORT).show();
-            checkCanByStyle(coin);
+            checkCanByStyle(stylePackID, coin);
         } else if (confirm.equals(getResources().getString(R.string.cancel))) {
             Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
         }
     }
 
-    private void checkCanByStyle(String coinStyle) {
+    private void checkCanByStyle(String stylePackID, String coinStyle) {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
 
@@ -87,6 +109,9 @@ public class StudentDashboardActivity extends AppCompatActivity implements Stude
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("Your coin don't enough! Please go to shop!")) {
                     openDialogDontEnough();
+                }
+                if (obj.getString("message").equals("enough")) {
+                    goBuyStyle(stylePackID);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -106,6 +131,48 @@ public class StudentDashboardActivity extends AppCompatActivity implements Stude
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         requestQueue.add(stringRequest);
 
+    }
+
+    private void goBuyStyle(String stylePackID) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, buyPackStyleUrl, response -> {
+            Log.d("Onresponse", response);
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                if (jsonObject.getString("message").equals("success")) {
+                    openDialogStyleSuccess();
+                }else{
+                    openDialogStyleFail();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("stylePackID", stylePackID);
+                params.put("userID", sharedUserID);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void openDialogStyleFail() {
+        FailDialog dialog = new FailDialog();
+        dialog.show(getSupportFragmentManager(),"FailDialog");
+    }
+
+    private void openDialogStyleSuccess() {
+        SuccessDialog dialog = new SuccessDialog();
+        dialog.show(getSupportFragmentManager(),"SuccessDialog");
     }
 
     private void openDialogDontEnough() {

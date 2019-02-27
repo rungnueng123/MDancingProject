@@ -93,5 +93,7 @@
     <string name="type_pay_thai">เลือกช่องทางการชำระเงิน</string>
     <string name="title_confirm_buy_style_pack">คุณแน่ใจที่จะซื้อหรือไม่?</string>
     <string name="coin_dont_enough">Your coin don\'t enough! Please go to shop!</string>
+    <string name="txt_payment_success">สั่งซื้อสำเร็จ</string>
+    <string name="txt_payment_fail">สั่งซื้อไม่สำเร็จ</string>
 
 </resources>

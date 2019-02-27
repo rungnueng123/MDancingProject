@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -16,8 +17,10 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mocom.com.mdancingproject.DialogFragment.CoinDontEnoughDialog;
 import com.mocom.com.mdancingproject.DialogFragment.ConfirmPayStyleDialog;
+import com.mocom.com.mdancingproject.DialogFragment.FailDialog;
 import com.mocom.com.mdancingproject.DialogFragment.PaymentClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.StudentCoinPackPaymentDialog;
+import com.mocom.com.mdancingproject.DialogFragment.SuccessDialog;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
 import com.mocom.com.mdancingproject.PaymentGateway.PaymentGatewayTestActivity;
 import com.mocom.com.mdancingproject.QRCode.StudentQRCodeActivity;
@@ -32,49 +35,150 @@ import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
-public class PaymentPackageActivity extends AppCompatActivity implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener, CoinDontEnoughDialog.OnBackListener, PaymentClassDialog.OnCancelBuyListener, ConfirmPayStyleDialog.OnConfirmStyleListener {
+public class PaymentPackageActivity extends AppCompatActivity
+        implements StudentCoinPackPaymentDialog.OnSelectTypePayPackListener,
+        CoinDontEnoughDialog.OnBackListener,
+        PaymentClassDialog.OnCancelBuyListener,
+        ConfirmPayStyleDialog.OnConfirmStyleListener,
+        SuccessDialog.OnBackSuccessListener,
+        FailDialog.OnBackFailListener {
 
     public static final int PAY_PACKAGE = 2;
 
     private SharedPreferences sharedPreferences;
     private String namePack, baht, coinAmt, secret_key;
     String queryGenQrUrl = DATA_URL + "query_for_gen_qr.php";
+    String checkCanByStyle = DATA_URL + "check_coin_for_pay_style_pack.php";
+    String buyPackStyleUrl = DATA_URL + "buy_pack_style.php";
     Toolbar toolbar;
     String sharedUserID;
 
 
-
     @Override
-    public void sendConfirmStyle(String confirm, String stylePackID, String coin) {
-        if (confirm.equals(getResources().getString(R.string.cancel))){
-            Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
-        }
-        if (confirm.equals(getResources().getString(R.string.confirm))){
-            Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
+    public void sendOnBackFailListener(String back) {
+        if (back.equals(getResources().getString(R.string.txt_payment_fail))) {
+            Toast.makeText(this, back, Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
+    public void sendOnBackSuccessListener(String back) {
+        if (back.equals(getResources().getString(R.string.txt_payment_success))) {
+            Toast.makeText(this, back, Toast.LENGTH_LONG).show();
+        }
+    }
+
+    @Override
+    public void sendConfirmStyle(String confirm, String stylePackID, String coin) {
+        if (confirm.equals(getResources().getString(R.string.cancel))) {
+            Toast.makeText(this, confirm, Toast.LENGTH_LONG).show();
+        }
+        if (confirm.equals(getResources().getString(R.string.confirm))) {
+            checkCanByStyle(stylePackID, coin);
+        }
+    }
+
+    private void checkCanByStyle(String stylePackID, String coinStyle) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, checkCanByStyle, response -> {
+            Log.d("checkCoinStyle", response);
+            try {
+                JSONObject obj = new JSONObject(response);
+                if (obj.getString("message").equals("Your coin don't enough! Please go to shop!")) {
+                    openDialogDontEnough();
+                }
+                if (obj.getString("message").equals("enough")) {
+                    goBuyStyle(stylePackID);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("coin", coinStyle);
+                params.put("userID", sharedUserID);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void goBuyStyle(String stylePackID) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
+
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, buyPackStyleUrl, response -> {
+            Log.d("Onresponse", response);
+            try {
+                JSONObject jsonObject = new JSONObject(response);
+                if (jsonObject.getString("msg").equals("success")) {
+                    openDialogStyleSuccess();
+                }else{
+                    openDialogStyleFail();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("stylePackID", stylePackID);
+                params.put("userID", sharedUserID);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void openDialogStyleFail() {
+        FailDialog dialog = new FailDialog();
+        dialog.show(getSupportFragmentManager(),"FailDialog");
+    }
+
+    private void openDialogStyleSuccess() {
+        SuccessDialog dialog = new SuccessDialog();
+        dialog.show(getSupportFragmentManager(),"SuccessDialog");
+    }
+
+    private void openDialogDontEnough() {
+        CoinDontEnoughDialog dialog = new CoinDontEnoughDialog();
+        dialog.show(getSupportFragmentManager(), "CoinDontEnoughDialog");
+    }
+
+    @Override
     public void sendOnCancelBuyListener(String cancel) {
-        if (cancel.equals(getResources().getString(R.string.cancel))){
+        if (cancel.equals(getResources().getString(R.string.cancel))) {
             Toast.makeText(this, cancel, Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void sendOnBackListener(String close) {
-        if (close.equals(getResources().getString(R.string.close))){
+        if (close.equals(getResources().getString(R.string.close))) {
             Toast.makeText(this, close, Toast.LENGTH_LONG).show();
         }
     }
 
     @Override
     public void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID) {
-        if(typePay.equals(getResources().getString(R.string.payment_gateway))){
+        if (typePay.equals(getResources().getString(R.string.payment_gateway))) {
             Intent intent = new Intent(getApplicationContext(), PaymentGatewayTestActivity.class);
             intent.putExtra("coinPackID", coinPackID);
-            startActivityForResult(intent,PAY_PACKAGE);
-        } else if(typePay.equals(getResources().getString(R.string.qr_code))){
+            startActivityForResult(intent, PAY_PACKAGE);
+        } else if (typePay.equals(getResources().getString(R.string.qr_code))) {
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
 
@@ -130,7 +234,7 @@ public class PaymentPackageActivity extends AppCompatActivity implements Student
     private void initInstance(Bundle savedInstanceState) {
         initToolbar();
 
-        if (savedInstanceState == null){
+        if (savedInstanceState == null) {
 //            Bundle bundle = new Bundle();
 //            bundle.putString("edttext", PAY_PACKAGE);
 //            Fragment studentCoinFragment = new StudentCoinFragment();
@@ -153,7 +257,7 @@ public class PaymentPackageActivity extends AppCompatActivity implements Student
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(requestCode == PAY_PACKAGE){
+        if (requestCode == PAY_PACKAGE) {
 //            Toast.makeText(this, "aaa", Toast.LENGTH_SHORT).show();
         }
     }
