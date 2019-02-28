@@ -21,12 +21,14 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.mocom.com.mdancingproject.DialogFragment.CoinTypePaymentClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.FailBuyClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.PaymentClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.SelectTypeForByCoinDialog;
 import com.mocom.com.mdancingproject.DialogFragment.StyleDontEnoughDialog;
 import com.mocom.com.mdancingproject.DialogFragment.SuccessBuyClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.TypePaymentClassDialog;
+import com.mocom.com.mdancingproject.PaymentGateway.PaymentGatewayCoinForClassActivity;
 import com.mocom.com.mdancingproject.R;
 
 import org.json.JSONArray;
@@ -41,16 +43,18 @@ import static com.mocom.com.mdancingproject.config.config.HOST_URL;
 
 public class ClassDetailActivity extends AppCompatActivity implements View.OnClickListener, TypePaymentClassDialog.OnInputListener,
         SelectTypeForByCoinDialog.OnSelectTypeForByCoinListener, StyleDontEnoughDialog.OnBackStyleListener,
-        SuccessBuyClassDialog.OnBackSuccessBuyClassListener, FailBuyClassDialog.OnBackFailBuyClassListener {
+        SuccessBuyClassDialog.OnBackSuccessBuyClassListener, FailBuyClassDialog.OnBackFailBuyClassListener, CoinTypePaymentClassDialog.OnBackCoinTypePaymentClassListener {
 
     public static final int COIN_CAN_PAY_CODE = 1;
     public static final int PAY_PACKAGE = 2;
+    public static final int PAY_COIN_BY_PGW = 3;
 
     String getClassUrl = DATA_URL + "get_single_class.php";
     String canBuyClassByCoinUrl = DATA_URL + "buy_class_by_coin.php";
     String genQrForBuyCoinUrl = DATA_URL + "query_qr_for_buy_coin.php";
     String checkCanBuyClassByStyle = DATA_URL + "check_can_buy_class_by_style.php";
     String buyClassByStyleUrl = DATA_URL + "buy_class_by_style.php";
+    String checkCoinUrl = DATA_URL + "check_coin_for_payment.php";
     String eventID, coinAmt, eventName, userID, canBuy, eventStyleID, sharedUserID;
     Toolbar toolbar;
 
@@ -61,8 +65,58 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     private SharedPreferences sharedPreferences;
 
     @Override
+    public void sendOnBackCoinTypePaymentClassListener(String back, String coin, String eventID) {
+        if (back.equals(getResources().getString(R.string.cancel))) {
+            Toast.makeText(this, back, Toast.LENGTH_SHORT).show();
+
+        }
+        if (back.equals(getResources().getString(R.string.confirm))) {
+            checkCoinCanPayment(coin, eventID);
+        }
+    }
+
+    private void checkCoinCanPayment(String coin, String eventid) {
+//        progressDialog = new ProgressDialog(getApplicationContext());
+//        progressDialog.setMessage("Loading..."); // Setting Message
+//        progressDialog.setTitle("ProgressDialog"); // Setting Title
+//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
+//        progressDialog.show(); // Display Progress Dialog
+//        progressDialog.setCancelable(false);
+
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        userID = sharedPreferences.getString(getString(R.string.UserID), "");
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, checkCoinUrl, response -> {
+            Log.d("response", response);
+            try {
+                JSONObject obj = new JSONObject(response);
+                if (obj.getString("message").equals("enough")) {
+                    goBuyClass(userID, eventid);
+                } else {
+                    openDialogSelectTypeForByCoin();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> {
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("coin", coin);
+                params.put("userID", userID);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    @Override
     public void sendOnBackSuccessBuyClassListener(String back) {
-        if(back.equals(getResources().getString(R.string.txt_payment_class_success))) {
+        if (back.equals(getResources().getString(R.string.txt_payment_class_success))) {
             loadClassDetail();
             Toast.makeText(this, back, Toast.LENGTH_SHORT).show();
         }
@@ -70,18 +124,18 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
     @Override
     public void sendOnBackFailBuyClassListener(String back) {
-        if(back.equals(getResources().getString(R.string.txt_payment_class_fail))) {
+        if (back.equals(getResources().getString(R.string.txt_payment_class_fail))) {
             Toast.makeText(this, back, Toast.LENGTH_SHORT).show();
         }
     }
 
     @Override
     public void sendOnBackStyleListener(String close) {
-        if(close.equals(getResources().getString(R.string.shop))){
-            Intent intent = new Intent(getApplicationContext(),PaymentPackageActivity.class);
+        if (close.equals(getResources().getString(R.string.shop))) {
+            Intent intent = new Intent(getApplicationContext(), PaymentPackageActivity.class);
             startActivity(intent);
         }
-        if(close.equals(getResources().getString(R.string.close))){
+        if (close.equals(getResources().getString(R.string.close))) {
             Toast.makeText(this, close, Toast.LENGTH_SHORT).show();
         }
 
@@ -91,11 +145,19 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     public void sendInput(String input) {
         txtTypePay.setText(input);
         if (txtTypePay.getText().toString().equals(getResources().getString(R.string.txt_type_payment_coin))) {
-            Intent intent = new Intent(getApplicationContext(), CoinTypePaymentClassActivity.class);
-            intent.putExtra("coin", coinAmt);
-            intent.putExtra("eventID", eventID);
-            intent.putExtra("eventName", eventName);
-            startActivityForResult(intent, COIN_CAN_PAY_CODE);
+            Bundle bundle = new Bundle();
+            bundle.putString("coin", coinAmt);
+            bundle.putString("eventID", eventID);
+            bundle.putString("eventName", eventName);
+            CoinTypePaymentClassDialog dialog = new CoinTypePaymentClassDialog();
+            dialog.setArguments(bundle);
+            dialog.show(getSupportFragmentManager(), "CoinTypePaymentClassDialog");
+
+//            Intent intent = new Intent(getApplicationContext(), CoinTypePaymentClassActivity.class);
+//            intent.putExtra("coin", coinAmt);
+//            intent.putExtra("eventID", eventID);
+//            intent.putExtra("eventName", eventName);
+//            startActivityForResult(intent, COIN_CAN_PAY_CODE);
         } else if (txtTypePay.getText().toString().equals(getResources().getString(R.string.txt_type_payment_style_pack))) {
             checkCanBuyClassByStylePack(eventStyleID);
         }
@@ -143,7 +205,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("success")) {
                     openDialogSuccessBuyClass();
-                }else{
+                } else {
                     openDialogFailBuyClass();
                 }
             } catch (JSONException e) {
@@ -191,11 +253,14 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void goBuyClassWithCoinIsEqualToCoinAmt() {
-
+        Intent intent = new Intent(this, PaymentGatewayCoinForClassActivity.class);
+        intent.putExtra("userID", userID);
+        intent.putExtra("eventID", eventID);
+        startActivityForResult(intent, PAY_COIN_BY_PGW);
     }
 
     private void genQrForBuyCoin() {
-
+        Toast.makeText(this, "gen QR", Toast.LENGTH_SHORT).show();
     }
 
     @Override
@@ -345,26 +410,6 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
         dialog.show(getSupportFragmentManager(), "PaymentClassDialog");
     }
 
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == COIN_CAN_PAY_CODE) {
-//            Toast.makeText(getApplicationContext(), data.getStringExtra("message"), Toast.LENGTH_SHORT).show();
-            if (data.getStringExtra("message").equals("Cancel")) {
-                Toast.makeText(getApplicationContext(), data.getStringExtra("message"), Toast.LENGTH_SHORT).show();
-            }
-            if (data.getStringExtra("message").equals("enough")) {
-                goBuyClass(userID, eventID);
-            }
-            if (data.getStringExtra("message").equals("Your coin don't enough! Please go to shop!")) {
-                openDialogSelectTypeForByCoin();
-            }
-        }
-        if (requestCode == PAY_PACKAGE) {
-
-        }
-    }
-
     private void openDialogSelectTypeForByCoin() {
         SelectTypeForByCoinDialog dialog = new SelectTypeForByCoinDialog();
         dialog.show(getSupportFragmentManager(), "SelectTypeForByCoinDialog");
@@ -406,5 +451,25 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 //        Intent intent = new Intent(getActivity(), StudentDashboardActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  |  Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startActivity(intent);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == COIN_CAN_PAY_CODE) {
+//            Toast.makeText(getApplicationContext(), data.getStringExtra("message"), Toast.LENGTH_SHORT).show();
+//            if (data.getStringExtra("message").equals("Cancel")) {
+//                Toast.makeText(getApplicationContext(), data.getStringExtra("message"), Toast.LENGTH_SHORT).show();
+//            }
+//            if (data.getStringExtra("message").equals("enough")) {
+//                goBuyClass(userID, eventID);
+//            }
+//            if (data.getStringExtra("message").equals("Your coin don't enough! Please go to shop!")) {
+//                openDialogSelectTypeForByCoin();
+//            }
+        }
+        if (requestCode == PAY_PACKAGE) {
+
+        }
     }
 }
