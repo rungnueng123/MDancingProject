@@ -13,19 +13,19 @@ import android.widget.TextView;
 
 import com.mocom.com.mdancingproject.R;
 
-public class CoinDontEnoughDialog extends DialogFragment implements View.OnClickListener {
+public class StyleDontEnoughDialog extends DialogFragment implements View.OnClickListener {
 
     TextView txtClose,txtShop;
-    public OnBackListener onBackListener;
+    public OnBackStyleListener onBackStyleListener;
 
-    public interface OnBackListener {
-        void sendOnBackListener(String close);
+    public interface OnBackStyleListener {
+        void sendOnBackStyleListener(String close);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dialog_coin_dont_enough, container, false);
+        View rootView = inflater.inflate(R.layout.dialog_style_dont_enough, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }
@@ -45,11 +45,11 @@ public class CoinDontEnoughDialog extends DialogFragment implements View.OnClick
     @Override
     public void onClick(View v) {
         if(v == txtClose){
-            onBackListener.sendOnBackListener(txtClose.getText().toString());
+            onBackStyleListener.sendOnBackStyleListener(txtClose.getText().toString());
             getDialog().dismiss();
         }
         if(v == txtShop){
-            onBackListener.sendOnBackListener(txtShop.getText().toString());
+            onBackStyleListener.sendOnBackStyleListener(txtShop.getText().toString());
             getDialog().dismiss();
         }
     }
@@ -58,7 +58,7 @@ public class CoinDontEnoughDialog extends DialogFragment implements View.OnClick
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            onBackListener = (CoinDontEnoughDialog.OnBackListener) getActivity();
+            onBackStyleListener = (OnBackStyleListener) getActivity();
         } catch (ClassCastException e) {
             Log.d("TAG", "onAttach: ClassCastException: " + e.getMessage());
         }

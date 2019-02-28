@@ -119,7 +119,7 @@ public class PaymentPackageActivity extends AppCompatActivity
             Log.d("Onresponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject.getString("msg").equals("success")) {
+                if (jsonObject.getString("message").equals("success")) {
                     openDialogStyleSuccess();
                 }else{
                     openDialogStyleFail();

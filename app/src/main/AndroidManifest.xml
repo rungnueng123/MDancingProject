@@ -17,10 +17,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".DialogFragment.FailDialog"></activity>
-        <activity android:name=".DialogFragment.SuccessDialog" />
-        <activity android:name=".DialogFragment.CoinDontEnoughDialog" />
-        <activity android:name=".DialogFragment.ConfirmPayStyleDialog" />
         <activity android:name=".Activities.PaymentPackageActivity" />
         <activity android:name=".Activities.LoginActivity">
             <intent-filter>

@@ -95,5 +95,12 @@
     <string name="coin_dont_enough">Your coin don\'t enough! Please go to shop!</string>
     <string name="txt_payment_success">สั่งซื้อสำเร็จ</string>
     <string name="txt_payment_fail">สั่งซื้อไม่สำเร็จ</string>
+    <string name="txt_time_show">จำนวนครั้ง</string>
+    <string name="style_dont_enough">Your style package don\'t enough! Please go to shop!</string>
+    <string name="shop">Shop</string>
+    <string name="txt_payment_success_detail">ขั้นตอนการลงทะเบียนและชำระเงินสำเร็จ กรุณามาเรียนตามวันและเวลาที่ลงทะเบียน</string>
+    <string name="txt_payment_fail_detail">กรุณาตรวจสอบขั้นตอนการลงทะเบียนอีกครั้ง</string>
+    <string name="txt_payment_class_fail">ชำระเงินไม่สำเร็จ!</string>
+    <string name="txt_payment_class_success">ชำระเงินสำเร็จ!</string>
 
 </resources>

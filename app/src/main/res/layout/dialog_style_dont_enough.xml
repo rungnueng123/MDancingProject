@@ -7,7 +7,7 @@
     android:layout_marginStart="40dp"
     android:layout_marginTop="11dp"
     android:layout_marginEnd="40dp"
-    tools:context=".DialogFragment.CoinDontEnoughDialog">
+    tools:context=".DialogFragment.StyleDontEnoughDialog">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -21,7 +21,7 @@
             android:layout_marginTop="25dp"
             android:layout_marginEnd="25dp"
             android:fontFamily="@font/kanit_medium"
-            android:text="@string/coin_dont_enough"
+            android:text="@string/style_dont_enough"
             android:textColor="#000"
             android:textSize="22sp" />
 

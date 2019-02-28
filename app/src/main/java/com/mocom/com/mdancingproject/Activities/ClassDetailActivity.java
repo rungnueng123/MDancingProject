@@ -21,8 +21,11 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.mocom.com.mdancingproject.DialogFragment.FailBuyClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.PaymentClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.SelectTypeForByCoinDialog;
+import com.mocom.com.mdancingproject.DialogFragment.StyleDontEnoughDialog;
+import com.mocom.com.mdancingproject.DialogFragment.SuccessBuyClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.TypePaymentClassDialog;
 import com.mocom.com.mdancingproject.R;
 
@@ -36,7 +39,9 @@ import java.util.Map;
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 import static com.mocom.com.mdancingproject.config.config.HOST_URL;
 
-public class ClassDetailActivity extends AppCompatActivity implements View.OnClickListener, TypePaymentClassDialog.OnInputListener, SelectTypeForByCoinDialog.OnSelectTypeForByCoinListener {
+public class ClassDetailActivity extends AppCompatActivity implements View.OnClickListener, TypePaymentClassDialog.OnInputListener,
+        SelectTypeForByCoinDialog.OnSelectTypeForByCoinListener, StyleDontEnoughDialog.OnBackStyleListener,
+        SuccessBuyClassDialog.OnBackSuccessBuyClassListener, FailBuyClassDialog.OnBackFailBuyClassListener {
 
     public static final int COIN_CAN_PAY_CODE = 1;
     public static final int PAY_PACKAGE = 2;
@@ -44,7 +49,9 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     String getClassUrl = DATA_URL + "get_single_class.php";
     String canBuyClassByCoinUrl = DATA_URL + "buy_class_by_coin.php";
     String genQrForBuyCoinUrl = DATA_URL + "query_qr_for_buy_coin.php";
-    String eventID, coinAmt, eventName, userID, canBuy;
+    String checkCanBuyClassByStyle = DATA_URL + "check_can_buy_class_by_style.php";
+    String buyClassByStyleUrl = DATA_URL + "buy_class_by_style.php";
+    String eventID, coinAmt, eventName, userID, canBuy, eventStyleID, sharedUserID;
     Toolbar toolbar;
 
     ImageView imgClass, imgArrow;
@@ -52,6 +59,33 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     public TextView txtTypePay;
     Button btnPayment;
     private SharedPreferences sharedPreferences;
+
+    @Override
+    public void sendOnBackSuccessBuyClassListener(String back) {
+        if(back.equals(getResources().getString(R.string.txt_payment_class_success))) {
+            loadClassDetail();
+            Toast.makeText(this, back, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void sendOnBackFailBuyClassListener(String back) {
+        if(back.equals(getResources().getString(R.string.txt_payment_class_fail))) {
+            Toast.makeText(this, back, Toast.LENGTH_SHORT).show();
+        }
+    }
+
+    @Override
+    public void sendOnBackStyleListener(String close) {
+        if(close.equals(getResources().getString(R.string.shop))){
+            Intent intent = new Intent(getApplicationContext(),PaymentPackageActivity.class);
+            startActivity(intent);
+        }
+        if(close.equals(getResources().getString(R.string.close))){
+            Toast.makeText(this, close, Toast.LENGTH_SHORT).show();
+        }
+
+    }
 
     @Override
     public void sendInput(String input) {
@@ -63,22 +97,101 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             intent.putExtra("eventName", eventName);
             startActivityForResult(intent, COIN_CAN_PAY_CODE);
         } else if (txtTypePay.getText().toString().equals(getResources().getString(R.string.txt_type_payment_style_pack))) {
-
+            checkCanBuyClassByStylePack(eventStyleID);
         }
+    }
+
+    private void checkCanBuyClassByStylePack(String eventStyleID) {
+        sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, checkCanBuyClassByStyle, response -> {
+            Log.d("checkCanBy", response);
+            try {
+                JSONObject obj = new JSONObject(response);
+                if (obj.getString("msg").equals("can")) {
+                    goBuyClassByStyle(eventStyleID, sharedUserID);
+                } else {
+                    openDialogStyleDontEnough();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }, error -> {
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("eventStyleID", eventStyleID);
+                params.put("userID", sharedUserID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void openDialogStyleDontEnough() {
+        StyleDontEnoughDialog dialog = new StyleDontEnoughDialog();
+        dialog.show(getSupportFragmentManager(), "StyleDontEnoughDialog");
+    }
+
+    private void goBuyClassByStyle(String eventStyleID, String sharedUserID) {
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, buyClassByStyleUrl, response -> {
+            Log.d("buyclassbystyle", response);
+            try {
+                JSONObject obj = new JSONObject(response);
+                if (obj.getString("message").equals("success")) {
+                    openDialogSuccessBuyClass();
+                }else{
+                    openDialogFailBuyClass();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> {
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("eventStyleID", eventStyleID);
+                params.put("userID", sharedUserID);
+                params.put("eventID", eventID);
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
+    }
+
+    private void openDialogSuccessBuyClass() {
+        SuccessBuyClassDialog dialog = new SuccessBuyClassDialog();
+        dialog.show(getSupportFragmentManager(), "SuccessBuyClassDialog");
+    }
+
+    private void openDialogFailBuyClass() {
+        FailBuyClassDialog dialog = new FailBuyClassDialog();
+        dialog.show(getSupportFragmentManager(), "FailBuyClassDialog");
     }
 
     @Override
     public void sendSelectTypeForByCoin(String input) {
 //        Toast.makeText(getApplicationContext(), input, Toast.LENGTH_SHORT).show();
-        if(input.equals(getResources().getString(R.string.txt_type_payment_coin_by_coin))){
-            Toast.makeText(getApplicationContext(), input, Toast.LENGTH_SHORT).show();
-        } else if(input.equals(getResources().getString(R.string.txt_type_payment_coin_by_pack))){
+        if (input.equals(getResources().getString(R.string.txt_type_payment_coin_by_coin))) {
+            goBuyClassWithCoinIsEqualToCoinAmt();
+        } else if (input.equals(getResources().getString(R.string.txt_type_payment_coin_by_pack))) {
             Intent intent = new Intent(getApplicationContext(), PaymentPackageActivity.class);
             startActivityForResult(intent, PAY_PACKAGE);
-        }else if(input.equals(getResources().getString(R.string.txt_type_payment_coin_by_qr))){
+        } else if (input.equals(getResources().getString(R.string.txt_type_payment_coin_by_qr))) {
 //            Toast.makeText(getApplicationContext(), input, Toast.LENGTH_SHORT).show();
             genQrForBuyCoin();
         }
+    }
+
+    private void goBuyClassWithCoinIsEqualToCoinAmt() {
+
     }
 
     private void genQrForBuyCoin() {
@@ -140,6 +253,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
                                 .load(imgUrl)
                                 .into(imgClass);
                         canBuy = obj.getString("canBuy");
+                        eventStyleID = obj.getString("eventStyleID");
                     }
                 } else {
 
@@ -246,7 +360,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
                 openDialogSelectTypeForByCoin();
             }
         }
-        if(requestCode == PAY_PACKAGE){
+        if (requestCode == PAY_PACKAGE) {
 
         }
     }
@@ -262,12 +376,14 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             try {
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("Payment Success")) {
-                    Intent intent = new Intent(getApplicationContext(), StudentDashboardActivity.class);
-                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                    intent.putExtra("goProfile", "goProfile");
-                    startActivity(intent);
+                    openDialogSuccessBuyClass();
+//                    Intent intent = new Intent(getApplicationContext(), StudentDashboardActivity.class);
+//                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//                    intent.putExtra("goProfile", "goProfile");
+//                    startActivity(intent);
                 } else {
-                    goBuyClass(userID, eventID);
+                    openDialogFailBuyClass();
+//                    goBuyClass(userID, eventID);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();

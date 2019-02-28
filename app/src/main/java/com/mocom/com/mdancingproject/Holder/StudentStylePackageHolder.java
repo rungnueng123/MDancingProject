@@ -3,7 +3,6 @@ package com.mocom.com.mdancingproject.Holder;
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -14,7 +13,6 @@ public class StudentStylePackageHolder extends RecyclerView.ViewHolder implement
 
     private TextView txtName,txtTime,txtCoin,txtStyle;
     private ImageView imgUrl;
-    private Button btnBuy;
     private ItemClickCallBack mListener;
 
     public TextView getTxtName() {
@@ -37,10 +35,6 @@ public class StudentStylePackageHolder extends RecyclerView.ViewHolder implement
         return imgUrl;
     }
 
-    public Button getBtnBuy() {
-        return btnBuy;
-    }
-
     public StudentStylePackageHolder(@NonNull View itemView, ItemClickCallBack listener) {
         super(itemView);
         mListener = listener;
@@ -51,7 +45,6 @@ public class StudentStylePackageHolder extends RecyclerView.ViewHolder implement
         txtTime = itemView.findViewById(R.id.txt_style_pack_time);
         txtCoin = itemView.findViewById(R.id.txt_style_pack_coin);
         txtStyle = itemView.findViewById(R.id.txt_style_pack_style);
-        btnBuy = itemView.findViewById(R.id.btn_coin_pack_buy);
     }
 
     @Override

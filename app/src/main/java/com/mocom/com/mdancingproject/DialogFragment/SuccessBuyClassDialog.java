@@ -9,47 +9,43 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.mocom.com.mdancingproject.R;
 
-public class CoinDontEnoughDialog extends DialogFragment implements View.OnClickListener {
+public class SuccessBuyClassDialog extends DialogFragment implements View.OnClickListener {
 
-    TextView txtClose,txtShop;
-    public OnBackListener onBackListener;
+    TextView txtSuccess;
+    Button btnBack;
+    public OnBackSuccessBuyClassListener onBackSuccessBuyClassListener;
 
-    public interface OnBackListener {
-        void sendOnBackListener(String close);
+    public interface OnBackSuccessBuyClassListener {
+        void sendOnBackSuccessBuyClassListener(String back);
     }
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.dialog_coin_dont_enough, container, false);
+        View rootView = inflater.inflate(R.layout.dialog_success_buy_class, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
-
     }
 
     private void initFindViewByID(View rootView) {
-        txtShop = rootView.findViewById(R.id.txt_go_shop);
-        txtShop.setOnClickListener(this);
-        txtClose = rootView.findViewById(R.id.txt_close);
-        txtClose.setOnClickListener(this);
+        txtSuccess = rootView.findViewById(R.id.txt_success);
+        btnBack = rootView.findViewById(R.id.btn_back);
+        btnBack.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if(v == txtClose){
-            onBackListener.sendOnBackListener(txtClose.getText().toString());
-            getDialog().dismiss();
-        }
-        if(v == txtShop){
-            onBackListener.sendOnBackListener(txtShop.getText().toString());
+        if(v == btnBack){
+            onBackSuccessBuyClassListener.sendOnBackSuccessBuyClassListener(txtSuccess.getText().toString());
             getDialog().dismiss();
         }
     }
@@ -58,7 +54,7 @@ public class CoinDontEnoughDialog extends DialogFragment implements View.OnClick
     public void onAttach(Context context) {
         super.onAttach(context);
         try {
-            onBackListener = (CoinDontEnoughDialog.OnBackListener) getActivity();
+            onBackSuccessBuyClassListener = (OnBackSuccessBuyClassListener) getActivity();
         } catch (ClassCastException e) {
             Log.d("TAG", "onAttach: ClassCastException: " + e.getMessage());
         }
