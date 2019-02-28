@@ -63,7 +63,10 @@ public class PaymentGatewayCoinForClassActivity extends AppCompatActivity implem
     @Override
     public void onClick(View v) {
         if(v == btnFinishPGW){
-
+            Intent intent = new Intent();
+            intent.putExtra("message","finish");
+            setResult(3,intent);
+            finish();
         }
     }
 

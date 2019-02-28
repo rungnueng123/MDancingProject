@@ -47,7 +47,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
     public static final int COIN_CAN_PAY_CODE = 1;
     public static final int PAY_PACKAGE = 2;
-    public static final int PAY_COIN_BY_PGW = 3;
+    public static final int PAY_COIN_BY_PGW = 3; // buy coin and buy class together
 
     String getClassUrl = DATA_URL + "get_single_class.php";
     String canBuyClassByCoinUrl = DATA_URL + "buy_class_by_coin.php";
@@ -470,6 +470,9 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
         }
         if (requestCode == PAY_PACKAGE) {
 
+        }
+        if (requestCode == PAY_COIN_BY_PGW) {
+            Toast.makeText(getApplicationContext(), data.getStringExtra("message"), Toast.LENGTH_SHORT).show();
         }
     }
 }
