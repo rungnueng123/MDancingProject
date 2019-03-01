@@ -102,5 +102,7 @@
     <string name="txt_payment_fail_detail">กรุณาตรวจสอบขั้นตอนการลงทะเบียนอีกครั้ง</string>
     <string name="txt_payment_class_fail">ชำระเงินไม่สำเร็จ!</string>
     <string name="txt_payment_class_success">ชำระเงินสำเร็จ!</string>
+    <string name="price">ราคา</string>
+    <string name="class_title">Class Detail</string>
 
 </resources>

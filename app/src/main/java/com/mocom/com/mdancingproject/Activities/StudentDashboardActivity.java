@@ -264,9 +264,6 @@ public class StudentDashboardActivity extends AppCompatActivity
                 if (id == R.id.nav_home) {
                     fragmentClass = HomeFragment.class;
                     actionbar.setTitle("Home");
-                } else if (id == R.id.nav_course) {
-                    fragmentClass = StudentCourseFragment.class;
-                    actionbar.setTitle("Course");
                 } else if (id == R.id.nav_coin) {
                     fragmentClass = StudentCoinFragment.class;
                     actionbar.setTitle("Coin");
