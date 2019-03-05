@@ -173,7 +173,7 @@ public class PaymentPackageActivity extends AppCompatActivity
     }
 
     @Override
-    public void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID) {
+    public void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID, String baht, String coinAmt) {
         if (typePay.equals(getResources().getString(R.string.payment_gateway))) {
             Intent intent = new Intent(getApplicationContext(), PaymentGatewayTestActivity.class);
             intent.putExtra("coinPackID", coinPackID);

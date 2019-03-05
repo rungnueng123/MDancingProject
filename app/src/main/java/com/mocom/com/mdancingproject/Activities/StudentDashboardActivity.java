@@ -181,7 +181,7 @@ public class StudentDashboardActivity extends AppCompatActivity
     }
 
     @Override
-    public void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID) {
+    public void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID, String baht, String coinAmt) {
         if (typePay.equals(getResources().getString(R.string.payment_gateway))) {
             Intent intent = new Intent(getApplicationContext(), PaymentGatewayTestActivity.class);
             intent.putExtra("coinPackID", coinPackID);
@@ -191,7 +191,7 @@ public class StudentDashboardActivity extends AppCompatActivity
             sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, queryGenQrUrl, response -> {
-//                    Log.d("Onresponse", response);
+                    Log.d("Onresponse", response);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("msg").equals("success")) {

@@ -34,6 +34,7 @@ import com.mocom.com.mdancingproject.DialogFragment.StyleDontEnoughDialog;
 import com.mocom.com.mdancingproject.DialogFragment.SuccessBuyClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.TypePaymentClassDialog;
 import com.mocom.com.mdancingproject.PaymentGateway.PaymentGatewayCoinForClassActivity;
+import com.mocom.com.mdancingproject.QRCode.QRCodeCoinForClassActivity;
 import com.mocom.com.mdancingproject.R;
 import com.mocom.com.mdancingproject.config.config;
 
@@ -61,6 +62,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     String checkCanBuyClassByStyle = DATA_URL + "check_can_buy_class_by_style.php";
     String buyClassByStyleUrl = DATA_URL + "buy_class_by_style.php";
     String checkCoinUrl = DATA_URL + "check_coin_for_payment.php";
+    String qrBuyClassUrl = DATA_URL + "gen_qr_for_buy_class.php";
     String eventID, coinAmt, eventName, userID, canBuy, eventStyleID, sharedUserID, imgUrl, youtubeUrl, numEmpty, buyAlready;
     Toolbar toolbar;
 
@@ -267,7 +269,45 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void genQrForBuyCoin() {
-        Toast.makeText(this, "gen QR", Toast.LENGTH_SHORT).show();
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, qrBuyClassUrl, response -> {
+            Log.d("response", response);
+            try {
+                JSONObject obj = new JSONObject(response);
+                if (obj.getString("msg").equals("success")) {
+                    Intent intent = new Intent(this, QRCodeCoinForClassActivity.class);
+                    intent.putExtra("userName",obj.getString("userName"));
+                    intent.putExtra("userID",obj.getString("userID"));
+                    intent.putExtra("eventID",obj.getString("eventID"));
+                    intent.putExtra("eventName",obj.getString("eventName"));
+                    intent.putExtra("coin",obj.getString("coin"));
+                    intent.putExtra("baht",obj.getString("baht"));
+                    startActivity(intent);
+
+                }else{
+                    AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                    builder.setMessage(obj.getString("msg"))
+                            .setNegativeButton("ok", null);
+                    AlertDialog alert = builder.create();
+                    alert.show();
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+        }, error -> {
+            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<String, String>();
+                params.put("eventID", eventID);
+                params.put("userID", userID);
+
+                return params;
+            }
+        };
+        RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
+        requestQueue.add(stringRequest);
     }
 
     @Override
@@ -507,6 +547,12 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 //        Intent intent = new Intent(getActivity(), StudentDashboardActivity.class);
 //        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK  |  Intent.FLAG_ACTIVITY_CLEAR_TASK);
 //        startActivity(intent);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadClassDetail();
     }
 
     @Override

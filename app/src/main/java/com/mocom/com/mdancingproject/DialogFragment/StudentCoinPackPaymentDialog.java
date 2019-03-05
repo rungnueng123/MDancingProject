@@ -21,7 +21,7 @@ import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 public class StudentCoinPackPaymentDialog extends DialogFragment implements View.OnClickListener {
 
     public interface OnSelectTypePayPackListener {
-        void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID);
+        void sendOnSelectTypePayPackCoinListener(String typePay, String coinPackID, String baht, String coinAmt);
     }
 
     public OnSelectTypePayPackListener onSelectTypePayPackListener;
@@ -79,7 +79,7 @@ public class StudentCoinPackPaymentDialog extends DialogFragment implements View
             int selectedId = radioGroup.getCheckedRadioButtonId();
             RadioButton selectRadioButton = v.getRootView().findViewById(selectedId);
 
-            onSelectTypePayPackListener.sendOnSelectTypePayPackCoinListener(selectRadioButton.getText().toString(), coinPackID);
+            onSelectTypePayPackListener.sendOnSelectTypePayPackCoinListener(selectRadioButton.getText().toString(), coinPackID, baht, coinAmt);
             getDialog().dismiss();
 //            int selectedId = radioGroup.getCheckedRadioButtonId();
 //            RadioButton selectRadioButton = v.getRootView().findViewById(selectedId);

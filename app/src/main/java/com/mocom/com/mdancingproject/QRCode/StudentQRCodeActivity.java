@@ -8,7 +8,6 @@ import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
-import android.widget.Toast;
 
 import com.google.gson.Gson;
 import com.google.zxing.qrcode.decoder.ErrorCorrectionLevel;
@@ -42,7 +41,7 @@ public class StudentQRCodeActivity extends AppCompatActivity implements View.OnC
         baht = intent.getStringExtra("baht");
         coinAmt = intent.getStringExtra("coinAmt");
 
-//        Toast.makeText(this, secret_key, Toast.LENGTH_LONG).show();
+//        Toast.makeText(this, baht+coinAmt+secret_key, Toast.LENGTH_LONG).show();
 
         initInstance();
     }
