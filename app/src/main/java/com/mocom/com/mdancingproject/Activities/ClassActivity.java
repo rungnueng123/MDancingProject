@@ -190,6 +190,7 @@ public class ClassActivity extends AppCompatActivity {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 branchName = branch.get(position);
 //                Toast.makeText(getApplicationContext(), branchName, Toast.LENGTH_SHORT).show();
+                loadEventData();
                 initCalendarListener();
             }
 
@@ -205,7 +206,6 @@ public class ClassActivity extends AppCompatActivity {
         year = day.getYear();
         month = (day.getMonth());
         date = day.getDay();
-        loadEventData();
         loadClassData();
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override

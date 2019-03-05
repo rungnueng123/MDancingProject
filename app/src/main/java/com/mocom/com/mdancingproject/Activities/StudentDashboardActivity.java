@@ -30,9 +30,9 @@ import com.mocom.com.mdancingproject.DialogFragment.ConfirmPayStyleDialog;
 import com.mocom.com.mdancingproject.DialogFragment.FailDialog;
 import com.mocom.com.mdancingproject.DialogFragment.StudentCoinPackPaymentDialog;
 import com.mocom.com.mdancingproject.DialogFragment.SuccessDialog;
+import com.mocom.com.mdancingproject.Fragments.CalendarFragment;
 import com.mocom.com.mdancingproject.Fragments.HomeFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
-import com.mocom.com.mdancingproject.Fragments.StudentCourseFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentProfileFragment;
 import com.mocom.com.mdancingproject.PaymentGateway.PaymentGatewayTestActivity;
 import com.mocom.com.mdancingproject.QRCode.StudentQRCodeActivity;
@@ -264,6 +264,9 @@ public class StudentDashboardActivity extends AppCompatActivity
                 if (id == R.id.nav_home) {
                     fragmentClass = HomeFragment.class;
                     actionbar.setTitle("Home");
+                } else if (id == R.id.nav_calendar) {
+                    fragmentClass = CalendarFragment.class;
+                    actionbar.setTitle("Calendar");
                 } else if (id == R.id.nav_coin) {
                     fragmentClass = StudentCoinFragment.class;
                     actionbar.setTitle("Coin");

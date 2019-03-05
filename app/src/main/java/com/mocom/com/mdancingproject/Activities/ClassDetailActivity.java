@@ -3,9 +3,11 @@ package com.mocom.com.mdancingproject.Activities;
 import android.app.AlertDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.Nullable;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
@@ -21,6 +23,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.google.android.youtube.player.YouTubeInitializationResult;
+import com.google.android.youtube.player.YouTubePlayer;
+import com.google.android.youtube.player.YouTubePlayerFragment;
 import com.mocom.com.mdancingproject.DialogFragment.CoinTypePaymentClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.FailBuyClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.PaymentClassDialog;
@@ -30,6 +35,7 @@ import com.mocom.com.mdancingproject.DialogFragment.SuccessBuyClassDialog;
 import com.mocom.com.mdancingproject.DialogFragment.TypePaymentClassDialog;
 import com.mocom.com.mdancingproject.PaymentGateway.PaymentGatewayCoinForClassActivity;
 import com.mocom.com.mdancingproject.R;
+import com.mocom.com.mdancingproject.config.config;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -55,7 +61,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     String checkCanBuyClassByStyle = DATA_URL + "check_can_buy_class_by_style.php";
     String buyClassByStyleUrl = DATA_URL + "buy_class_by_style.php";
     String checkCoinUrl = DATA_URL + "check_coin_for_payment.php";
-    String eventID, coinAmt, eventName, userID, canBuy, eventStyleID, sharedUserID;
+    String eventID, coinAmt, eventName, userID, canBuy, eventStyleID, sharedUserID, imgUrl, youtubeUrl, numEmpty, buyAlready;
     Toolbar toolbar;
 
     ImageView imgClass, imgArrow;
@@ -63,6 +69,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     public TextView txtTypePay;
     Button btnPayment;
     private SharedPreferences sharedPreferences;
+    YouTubePlayerFragment youtubePlayer;
 
     @Override
     public void sendOnBackCoinTypePaymentClassListener(String back, String coin, String eventID) {
@@ -297,10 +304,20 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             Log.d("onResponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
+                if (jsonObject.getString("buyAlready").equals("yes")) {
+                    btnPayment.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.shapebtncantpayment));
+                }
+                buyAlready = jsonObject.getString("buyAlready");
                 if (jsonObject.getString("msg").equals("success")) {
                     JSONArray classArray = jsonObject.getJSONArray("class");
                     for (int i = 0; i < classArray.length(); i++) {
                         JSONObject obj = classArray.getJSONObject(i);
+                        if (obj.getString("eventEmpty").equals("0")) {
+                            btnPayment.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.shapebtncantpayment));
+                            txtEmpty.setTextColor(Color.RED);
+                        }else if(obj.getString("canBuy").equals("cant")){
+                            btnPayment.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.shapebtncantpayment));
+                        }
                         txtClassName.setText("คลาส : " + obj.getString("eventTitle"));
                         eventName = obj.getString("eventTitle");
                         txtPlaylist.setText("เพลง : " + obj.getString("playlist"));
@@ -309,15 +326,34 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
                         txtDate.setText("วันที่เรียน : " + obj.getString("eventDate"));
                         txtTime.setText("เวลา : " + obj.getString("eventTime"));
                         txtEmpty.setText("ว่าง : " + obj.getString("eventEmpty"));
+                        numEmpty = obj.getString("eventEmpty");
                         txtBranch.setText("สาขา : " + obj.getString("eventBranch"));
                         txtCoin.setText(obj.getString("coin") + " Coins/Time");
                         coinAmt = obj.getString("coin");
                         txtDesc.setText(obj.getString("description"));
-                        String imgUrl = HOST_URL + obj.getString("imgUrl");
+                        imgUrl = HOST_URL + obj.getString("imgUrl");
                         Glide.with(getApplicationContext())
                                 .load(imgUrl)
                                 .into(imgClass);
                         canBuy = obj.getString("canBuy");
+
+                        if (obj.getString("youtubeUrl").equals("null")) {
+                            youtubeUrl = "";
+                        } else {
+                            youtubeUrl = obj.getString("youtubeUrl");
+                            youtubePlayer.initialize(config.getYoutubeKey(), new YouTubePlayer.OnInitializedListener() {
+                                @Override
+                                public void onInitializationSuccess(YouTubePlayer.Provider provider, YouTubePlayer youTubePlayer, boolean b) {
+                                    youTubePlayer.cueVideo(youtubeUrl);
+                                }
+
+                                @Override
+                                public void onInitializationFailure(YouTubePlayer.Provider provider, YouTubeInitializationResult youTubeInitializationResult) {
+
+                                }
+                            });
+                        }
+
                         eventStyleID = obj.getString("eventStyleID");
                     }
                 } else {
@@ -336,6 +372,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
                 params.put("eventID", eventID);
+                params.put("userID", userID);
 
                 return params;
             }
@@ -347,6 +384,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     private void initFindViewByID() {
         toolbar = findViewById(R.id.toolbar_class_detail);
         imgClass = findViewById(R.id.img_class);
+        imgClass.setOnClickListener(this);
         imgArrow = findViewById(R.id.img_arrow);
         imgArrow.setOnClickListener(this);
         txtClassName = findViewById(R.id.txt_class_name);
@@ -362,11 +400,17 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
         btnPayment = findViewById(R.id.btn_payment);
         btnPayment.setOnClickListener(this);
         txtTypePay = findViewById(R.id.txt_type_pay);
+        youtubePlayer = (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_player_footage);
 
     }
 
     @Override
     public void onClick(View v) {
+        if (v == imgClass) {
+            Intent intentShowPic = new Intent(this, ShowPictureActivity.class);
+            intentShowPic.putExtra("imageUrl", imgUrl);
+            startActivity(intentShowPic);
+        }
         if (v == imgArrow) {
             if (txtDesc.getVisibility() == View.GONE) {
                 imgArrow.setImageResource(R.drawable.ic_arrow_drop_down_open);
@@ -377,7 +421,19 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             }
         }
         if (v == btnPayment) {
-            if (canBuy.equals("can")) {
+            if(buyAlready.equals("yes")) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(getResources().getString(R.string.txt_buy_class_already))
+                        .setNegativeButton("ok", null);
+                AlertDialog alert = builder.create();
+                alert.show();
+            }else if (numEmpty.equals("0")) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setMessage(getResources().getString(R.string.txt_full_class))
+                        .setNegativeButton("ok", null);
+                AlertDialog alert = builder.create();
+                alert.show();
+            }else if (canBuy.equals("can")) {
                 openDialogTypePay(coinAmt, eventID, eventName);
 //                openDialogFragment(coinAmt, eventID, eventName);
             } else {
@@ -472,7 +528,9 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
         }
         if (requestCode == PAY_COIN_BY_PGW) {
-            Toast.makeText(getApplicationContext(), data.getStringExtra("message"), Toast.LENGTH_SHORT).show();
+            if(!data.getStringExtra("message").equals("null")) {
+                Toast.makeText(getApplicationContext(), data.getStringExtra("message"), Toast.LENGTH_SHORT).show();
+            }
         }
     }
 }

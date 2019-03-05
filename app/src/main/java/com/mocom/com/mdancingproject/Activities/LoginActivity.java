@@ -263,6 +263,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         AlertDialog alert = builder.create();
                         alert.show();
                     } else {
+                        progressDialog.dismiss();
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setMessage(jsonObject.getString("msg"))
                                 .setNegativeButton("ok", null);

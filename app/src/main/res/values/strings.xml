@@ -104,5 +104,8 @@
     <string name="txt_payment_class_success">ชำระเงินสำเร็จ!</string>
     <string name="price">ราคา</string>
     <string name="class_title">Class Detail</string>
+    <string name="txt_full_class">คลาสเต็มแล้ว</string>
+    <string name="nav_calendar">Calendar</string>
+    <string name="txt_buy_class_already">คุณซื้อคลาสนี้เรียบร้อยแล้ว</string>
 
 </resources>

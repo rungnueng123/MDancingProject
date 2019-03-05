@@ -6,6 +6,10 @@
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/nav_home" />
         <item
+            android:id="@+id/nav_calendar"
+            android:icon="@drawable/ic_home_black_24dp"
+            android:title="@string/nav_calendar" />
+        <item
             android:id="@+id/nav_coin"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/nav_coin" />

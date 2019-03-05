@@ -91,4 +91,12 @@ public class PaymentGatewayCoinForClassActivity extends AppCompatActivity implem
             dialog.show();
         }
     }
+
+    @Override
+    public void onBackPressed() {
+        Intent intent = new Intent();
+        intent.putExtra("message", "Back");
+        setResult(3, intent);
+        finish();
+    }
 }
