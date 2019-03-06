@@ -18,6 +18,16 @@
             android:background="@drawable/shape_image"
             android:scaleType="fitXY" />
 
+        <ImageView
+            android:id="@+id/img_info"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:background="@drawable/ic_info_black_24dp"
+            android:scaleType="fitXY" />
+
         <TextView
             android:id="@+id/txt_style"
             android:layout_width="wrap_content"

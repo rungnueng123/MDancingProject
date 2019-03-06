@@ -1,7 +1,9 @@
 package com.mocom.com.mdancingproject.Adapter;
 
 import android.content.Context;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,6 +12,7 @@ import android.view.ViewGroup;
 import com.bumptech.glide.Glide;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StyleHomeDao;
+import com.mocom.com.mdancingproject.DialogFragment.StyleDetailDialog;
 import com.mocom.com.mdancingproject.Holder.StyleHomeHolder;
 import com.mocom.com.mdancingproject.R;
 
@@ -45,6 +48,23 @@ public class StyleHomeAdapter extends RecyclerView.Adapter<StyleHomeHolder> {
         Glide.with(context)
                 .load(imgUrl)
                 .into(holder.getImgUrl());
+
+        holder.getImgInfo().setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                openInfoDialogFragment(styleHomeDao.getStyleName(),styleHomeDao.getStyleDesc());
+            }
+        });
+    }
+
+    private void openInfoDialogFragment(String styleName, String styleDesc) {
+        Bundle bundle = new Bundle();
+        bundle.putString("styleName", styleName);
+        bundle.putString("styleDesc", styleDesc);
+
+        StyleDetailDialog dialog = new StyleDetailDialog();
+        dialog.setArguments(bundle);
+        dialog.show(((AppCompatActivity) context).getSupportFragmentManager(), "StyleDetailDialog");
     }
 
     @Override

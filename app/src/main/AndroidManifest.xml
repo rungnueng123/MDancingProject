@@ -18,7 +18,7 @@
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
         <activity android:name=".Activities.PaymentPackageActivity" />
-        <activity android:name=".QRCode.AdminQRCodeScannedActivity">
+        <activity android:name=".Activities.LoginActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -27,9 +27,8 @@
         </activity>
         <activity
             android:name=".Activities.StudentDashboardActivity"
-            android:configChanges="orientation|keyboardHidden"
-            android:screenOrientation="portrait" />
-        <activity android:name=".Activities.LoginActivity" />
+            android:configChanges="orientation|keyboardHidden" />
+        <activity android:name=".QRCode.AdminQRCodeScannedActivity" />
         <activity android:name=".Activities.RegisterActivity" />
         <activity android:name=".Activities.AdminDashboardActivity" />
         <activity android:name=".QRCode.AdminQRCodeScannedResultActivity" />

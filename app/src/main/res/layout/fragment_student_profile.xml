@@ -47,7 +47,8 @@
             android:layout_marginTop="4dp"
             android:text="Tel"
             android:textSize="18sp"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:visibility="gone"/>
 
         <TextView
             android:id="@+id/txt_birth"
@@ -57,7 +58,8 @@
             android:layout_marginTop="4dp"
             android:text="Birth"
             android:textSize="18sp"
-            android:layout_marginStart="8dp" />
+            android:layout_marginStart="8dp"
+            android:visibility="gone" />
 
     </RelativeLayout>
 

@@ -12,7 +12,7 @@ import com.mocom.com.mdancingproject.R;
 public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ItemClickCallBack mListener;
-    ImageView imgUrl;
+    ImageView imgUrl, imgInfo;
     TextView style;
 
     public ImageView getImgUrl() {
@@ -23,6 +23,10 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
         return style;
     }
 
+    public ImageView getImgInfo() {
+        return imgInfo;
+    }
+
     public StyleHomeHolder(@NonNull View itemView, ItemClickCallBack listener) {
         super(itemView);
         mListener = listener;
@@ -30,6 +34,7 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
 
         imgUrl = itemView.findViewById(R.id.img_style);
         style = itemView.findViewById(R.id.txt_style);
+        imgInfo = itemView.findViewById(R.id.img_info);
     }
 
     @Override
