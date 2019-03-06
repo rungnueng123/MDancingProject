@@ -107,5 +107,6 @@
     <string name="txt_full_class">คลาสเต็มแล้ว</string>
     <string name="nav_calendar">Calendar</string>
     <string name="txt_buy_class_already">คุณซื้อคลาสนี้เรียบร้อยแล้ว</string>
+    <string name="nav_course_and_style"><![CDATA[Course & Style]]></string>
 
 </resources>

@@ -262,11 +262,11 @@ public class StudentDashboardActivity extends AppCompatActivity
                 Fragment fragment = null;
                 Class fragmentClass = null;
                 if (id == R.id.nav_home) {
-                    fragmentClass = HomeFragment.class;
+                    fragmentClass = CalendarFragment.class;
                     actionbar.setTitle("Home");
                 } else if (id == R.id.nav_calendar) {
-                    fragmentClass = CalendarFragment.class;
-                    actionbar.setTitle("Calendar");
+                    fragmentClass = HomeFragment.class;
+                    actionbar.setTitle("Course & Style");
                 } else if (id == R.id.nav_coin) {
                     fragmentClass = StudentCoinFragment.class;
                     actionbar.setTitle("Coin");
@@ -311,7 +311,7 @@ public class StudentDashboardActivity extends AppCompatActivity
                         .commit();
             } else {
                 getSupportFragmentManager().beginTransaction()
-                        .add(R.id.fragment_dashboard, HomeFragment.newInstance())
+                        .add(R.id.fragment_dashboard, CalendarFragment.newInstance())
                         .commit();
             }
         }

@@ -30,6 +30,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
     private val TAG: String = "ScannedResultActivity"
     private val getQrDataUrl: String = DATA_URL + "query_for_get_data_qr.php"
     private val buyCoinAndClassUrl: String = DATA_URL + "buy_class_and_coin_with_qr.php"
+    private val buyCoinPackUrl: String = DATA_URL + "buy_coin_pack_with_qr.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -51,10 +52,13 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
                     if (obj.getString("msg") == "success") {
                         layout_buy_coin_only.visibility = View.VISIBLE
                         layout_buy_coin_and_class.visibility = View.GONE
+                        txt_scan_userid.text = obj.getString("userID")
+                        txt_scan_coinpackid.text = obj.getString("coinPackID")
                         txt_scan_name.text = obj.getString("user")
                         txt_scan_package.text = obj.getString("coinPackName")
                         txt_scan_coin.text = coinAmt
-                        txt_scan_bath.text = baht
+                        txt_scan_baht.text = baht
+//                        Toast.makeText(applicationContext,txt_scan_userid.text,Toast.LENGTH_LONG).show()
                     }
                 } catch (e: JSONException) {
                     e.printStackTrace()
@@ -96,10 +100,42 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
         }
 
         btn_ok.setOnClickListener {
-            if (txt_scan_name.text != "") {
-//                Toast.makeText(applicationContext, "a", Toast.LENGTH_LONG).show()
+            if (txt_scan_name.text.toString() != "") {
+                layout_progressbar.visibility = View.VISIBLE
+                val stringRequest = object : StringRequest(Request.Method.POST, buyCoinPackUrl, Response.Listener<String> { response ->
+                    Log.d(TAG, response)
+                    layout_progressbar.visibility = View.GONE
+                    try {
+                        val obj = JSONObject(response)
+                        if (obj.getString("message") == "success") {
+                            openDialogSuccess()
+                        } else {
+                            openDialogFail()
+                        }
+                    } catch (e: JSONException) {
+                        e.printStackTrace()
+                    }
+
+                },
+                        object : Response.ErrorListener {
+                            override fun onErrorResponse(volleyError: VolleyError) {
+                                Toast.makeText(applicationContext, volleyError.message, Toast.LENGTH_LONG).show()
+                            }
+                        }) {
+                    @Throws(AuthFailureError::class)
+                    override fun getParams(): MutableMap<String, String> {
+                        val params = HashMap<String, String>()
+                        params.put("userID", txt_scan_userid.text.toString())
+                        params.put("coinPackID", txt_scan_coinpackid.text.toString())
+                        params.put("coin", txt_scan_coin.text.toString())
+                        params.put("baht", txt_scan_baht.text.toString())
+                        return params
+                    }
+                }
+                VolleySingleton.getInstance(applicationContext).addToRequestQueue(stringRequest)
+                Toast.makeText(applicationContext, "a", Toast.LENGTH_LONG).show()
 //                Toast.makeText(applicationContext, txt_scan_name.text, Toast.LENGTH_LONG).show()
-            } else if (txt_event_for_class.text != "") {
+            } else if (txt_event_for_class.text.toString() != "") {
                 layout_progressbar.visibility = View.VISIBLE
                 val stringRequest = object : StringRequest(Request.Method.POST, buyCoinAndClassUrl, Response.Listener<String> { response ->
                     Log.d(TAG, response)
@@ -108,7 +144,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
                         val obj = JSONObject(response)
                         if (obj.getString("message") == "Payment Success") {
                             openDialogSuccess()
-                        }else{
+                        } else {
                             openDialogFail()
                         }
                     } catch (e: JSONException) {
@@ -140,13 +176,13 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
     }
 
     private fun openDialogFail() {
-        var failBuyClassDialog : FailBuyClassDialog = FailBuyClassDialog()
-        failBuyClassDialog.show(supportFragmentManager,"failBuyClassDialog")
+        var failBuyClassDialog: FailBuyClassDialog = FailBuyClassDialog()
+        failBuyClassDialog.show(supportFragmentManager, "failBuyClassDialog")
     }
 
     private fun openDialogSuccess() {
-        var successBuyClassDialog : SuccessBuyClassDialog = SuccessBuyClassDialog()
-        successBuyClassDialog.show(supportFragmentManager,"successBuyClassDialog")
+        var successBuyClassDialog: SuccessBuyClassDialog = SuccessBuyClassDialog()
+        successBuyClassDialog.show(supportFragmentManager, "successBuyClassDialog")
     }
 
     override fun sendOnBackSuccessBuyClassListener(back: String?) {
