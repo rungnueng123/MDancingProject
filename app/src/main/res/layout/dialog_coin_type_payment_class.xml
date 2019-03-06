@@ -78,6 +78,7 @@
             android:layout_marginBottom="18dp"
             android:layout_toStartOf="@+id/action_buy"
             android:fontFamily="@font/kanit_medium"
+            android:padding="8dp"
             android:text="@string/cancel"
             android:textColor="@color/txt_color_class_list"
             android:textSize="14sp" />
@@ -92,6 +93,7 @@
             android:layout_marginEnd="19dp"
             android:layout_marginBottom="18dp"
             android:fontFamily="@font/kanit_medium"
+            android:padding="8dp"
             android:text="@string/confirm"
             android:textColor="@color/txt_color_class_list"
             android:textSize="14sp" />

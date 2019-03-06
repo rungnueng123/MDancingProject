@@ -71,9 +71,10 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_desc"
-            android:layout_marginTop="15dp"
             android:layout_alignParentEnd="true"
+            android:layout_marginTop="15dp"
             android:fontFamily="@font/kanit_regular"
+            android:padding="8dp"
             android:text="@string/close"
             android:textColor="@color/colorPrimary"
             android:textSize="14sp" />

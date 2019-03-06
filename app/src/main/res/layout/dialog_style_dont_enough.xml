@@ -34,20 +34,22 @@
             android:layout_marginTop="19dp"
             android:layout_marginEnd="19dp"
             android:layout_marginBottom="18dp"
-            android:textColor="@color/txt_color_class_list"
-            android:text="@string/close"/>
+            android:padding="8dp"
+            android:text="@string/close"
+            android:textColor="@color/txt_color_class_list" />
 
         <TextView
             android:id="@+id/txt_go_shop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@id/txt_title"
-            android:layout_toStartOf="@id/txt_close"
             android:layout_marginTop="19dp"
             android:layout_marginEnd="19dp"
             android:layout_marginBottom="18dp"
-            android:textColor="@color/txt_color_class_list"
-            android:text="@string/shop"/>
+            android:layout_toStartOf="@id/txt_close"
+            android:padding="8dp"
+            android:text="@string/shop"
+            android:textColor="@color/txt_color_class_list" />
 
     </RelativeLayout>
 
