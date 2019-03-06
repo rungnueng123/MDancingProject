@@ -1,7 +1,6 @@
 package com.mocom.com.mdancingproject.Activities;
 
 import android.app.AlertDialog;
-import android.app.ProgressDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -59,7 +58,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     private Button btnLogin, btnFBCustom;
     String UserID, User, Email, GroupID, Groups, firstName = "", lastName = "", email = "", id = "", birthday = "", gender = "";
     private URL profilePicture;
-    ProgressDialog progressDialog;
+    View layoutProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -81,6 +80,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         txtCreateAccount.setOnClickListener(this);
         btnFBCustom = findViewById(R.id.btn_fb_custom);
         btnFBCustom.setOnClickListener(this);
+        layoutProgress = findViewById(R.id.layout_progressbar);
 
     }
 
@@ -206,12 +206,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     }
 
     private void goLogin(String username, String pass) {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading..."); // Setting Message
-        progressDialog.setTitle("ProgressDialog"); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
+        layoutProgress.setVisibility(View.VISIBLE);
 
         if (!username.isEmpty()) {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -219,6 +214,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                    Log.d("onResponse",response);
 //                    edtCourse.setText("");
 //                    Toast.makeText(getActivity(),"เพิ่มข้อมูลแล้วจ้า",Toast.LENGTH_SHORT).show();
+                layoutProgress.setVisibility(View.GONE);
                 try {
                     //converting response to json object
 
@@ -243,7 +239,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             editor.commit();
 //                        courseList.add(item);
                         }
-                        progressDialog.dismiss();
+                        layoutProgress.setVisibility(View.GONE);
                         //TODO
                         if (Groups.equals("student")) {
                             Intent intent = new Intent(this, StudentDashboardActivity.class);
@@ -255,7 +251,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             finish();
                         }
                     } else if (jsonObject.getString("msg").equals("verify email")) {
-                        progressDialog.dismiss();
+                        layoutProgress.setVisibility(View.GONE);
 //                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setMessage(jsonObject.getString("msg"))
@@ -263,7 +259,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         AlertDialog alert = builder.create();
                         alert.show();
                     } else {
-                        progressDialog.dismiss();
+                        layoutProgress.setVisibility(View.GONE);
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setMessage(jsonObject.getString("msg"))
                                 .setNegativeButton("ok", null);
@@ -277,7 +273,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }, error -> {
 //                    Log.d("onError", error.toString());
 //                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
-                progressDialog.dismiss();
+                layoutProgress.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }) {
                 @Override
@@ -291,16 +287,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             };
             requestQueue.add(request);
 
+        }else{
+            layoutProgress.setVisibility(View.GONE);
         }
     }
 
     private void goMainScreenWithFB(String id, String firstName, String lastName, String email, String birthday, String gender) {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading..."); // Setting Message
-        progressDialog.setTitle("ProgressDialog"); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
+        layoutProgress.setVisibility(View.VISIBLE);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, loginFBUrl, response -> {
             Log.d("onResponse", response);
@@ -328,7 +321,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         editor.commit();
 //                        courseList.add(item);
                     }
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                     //TODO
                     if (!Groups.equals("student")) {
                         Intent intent = new Intent(this, AdminDashboardActivity.class);
@@ -340,6 +333,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         finish();
                     }
                 } else {
+                    layoutProgress.setVisibility(View.GONE);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(jsonObject.getString("msg"))
                             .setNegativeButton("ok", null);
@@ -352,7 +346,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         }, error -> {
 //                    Log.d("onError", error.toString());
-            progressDialog.dismiss();
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

@@ -1,6 +1,5 @@
 package com.mocom.com.mdancingproject.Fragments;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -50,8 +49,7 @@ public class HomeFragment extends Fragment {
     private String styleUrl = DATA_URL + "get_style_all.php";
     private String courseUrl = DATA_URL + "get_course_style_all.php";
     private String BannerUrl = DATA_URL + "get_banner.php";
-    ProgressDialog progressDialog;
-    View layoutShowFirstOpen, layoutShowEmpty;
+    View layoutShowFirstOpen, layoutShowEmpty, layoutProgress;
     String styleID = "";
 
 
@@ -127,7 +125,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadBanner() {
-
+        layoutProgress.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, BannerUrl, response -> {
             Log.d("Onresponse", response);
             try {
@@ -197,13 +195,16 @@ public class HomeFragment extends Fragment {
                         }
                     });
 
-
+                    layoutProgress.setVisibility(View.GONE);
+                }else{
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
@@ -219,16 +220,11 @@ public class HomeFragment extends Fragment {
         layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
         viewPager = rootView.findViewById(R.id.pager);
         indicator = rootView.findViewById(R.id.indicator);
+        layoutProgress = rootView.findViewById(R.id.layout_progressbar);
     }
 
     private void loadStyle() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading..."); // Setting Message
-        progressDialog.setTitle("ProgressDialog"); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
-
+        layoutProgress.setVisibility(View.VISIBLE);
         if (styleList != null || styleList.size() > 0) {
             styleList.clear();
         }
@@ -250,19 +246,18 @@ public class HomeFragment extends Fragment {
                     }
                     adapterStyle = new StyleHomeAdapter(styleListener, styleList, getContext());
                     recyclerStyleView.setAdapter(adapterStyle);
-
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                     loadCourse();
 
                 }else{
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }, error -> {
-            progressDialog.dismiss();
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
@@ -272,12 +267,7 @@ public class HomeFragment extends Fragment {
     }
 
     private void loadCourse() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading..."); // Setting Message
-        progressDialog.setTitle("ProgressDialog"); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
+        layoutProgress.setVisibility(View.VISIBLE);
         if (courseList != null || courseList.size() > 0) {
             courseList.clear();
         }
@@ -313,19 +303,18 @@ public class HomeFragment extends Fragment {
                         adapterCourse = new CourseHomeAdapter(courseListener, courseList, getContext());
                         recyclerCourseView.setAdapter(adapterCourse);
                     }
-
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                 }else{
                     layoutShowEmpty.setVisibility(View.VISIBLE);
                     recyclerCourseView.setVisibility(View.GONE);
                     layoutShowFirstOpen.setVisibility(View.GONE);
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, error -> {
-            progressDialog.dismiss();
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

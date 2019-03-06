@@ -1,6 +1,5 @@
 package com.mocom.com.mdancingproject.Fragments;
 
-import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
@@ -68,7 +67,7 @@ public class CalendarFragment extends Fragment {
     private ArrayList<String> branch = new ArrayList<String>();
     private Spinner spinnerBranch;
 
-    ProgressDialog progressDialog;
+    View layoutProgress;
 
     CollapsibleCalendar collapsibleCalendar;
     Integer year, month, date;
@@ -130,11 +129,12 @@ public class CalendarFragment extends Fragment {
         collapsibleCalendar = rootView.findViewById(R.id.calendarView);
         recyclerView = rootView.findViewById(R.id.recycler_calendar_fragment);
         txtEmpty = rootView.findViewById(R.id.txt_recycler_calendar_fragment_empty);
+        layoutProgress = rootView.findViewById(R.id.layout_progressbar);
 
     }
 
     private void loadBanner() {
-
+        layoutProgress.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, BannerUrl, response -> {
             Log.d("Onresponse", response);
             try {
@@ -203,14 +203,14 @@ public class CalendarFragment extends Fragment {
 
                         }
                     });
-
-
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
@@ -220,12 +220,7 @@ public class CalendarFragment extends Fragment {
     }
 
     private void loadAllBranch() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading..."); // Setting Message
-        progressDialog.setTitle("ProgressDialog"); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
+        layoutProgress.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, loadBranchUrl, response -> {
             Log.d("Onresponse", response);
             try {
@@ -236,13 +231,14 @@ public class CalendarFragment extends Fragment {
                         JSONObject obj = array.getJSONObject(i);
                         branch.add(obj.getString("Branch"));
                     }
-                    progressDialog.dismiss();
+
                     if (branch.size() > 0) {
+                        layoutProgress.setVisibility(View.GONE);
                         setSpinner();
                     }
-
+                    layoutProgress.setVisibility(View.GONE);
                 } else {
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -316,6 +312,7 @@ public class CalendarFragment extends Fragment {
     }
 
     private void loadClassData() {
+        layoutProgress.setVisibility(View.VISIBLE);
         if (classList != null || classList.size() > 0) {
             classList.clear();
         }
@@ -354,7 +351,7 @@ public class CalendarFragment extends Fragment {
                         adapter = new ClassAdapter(listener, classList, getContext());
                         recyclerView.setAdapter(adapter);
                     }
-
+                    layoutProgress.setVisibility(View.GONE);
                 } else {
                     if (classList.size() == 0) {
                         txtEmpty.setVisibility(View.VISIBLE);
@@ -365,13 +362,14 @@ public class CalendarFragment extends Fragment {
                         adapter = new ClassAdapter(listener, classList, getContext());
                         recyclerView.setAdapter(adapter);
                     }
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
-
+            layoutProgress.setVisibility(View.GONE);
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -391,12 +389,7 @@ public class CalendarFragment extends Fragment {
     }
 
     private void loadEventData() {
-        progressDialog = new ProgressDialog(getContext());
-        progressDialog.setMessage("Loading..."); // Setting Message
-        progressDialog.setTitle("ProgressDialog"); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
+        layoutProgress.setVisibility(View.VISIBLE);
         eventList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, CalendarEventUrl, response -> {
             Log.d("Onresponse", response);
@@ -428,16 +421,17 @@ public class CalendarFragment extends Fragment {
                             collapsibleCalendar.addEventTag(eventList.get(i).getYear(), eventList.get(i).getMonth() - 1, eventList.get(i).getDay());
                         }
                     }
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
+
                 } else {
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }, error -> {
-            progressDialog.dismiss();
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

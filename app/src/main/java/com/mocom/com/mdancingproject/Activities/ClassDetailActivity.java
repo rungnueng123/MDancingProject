@@ -56,6 +56,8 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     public static final int PAY_PACKAGE = 2;
     public static final int PAY_COIN_BY_PGW = 3; // buy coin and buy class together
 
+    View layoutProgress;
+
     String getClassUrl = DATA_URL + "get_single_class.php";
     String canBuyClassByCoinUrl = DATA_URL + "buy_class_by_coin.php";
     String genQrForBuyCoinUrl = DATA_URL + "query_qr_for_buy_coin.php";
@@ -85,12 +87,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void checkCoinCanPayment(String coin, String eventid) {
-//        progressDialog = new ProgressDialog(getApplicationContext());
-//        progressDialog.setMessage("Loading..."); // Setting Message
-//        progressDialog.setTitle("ProgressDialog"); // Setting Title
-//        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-//        progressDialog.show(); // Display Progress Dialog
-//        progressDialog.setCancelable(false);
+        layoutProgress.setVisibility(View.VISIBLE);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
@@ -98,6 +95,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             Log.d("response", response);
             try {
                 JSONObject obj = new JSONObject(response);
+                layoutProgress.setVisibility(View.GONE);
                 if (obj.getString("message").equals("enough")) {
                     goBuyClass(userID, eventid);
                 } else {
@@ -108,6 +106,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             }
 
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -173,11 +172,13 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void checkCanBuyClassByStylePack(String eventStyleID) {
+        layoutProgress.setVisibility(View.VISIBLE);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, checkCanBuyClassByStyle, response -> {
             Log.d("checkCanBy", response);
             try {
+                layoutProgress.setVisibility(View.GONE);
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("msg").equals("can")) {
                     goBuyClassByStyle(eventStyleID, sharedUserID);
@@ -188,6 +189,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
                 e.printStackTrace();
             }
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -208,9 +210,11 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void goBuyClassByStyle(String eventStyleID, String sharedUserID) {
+        layoutProgress.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, buyClassByStyleUrl, response -> {
             Log.d("buyclassbystyle", response);
             try {
+                layoutProgress.setVisibility(View.GONE);
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("success")) {
                     openDialogSuccessBuyClass();
@@ -222,6 +226,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             }
 
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -269,9 +274,11 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void genQrForBuyCoin() {
+        layoutProgress.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, qrBuyClassUrl, response -> {
             Log.d("response", response);
             try {
+                layoutProgress.setVisibility(View.GONE);
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("msg").equals("success")) {
                     Intent intent = new Intent(this, QRCodeCoinForClassActivity.class);
@@ -295,6 +302,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             }
 
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -340,6 +348,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void loadClassDetail() {
+        layoutProgress.setVisibility(View.VISIBLE);
         StringRequest request = new StringRequest(Request.Method.POST, getClassUrl, response -> {
             Log.d("onResponse", response);
             try {
@@ -396,16 +405,16 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
                         eventStyleID = obj.getString("eventStyleID");
                     }
+                    layoutProgress.setVisibility(View.GONE);
                 } else {
-
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }, error -> {
-//                    Log.d("onError", error.toString());
-//                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -422,6 +431,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void initFindViewByID() {
+        layoutProgress = findViewById(R.id.layout_progressbar);
         toolbar = findViewById(R.id.toolbar_class_detail);
         imgClass = findViewById(R.id.img_class);
         imgClass.setOnClickListener(this);
@@ -512,9 +522,11 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
     }
 
     private void goBuyClass(String userID, String eventID) {
+        layoutProgress.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, canBuyClassByCoinUrl, response -> {
             Log.d("response", response);
             try {
+                layoutProgress.setVisibility(View.GONE);
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("Payment Success")) {
                     openDialogSuccessBuyClass();
@@ -530,6 +542,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
                 e.printStackTrace();
             }
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

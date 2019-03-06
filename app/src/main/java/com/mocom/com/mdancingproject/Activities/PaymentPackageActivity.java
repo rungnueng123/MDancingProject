@@ -8,6 +8,7 @@ import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -45,6 +46,8 @@ public class PaymentPackageActivity extends AppCompatActivity
 
     public static final int PAY_PACKAGE = 2;
 
+    View layoutProgress;
+
     private SharedPreferences sharedPreferences;
     private String namePack, baht, coinAmt, secret_key;
     String queryGenQrUrl = DATA_URL + "query_for_gen_qr.php";
@@ -79,11 +82,13 @@ public class PaymentPackageActivity extends AppCompatActivity
     }
 
     private void checkCanByStyle(String stylePackID, String coinStyle) {
+        layoutProgress.setVisibility(View.VISIBLE);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, checkCanByStyle, response -> {
             Log.d("checkCoinStyle", response);
+            layoutProgress.setVisibility(View.GONE);
             try {
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("Your coin don't enough! Please go to shop!")) {
@@ -96,6 +101,7 @@ public class PaymentPackageActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -112,11 +118,13 @@ public class PaymentPackageActivity extends AppCompatActivity
     }
 
     private void goBuyStyle(String stylePackID) {
+        layoutProgress.setVisibility(View.VISIBLE);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, buyPackStyleUrl, response -> {
             Log.d("Onresponse", response);
+            layoutProgress.setVisibility(View.GONE);
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("message").equals("success")) {
@@ -128,6 +136,7 @@ public class PaymentPackageActivity extends AppCompatActivity
                 e.printStackTrace();
             }
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -179,11 +188,13 @@ public class PaymentPackageActivity extends AppCompatActivity
             intent.putExtra("coinPackID", coinPackID);
             startActivityForResult(intent, PAY_PACKAGE);
         } else if (typePay.equals(getResources().getString(R.string.qr_code))) {
+            layoutProgress.setVisibility(View.VISIBLE);
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, queryGenQrUrl, response -> {
 //                    Log.d("Onresponse", response);
+                layoutProgress.setVisibility(View.GONE);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("msg").equals("success")) {
@@ -202,6 +213,7 @@ public class PaymentPackageActivity extends AppCompatActivity
                     e.printStackTrace();
                 }
             }, error -> {
+                layoutProgress.setVisibility(View.GONE);
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }) {
                 @Override
@@ -229,6 +241,7 @@ public class PaymentPackageActivity extends AppCompatActivity
 
     private void initFindViewById() {
         toolbar = findViewById(R.id.toolbar_payment_package);
+        layoutProgress = findViewById(R.id.layout_progressbar);
     }
 
     private void initInstance(Bundle savedInstanceState) {

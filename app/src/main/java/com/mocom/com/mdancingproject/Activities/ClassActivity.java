@@ -51,6 +51,8 @@ public class ClassActivity extends AppCompatActivity {
     private String jsonEventUrl = DATA_URL + "get_event_by_branch.php";
     private String jsonClassUrl = DATA_URL + "get_class_by_branch_and_date.php";
 
+    View layoutProgress;
+
     String courseID, courseName, youtubeUrl, branchName;
     Integer year, month, date;
     Toolbar toolbar;
@@ -105,6 +107,7 @@ public class ClassActivity extends AppCompatActivity {
     }
 
     private void loadVideoYoutube() {
+        layoutProgress.setVisibility(View.VISIBLE);
         StringRequest request = new StringRequest(Request.Method.POST, getYoutubeUrl, response -> {
 //            Log.d("onResponse", response);
             try {
@@ -127,10 +130,14 @@ public class ClassActivity extends AppCompatActivity {
                         });
                     }
                 }
+                layoutProgress.setVisibility(View.GONE);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-        }, error -> Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show()) {
+        }, error -> {
+            layoutProgress.setVisibility(View.GONE);
+            Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -145,12 +152,7 @@ public class ClassActivity extends AppCompatActivity {
     }
 
     private void loadAllBranch() {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading..."); // Setting Message
-        progressDialog.setTitle("ProgressDialog"); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
+        layoutProgress.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, loadBranchUrl, response -> {
             Log.d("Onresponse", response);
             try {
@@ -161,19 +163,23 @@ public class ClassActivity extends AppCompatActivity {
                         JSONObject obj = array.getJSONObject(i);
                         branch.add(obj.getString("Branch"));
                     }
-                    progressDialog.dismiss();
+
                     if (branch.size() > 0) {
                         setSpinner();
                     }
-
+                    layoutProgress.setVisibility(View.GONE);
                 } else {
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-        }, error -> Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show());
+        }, error -> {
+            layoutProgress.setVisibility(View.GONE);
+            Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
+
+        });
 
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         requestQueue.add(stringRequest);
@@ -242,12 +248,7 @@ public class ClassActivity extends AppCompatActivity {
     }
 
     private void loadEventData() {
-        progressDialog = new ProgressDialog(this);
-        progressDialog.setMessage("Loading..."); // Setting Message
-        progressDialog.setTitle("ProgressDialog"); // Setting Title
-        progressDialog.setProgressStyle(ProgressDialog.STYLE_SPINNER); // Progress Dialog Style Spinner
-        progressDialog.show(); // Display Progress Dialog
-        progressDialog.setCancelable(false);
+        layoutProgress.setVisibility(View.VISIBLE);
         eventList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonEventUrl, response -> {
             Log.d("Onresponse", response);
@@ -279,16 +280,16 @@ public class ClassActivity extends AppCompatActivity {
                             collapsibleCalendar.addEventTag(eventList.get(i).getYear(), eventList.get(i).getMonth() - 1, eventList.get(i).getDay());
                         }
                     }
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                 } else {
-                    progressDialog.dismiss();
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }, error -> {
-            progressDialog.dismiss();
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -309,6 +310,7 @@ public class ClassActivity extends AppCompatActivity {
     }
 
     private void loadClassData() {
+        layoutProgress.setVisibility(View.VISIBLE);
         if (classList != null || classList.size() > 0) {
             classList.clear();
         }
@@ -347,7 +349,7 @@ public class ClassActivity extends AppCompatActivity {
                         adapter = new ClassAdapter(listener, classList, getApplicationContext());
                         recyclerView.setAdapter(adapter);
                     }
-
+                    layoutProgress.setVisibility(View.GONE);
                 } else {
                     if (classList.size() == 0) {
                         txtEmpty.setVisibility(View.VISIBLE);
@@ -358,6 +360,7 @@ public class ClassActivity extends AppCompatActivity {
                         adapter = new ClassAdapter(listener, classList, getApplicationContext());
                         recyclerView.setAdapter(adapter);
                     }
+                    layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -365,6 +368,7 @@ public class ClassActivity extends AppCompatActivity {
 
 
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -394,6 +398,7 @@ public class ClassActivity extends AppCompatActivity {
     }
 
     private void initFindViewByID() {
+        layoutProgress = findViewById(R.id.layout_progressbar);
         youtubePlayer = (YouTubePlayerFragment) getFragmentManager().findFragmentById(R.id.youtube_player);
         toolbar = findViewById(R.id.toolbar_course_class_detail);
         spinnerBranch = findViewById(R.id.spinner_branch);
