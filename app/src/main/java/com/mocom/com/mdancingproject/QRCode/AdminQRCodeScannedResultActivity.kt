@@ -14,6 +14,7 @@ import com.android.volley.VolleyError
 import com.android.volley.toolbox.StringRequest
 import com.google.gson.Gson
 import com.mocom.com.mdancingproject.Dao.QRCodeGenForBuyClassObject
+import com.mocom.com.mdancingproject.Dao.QRCodeGenForCheckedObject
 import com.mocom.com.mdancingproject.Dao.QRCodeStudentGenObject
 import com.mocom.com.mdancingproject.DialogFragment.FailBuyClassDialog
 import com.mocom.com.mdancingproject.DialogFragment.SuccessBuyClassDialog
@@ -31,6 +32,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
     private val getQrDataUrl: String = DATA_URL + "query_for_get_data_qr.php"
     private val buyCoinAndClassUrl: String = DATA_URL + "buy_class_and_coin_with_qr.php"
     private val buyCoinPackUrl: String = DATA_URL + "buy_coin_pack_with_qr.php"
+    private val checkStudentClassUrl: String = DATA_URL + "check_student_have_class.php"
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,6 +42,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
         val decryptedString = EncryptionHelper.getInstance().getDecryptionString(intent.getStringExtra(SCANNED_STRING))
         val payCoinObject = Gson().fromJson(decryptedString, QRCodeStudentGenObject::class.java)
         val payCoinAndClassObject = Gson().fromJson(decryptedString, QRCodeGenForBuyClassObject::class.java)
+        val checkedStudentObject = Gson().fromJson(decryptedString, QRCodeGenForCheckedObject::class.java)
         if (payCoinObject.secret_key != null) {
             //pay coin only
             val secretKey = payCoinObject.secret_key
@@ -52,6 +55,8 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
                     if (obj.getString("msg") == "success") {
                         layout_buy_coin_only.visibility = View.VISIBLE
                         layout_buy_coin_and_class.visibility = View.GONE
+                        layout_btn_ok_and_cancel.visibility = View.VISIBLE
+                        layout_show_checked_result.visibility = View.GONE
                         txt_scan_userid.text = obj.getString("userID")
                         txt_scan_coinpackid.text = obj.getString("coinPackID")
                         txt_scan_name.text = obj.getString("user")
@@ -82,6 +87,8 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
         if (payCoinAndClassObject.eventID != null && payCoinAndClassObject.baht != null) {
             layout_buy_coin_and_class.visibility = View.VISIBLE
             layout_buy_coin_only.visibility = View.GONE
+            layout_btn_ok_and_cancel.visibility = View.VISIBLE
+            layout_show_checked_result.visibility = View.GONE
             val userName = payCoinAndClassObject.userName
             val userID = payCoinAndClassObject.userID
             val eventID = payCoinAndClassObject.eventID
@@ -93,6 +100,66 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
             txt_coin_for_class.text = coin
             txt_baht_for_class.text = baht
 
+        }
+
+        if (checkedStudentObject.eventID != null && checkedStudentObject.userID != null && checkedStudentObject.checked != null) {
+            layout_show_checked_result.visibility = View.VISIBLE
+            layout_buy_coin_and_class.visibility = View.GONE
+            layout_buy_coin_only.visibility = View.GONE
+            layout_btn_ok_and_cancel.visibility = View.GONE
+            layout_progressbar.visibility = View.VISIBLE
+            val stringRequest = object : StringRequest(Request.Method.POST, checkStudentClassUrl, Response.Listener<String> { response ->
+                Log.d(TAG, response)
+                layout_progressbar.visibility = View.GONE
+                try {
+                    val obj = JSONObject(response)
+                    when {
+                        obj.getString("msg") == "cant regis" -> {
+                            img_status_check.setImageResource(R.drawable.ic_fail)
+                            txt_name_student.text = obj.getString("userName")
+                            txt_status_student.setText(R.string.cant_regis)
+                        }
+                        obj.getString("msg") == "check already" -> {
+                            img_status_check.setImageResource(R.drawable.ic_fail)
+                            txt_name_student.text = obj.getString("userName")
+                            txt_status_student.setText(R.string.checked_enroll)
+                        }
+                        obj.getString("msg") == "fail" -> {
+                            img_status_check.setImageResource(R.drawable.ic_fail)
+                            txt_name_student.setText(R.string.connect_fail)
+                        }
+                        obj.getString("msg") == "success" -> {
+                            img_status_check.setImageResource(R.drawable.ic_success)
+                            txt_name_student.text = obj.getString("userName")
+                            txt_status_student.setText(R.string.checked_already)
+                        }
+                    }
+                } catch (e: JSONException) {
+                    e.printStackTrace()
+                }
+
+            },
+                    object : Response.ErrorListener {
+                        override fun onErrorResponse(volleyError: VolleyError) {
+                            layout_progressbar.visibility = View.GONE
+                            img_status_check.setImageResource(R.drawable.ic_fail)
+                            txt_name_student.setText(R.string.connect_fail)
+                        }
+                    }) {
+                @Throws(AuthFailureError::class)
+                override fun getParams(): MutableMap<String, String> {
+                    val params = HashMap<String, String>()
+                    params.put("userID", checkedStudentObject.userID)
+                    params.put("eventID", checkedStudentObject.eventID)
+                    return params
+                }
+            }
+            VolleySingleton.getInstance(applicationContext).addToRequestQueue(stringRequest)
+//            Toast.makeText(applicationContext, checkedStudentObject.eventID + "/" + checkedStudentObject.userID + "/" + checkedStudentObject.checked, Toast.LENGTH_LONG).show()
+        }
+
+        btn_checked_back.setOnClickListener {
+            finish()
         }
 
         btn_back.setOnClickListener {
@@ -133,7 +200,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
                     }
                 }
                 VolleySingleton.getInstance(applicationContext).addToRequestQueue(stringRequest)
-                Toast.makeText(applicationContext, "a", Toast.LENGTH_LONG).show()
+//                Toast.makeText(applicationContext, "a", Toast.LENGTH_LONG).show()
 //                Toast.makeText(applicationContext, txt_scan_name.text, Toast.LENGTH_LONG).show()
             } else if (txt_event_for_class.text.toString() != "") {
                 layout_progressbar.visibility = View.VISIBLE

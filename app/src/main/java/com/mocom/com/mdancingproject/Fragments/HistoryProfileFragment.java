@@ -42,7 +42,7 @@ public class HistoryProfileFragment extends Fragment {
 
     private String jsonUrl = DATA_URL + "json_get_class_history_student.php";
 
-    View layoutShowEmpty;
+    View layoutShowEmpty, layoutProgress;
     TextView txtRecyclerDate;
     String userID;
 
@@ -109,6 +109,7 @@ public class HistoryProfileFragment extends Fragment {
     }
 
     private void loadClassHistoryData() {
+        layoutProgress.setVisibility(View.VISIBLE);
         if (classList != null || classList.size() > 0) {
             classList.clear();
         }
@@ -144,11 +145,14 @@ public class HistoryProfileFragment extends Fragment {
                         recyclerView.setAdapter(adapter);
                     }
                 }
+                layoutProgress.setVisibility(View.GONE);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-        }, error -> Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show()) {
+        }, error -> {
+            layoutProgress.setVisibility(View.GONE);
+            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();}) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -167,6 +171,7 @@ public class HistoryProfileFragment extends Fragment {
         swipeRefreshLayout = rootView.findViewById(R.id.pullToRefresh);
         layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
         txtRecyclerDate = rootView.findViewById(R.id.txt_recycler_home_empty);
+        layoutProgress = rootView.findViewById(R.id.layout_progressbar);
     }
 
     @Override
@@ -186,5 +191,11 @@ public class HistoryProfileFragment extends Fragment {
     }
 
     private void onRestoreInstanceState(Bundle savedInstanceState) {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadClassHistoryData();
     }
 }

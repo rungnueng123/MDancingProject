@@ -145,6 +145,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         }
         if(v == btnBack){
             Intent intent = new Intent(this,LoginActivity.class);
+            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
             startActivity(intent);
             finish();
 
@@ -185,11 +186,11 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         } else {
             edtTel.setError(null);
         }
-        if (TextUtils.isEmpty(txtBirth.getText())) {
-            txtBirth.setError("Birth date is required!");
-        } else {
-            txtBirth.setError(null);
-        }
+//        if (TextUtils.isEmpty(txtBirth.getText())) {
+//            txtBirth.setError("Birth date is required!");
+//        } else {
+//            txtBirth.setError(null);
+//        }
     }
 
     private void goRegister(String username, String email, String password, String phone, String sex, String birth) {
@@ -205,6 +206,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                                 @Override
                                 public void onClick(DialogInterface dialog, int which) {
                                     Intent intent = new Intent(getApplicationContext(), LoginActivity.class);
+                                    intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                                     startActivity(intent);
                                     finish();
                                 }

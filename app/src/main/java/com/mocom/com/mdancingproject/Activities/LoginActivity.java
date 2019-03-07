@@ -1,6 +1,7 @@
 package com.mocom.com.mdancingproject.Activities;
 
 import android.app.AlertDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -9,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
@@ -172,23 +174,33 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View v) {
         if (v == btnLogin) {
-            checkInputNull();
             String username = edtUsername.getText().toString();
             String pass = edtPassword.getText().toString();
-            goLogin(username, pass);
+            closeKeyboard();
+            if(!username.equals("") && !pass.equals("")) {
+                goLogin(username, pass);
+            }else{
+                checkInputNull();
+            }
         }
         if (v == txtCreateAccount) {
             Intent intent = new Intent(this, RegisterActivity.class);
             startActivity(intent);
-            finish();
         }
         if (v == txtForgotPass) {
             Intent intent = new Intent(this, ForgotPasswordActivity.class);
             startActivity(intent);
-            finish();
         }
         if (v == btnFBCustom) {
             btnLoginFB.performClick();
+        }
+    }
+
+    private void closeKeyboard() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
         }
     }
 

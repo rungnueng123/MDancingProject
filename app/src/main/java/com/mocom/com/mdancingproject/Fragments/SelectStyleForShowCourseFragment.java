@@ -116,7 +116,8 @@ public class SelectStyleForShowCourseFragment extends Fragment {
 
     private void loadStyle() {
 //        layoutProgress.setVisibility(View.VISIBLE);
-        layoutProgressStyle.setVisibility(View.VISIBLE);
+        recyclerStyleView.setVisibility(View.GONE);
+//        layoutProgressStyle.setVisibility(View.VISIBLE);
         if (styleList != null || styleList.size() > 0) {
             styleList.clear();
         }
@@ -138,13 +139,15 @@ public class SelectStyleForShowCourseFragment extends Fragment {
                     }
                     adapterStyle = new StyleHomeAdapter(styleListener, styleList, getContext());
                     recyclerStyleView.setAdapter(adapterStyle);
-                    layoutProgressStyle.setVisibility(View.GONE);
+                    recyclerStyleView.setVisibility(View.VISIBLE);
+//                    layoutProgressStyle.setVisibility(View.GONE);
 //                    layoutProgress.setVisibility(View.GONE);
                     loadCourse();
 
                 } else {
 //                    layoutProgress.setVisibility(View.GONE);
-                    layoutProgressStyle.setVisibility(View.GONE);
+//                    layoutProgressStyle.setVisibility(View.GONE);
+                    recyclerStyleView.setVisibility(View.VISIBLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -152,7 +155,8 @@ public class SelectStyleForShowCourseFragment extends Fragment {
 
         }, error -> {
 //            layoutProgress.setVisibility(View.GONE);
-            layoutProgressStyle.setVisibility(View.GONE);
+//            layoutProgressStyle.setVisibility(View.GONE);
+            recyclerStyleView.setVisibility(View.VISIBLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
@@ -162,7 +166,8 @@ public class SelectStyleForShowCourseFragment extends Fragment {
     }
 
     private void loadCourse() {
-        layoutProgress.setVisibility(View.VISIBLE);
+        recyclerCourseView.setVisibility(View.GONE);
+//        layoutProgress.setVisibility(View.VISIBLE);
 //        layoutProgressCourse.setVisibility(View.VISIBLE);
         if (courseList != null || courseList.size() > 0) {
             courseList.clear();

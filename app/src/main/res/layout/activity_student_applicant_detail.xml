@@ -17,138 +17,162 @@
         app:title="@string/class_detail_title"
         app:titleTextColor="@color/white" />
 
-    <RelativeLayout
+    <FrameLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_marginEnd="8dp">
+        android:layout_height="match_parent">
 
-        <ImageView
-            android:id="@+id/img_class"
+        <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:src="@mipmap/ic_launcher" />
+            android:layout_height="match_parent"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:paddingStart="8dp"
+            android:paddingEnd="8dp">
 
-        <TextView
-            android:id="@+id/txt_title"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/img_class"
-            android:layout_marginTop="12.37dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="คลาส"
-            android:textColor="@color/txt_color_class_list"
-            android:textSize="24sp" />
+            <ImageView
+                android:id="@+id/img_class"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:src="@mipmap/ic_launcher" />
 
-        <TextView
-            android:id="@+id/txt_playlist"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_title"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="เพลง"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/img_class"
+                android:layout_marginTop="12.37dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="คลาส"
+                android:textColor="@color/txt_color_class_list"
+                android:textSize="24sp" />
 
-        <TextView
-            android:id="@+id/txt_style"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_playlist"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="สไตล์"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_playlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_title"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="เพลง"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/txt_teacher"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_style"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="ผู้สอน"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_playlist"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="สไตล์"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/txt_date"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_teacher"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="วันที่เรียน"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_style"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="ผู้สอน"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/txt_time"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_date"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="เวลา"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_teacher"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="วันที่เรียน"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/txt_room"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_time"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="ห้อง"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_date"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="เวลา"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/txt_branch"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_room"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="สาขา"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_room"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_time"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="ห้อง"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/txt_status"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_branch"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="สถานะ"
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_branch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_room"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="สาขา"
+                android:textSize="14sp" />
 
-        <TextView
-            android:id="@+id/txt_desc"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/txt_status"
-            android:layout_marginTop="5dp"
-            android:fontFamily="@font/kanit_regular"
-            android:text="Description : "
-            android:textSize="14sp" />
+            <TextView
+                android:id="@+id/txt_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_branch"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="สถานะ"
+                android:textSize="14sp" />
 
-        <Button
-            android:id="@+id/btn_qr_check"
+            <TextView
+                android:id="@+id/txt_desc"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_status"
+                android:layout_marginTop="5dp"
+                android:fontFamily="@font/kanit_regular"
+                android:text="Description : "
+                android:textSize="14sp" />
+
+            <Button
+                android:id="@+id/btn_qr_check"
+                android:layout_width="match_parent"
+                android:layout_height="41dp"
+                android:layout_below="@id/txt_desc"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/shapelogin"
+                android:fontFamily="@font/kanit_regular"
+                android:text="@string/qr_code"
+                android:textColor="@color/white" />
+
+            <TextView
+                android:id="@+id/txt_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/btn_qr_check"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+        <FrameLayout
+            android:id="@+id/layout_progressbar"
             android:layout_width="match_parent"
-            android:layout_height="41dp"
-            android:layout_below="@id/txt_desc"
-            android:layout_marginTop="20dp"
-            android:background="@drawable/shapelogin"
-            android:fontFamily="@font/kanit_regular"
-            android:text="@string/qr_code"
-            android:textColor="@color/white" />
+            android:layout_height="match_parent"
+            android:background="#90000000"
+            android:visibility="gone">
 
-        <TextView
-            android:id="@+id/txt_active"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@id/btn_qr_check"
-            android:visibility="gone"/>
+            <ProgressBar
+                android:id="@+id/progressbar"
+                style="?android:attr/progressBarStyleLarge"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center" />
 
-    </RelativeLayout>
+        </FrameLayout>
+
+    </FrameLayout>
 
 </LinearLayout>
