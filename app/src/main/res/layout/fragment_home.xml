@@ -21,34 +21,50 @@
                 android:layout_height="match_parent"
                 android:orientation="vertical">
 
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="164dp">
+
+                    <android.support.v4.view.ViewPager
+                        android:id="@+id/pager"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentTop="true" />
+
+                    <com.viewpagerindicator.CirclePageIndicator
+                        android:id="@+id/indicator"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentBottom="true"
+                        android:layout_centerHorizontal="true"
+                        android:gravity="bottom"
+                        android:padding="10dip"
+                        app:centered="true"
+                        app:fillColor="#df0623"
+                        app:pageColor="#fff"
+                        app:snap="false" />
+                </RelativeLayout>
+
+
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <RelativeLayout
+                    <FrameLayout
+                        android:id="@+id/container_style_course"
                         android:layout_width="match_parent"
-                        android:layout_height="164dp">
+                        android:layout_height="wrap_content" />
 
-                        <android.support.v4.view.ViewPager
-                            android:id="@+id/pager"
-                            android:layout_width="match_parent"
-                            android:layout_height="match_parent"
-                            android:layout_alignParentTop="true" />
+                </LinearLayout>
 
-                        <com.viewpagerindicator.CirclePageIndicator
-                            android:id="@+id/indicator"
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_alignParentBottom="true"
-                            android:layout_centerHorizontal="true"
-                            android:gravity="bottom"
-                            android:padding="10dip"
-                            app:centered="true"
-                            app:fillColor="#df0623"
-                            app:pageColor="#fff"
-                            app:snap="false" />
-                    </RelativeLayout>
+
+                <!--ย้ายไปเป็นอีก fragment นึง-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -73,7 +89,8 @@
                     android:layout_height="match_parent"
                     android:layout_marginTop="15dp"
                     android:background="@android:color/white"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:visibility="gone">
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -129,6 +146,7 @@
                         tools:listitem="@layout/course_home_item" />
 
                 </LinearLayout>
+                <!--ย้ายไปเป็นอีก fragment นึง-->
 
             </LinearLayout>
 

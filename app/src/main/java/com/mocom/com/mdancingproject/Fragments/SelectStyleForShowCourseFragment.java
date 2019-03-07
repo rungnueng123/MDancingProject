@@ -3,10 +3,8 @@ package com.mocom.com.mdancingproject.Fragments;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -22,13 +20,11 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mocom.com.mdancingproject.Activities.ClassActivity;
 import com.mocom.com.mdancingproject.Adapter.CourseHomeAdapter;
-import com.mocom.com.mdancingproject.Adapter.ImageBannerAdapter;
 import com.mocom.com.mdancingproject.Adapter.StyleHomeAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.CourseHomeDao;
 import com.mocom.com.mdancingproject.Dao.StyleHomeDao;
 import com.mocom.com.mdancingproject.R;
-import com.viewpagerindicator.CirclePageIndicator;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -38,27 +34,15 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Timer;
-import java.util.TimerTask;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
-import static com.mocom.com.mdancingproject.config.config.HOST_URL;
 
-public class HomeFragment extends Fragment {
+public class SelectStyleForShowCourseFragment extends Fragment {
 
     private String styleUrl = DATA_URL + "get_style_all.php";
     private String courseUrl = DATA_URL + "get_course_style_all.php";
-    private String BannerUrl = DATA_URL + "get_banner.php";
-    View layoutShowFirstOpen, layoutShowEmpty, layoutProgress;
+    View layoutShowFirstOpen, layoutShowEmpty, layoutProgress, layoutProgressStyle, layoutProgressCourse;
     String styleID = "";
-
-
-    private static ViewPager viewPager;
-    private static int currentPage = 0;
-    private static int NUM_PAGES = 0;
-    private String[] urls;
-    CirclePageIndicator indicator;
-
 
     private RecyclerView recyclerStyleView, recyclerCourseView;
     private RecyclerView.Adapter adapterStyle, adapterCourse;
@@ -66,8 +50,8 @@ public class HomeFragment extends Fragment {
     private List<CourseHomeDao> courseList;
     private ItemClickCallBack styleListener, courseListener;
 
-    public static HomeFragment newInstance() {
-        HomeFragment fragment = new HomeFragment();
+    public static SelectStyleForShowCourseFragment newInstance() {
+        SelectStyleForShowCourseFragment fragment = new SelectStyleForShowCourseFragment();
         Bundle args = new Bundle();
         fragment.setArguments(args);
         return fragment;
@@ -77,26 +61,20 @@ public class HomeFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (savedInstanceState != null) {
+        if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
-        }
-            getChildFragmentManager().beginTransaction()
-                    .add(R.id.container_style_course, SelectStyleForShowCourseFragment.newInstance())
-                    .commit();
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
-        View rootView = inflater.inflate(R.layout.fragment_home, container, false);
+        View rootView = inflater.inflate(R.layout.fragment_select_style_for_show_course, container, false);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
-
-        loadBanner();
 
         ViewCompat.setNestedScrollingEnabled(recyclerCourseView, false);
 
@@ -124,96 +102,6 @@ public class HomeFragment extends Fragment {
             intent.putExtra("courseName", courseList.get(position).getCourseName());
             startActivity(intent);
         };
-
-    }
-
-    private void loadBanner() {
-        layoutProgress.setVisibility(View.VISIBLE);
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, BannerUrl, response -> {
-            Log.d("Onresponse", response);
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject.getString("msg").equals("success")) {
-                    JSONArray array = jsonObject.getJSONArray("data");
-                    urls = new String[array.length()];
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject obj = array.getJSONObject(i);
-//                        ImageBannerDao item = new ImageBannerDao(
-//                                obj.getString("id"),
-//                                obj.getString("title"),
-//                                obj.getString("desc"),
-//                                obj.getString("imgUrl")
-//                        );
-                        urls[i] = HOST_URL + obj.getString("imgUrl");
-//                        urls[2] = HOST_URL+"imgBanner/0860476001551410367--Mask Group 34.png";
-                    }
-//                    urls = new String[] {"https://demonuts.com/Demonuts/SampleImages/W-03.JPG",
-//                            "https://demonuts.com/Demonuts/SampleImages/W-08.JPG",
-//                            "https://demonuts.com/Demonuts/SampleImages/W-10.JPG",
-//                            "https://demonuts.com/Demonuts/SampleImages/W-13.JPG",
-//                            "https://demonuts.com/Demonuts/SampleImages/W-17.JPG",
-//                            "https://demonuts.com/Demonuts/SampleImages/W-21.JPG"};
-
-                    viewPager.setAdapter(new ImageBannerAdapter(getContext(), urls));
-                    indicator.setViewPager(viewPager);
-                    final float density = getResources().getDisplayMetrics().density;
-                    indicator.setRadius(5 * density);
-
-                    NUM_PAGES = urls.length;
-                    // Auto start of viewpager
-                    final Handler handler = new Handler();
-                    final Runnable Update = new Runnable() {
-                        public void run() {
-                            if (currentPage == NUM_PAGES) {
-                                currentPage = 0;
-                            }
-                            viewPager.setCurrentItem(currentPage++, true);
-                        }
-                    };
-                    Timer swipeTimer = new Timer();
-                    swipeTimer.schedule(new TimerTask() {
-                        @Override
-                        public void run() {
-                            handler.post(Update);
-                        }
-                    }, 5000, 5000);
-
-                    // Pager listener over indicator
-                    indicator.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-
-                        @Override
-                        public void onPageSelected(int position) {
-                            currentPage = position;
-
-                        }
-
-                        @Override
-                        public void onPageScrolled(int pos, float arg1, int arg2) {
-
-                        }
-
-                        @Override
-                        public void onPageScrollStateChanged(int pos) {
-
-                        }
-                    });
-
-                    layoutProgress.setVisibility(View.GONE);
-                } else {
-                    layoutProgress.setVisibility(View.GONE);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-        }, error -> {
-            layoutProgress.setVisibility(View.GONE);
-            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-        });
-
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
-
     }
 
     private void initFindViewByID(View rootView) {
@@ -221,13 +109,14 @@ public class HomeFragment extends Fragment {
         recyclerCourseView = rootView.findViewById(R.id.recycler_course_home);
         layoutShowFirstOpen = rootView.findViewById(R.id.layout_show_first_open);
         layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
-        viewPager = rootView.findViewById(R.id.pager);
-        indicator = rootView.findViewById(R.id.indicator);
         layoutProgress = rootView.findViewById(R.id.layout_progressbar);
+        layoutProgressStyle = rootView.findViewById(R.id.layout_progressbar_style);
+        layoutProgressCourse = rootView.findViewById(R.id.layout_progressbar_course);
     }
 
     private void loadStyle() {
-        layoutProgress.setVisibility(View.VISIBLE);
+//        layoutProgress.setVisibility(View.VISIBLE);
+        layoutProgressStyle.setVisibility(View.VISIBLE);
         if (styleList != null || styleList.size() > 0) {
             styleList.clear();
         }
@@ -249,18 +138,21 @@ public class HomeFragment extends Fragment {
                     }
                     adapterStyle = new StyleHomeAdapter(styleListener, styleList, getContext());
                     recyclerStyleView.setAdapter(adapterStyle);
-                    layoutProgress.setVisibility(View.GONE);
+                    layoutProgressStyle.setVisibility(View.GONE);
+//                    layoutProgress.setVisibility(View.GONE);
                     loadCourse();
 
                 } else {
-                    layoutProgress.setVisibility(View.GONE);
+//                    layoutProgress.setVisibility(View.GONE);
+                    layoutProgressStyle.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }, error -> {
-            layoutProgress.setVisibility(View.GONE);
+//            layoutProgress.setVisibility(View.GONE);
+            layoutProgressStyle.setVisibility(View.GONE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
@@ -271,6 +163,7 @@ public class HomeFragment extends Fragment {
 
     private void loadCourse() {
         layoutProgress.setVisibility(View.VISIBLE);
+//        layoutProgressCourse.setVisibility(View.VISIBLE);
         if (courseList != null || courseList.size() > 0) {
             courseList.clear();
         }
@@ -307,17 +200,20 @@ public class HomeFragment extends Fragment {
                         recyclerCourseView.setAdapter(adapterCourse);
                     }
                     layoutProgress.setVisibility(View.GONE);
+//                    layoutProgressCourse.setVisibility(View.GONE);
                 } else {
                     layoutShowEmpty.setVisibility(View.VISIBLE);
                     recyclerCourseView.setVisibility(View.GONE);
                     layoutShowFirstOpen.setVisibility(View.GONE);
                     layoutProgress.setVisibility(View.GONE);
+//                    layoutProgressCourse.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+//            layoutProgressCourse.setVisibility(View.GONE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

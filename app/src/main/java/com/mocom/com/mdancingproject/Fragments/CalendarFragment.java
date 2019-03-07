@@ -94,6 +94,10 @@ public class CalendarFragment extends Fragment {
 
         if (savedInstanceState != null)
             onRestoreInstanceState(savedInstanceState);
+        assert getFragmentManager() != null;
+        getFragmentManager().beginTransaction()
+                .add(R.id.container_style_course, SelectStyleForShowCourseFragment.newInstance())
+                .commit();
     }
 
     @Override

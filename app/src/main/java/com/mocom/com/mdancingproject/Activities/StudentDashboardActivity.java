@@ -30,6 +30,7 @@ import com.mocom.com.mdancingproject.DialogFragment.ConfirmPayStyleDialog;
 import com.mocom.com.mdancingproject.DialogFragment.FailDialog;
 import com.mocom.com.mdancingproject.DialogFragment.StudentCoinPackPaymentDialog;
 import com.mocom.com.mdancingproject.DialogFragment.SuccessDialog;
+import com.mocom.com.mdancingproject.Fragments.AboutUsFragment;
 import com.mocom.com.mdancingproject.Fragments.CalendarFragment;
 import com.mocom.com.mdancingproject.Fragments.HomeFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
@@ -263,16 +264,19 @@ public class StudentDashboardActivity extends AppCompatActivity
                 Class fragmentClass = null;
                 if (id == R.id.nav_home) {
                     fragmentClass = CalendarFragment.class;
-                    actionbar.setTitle("Home");
+                    actionbar.setTitle(getResources().getString(R.string.nav_home));
                 } else if (id == R.id.nav_calendar) {
                     fragmentClass = HomeFragment.class;
-                    actionbar.setTitle("Course & Style");
+                    actionbar.setTitle(getResources().getString(R.string.nav_course_and_style));
                 } else if (id == R.id.nav_coin) {
                     fragmentClass = StudentCoinFragment.class;
-                    actionbar.setTitle("Coin");
+                    actionbar.setTitle(getResources().getString(R.string.nav_coin));
                 } else if (id == R.id.nav_profile) {
                     fragmentClass = StudentProfileFragment.class;
-                    actionbar.setTitle("Profile");
+                    actionbar.setTitle(getResources().getString(R.string.nav_profile));
+                } else if (id == R.id.nav_about_us) {
+                    fragmentClass = AboutUsFragment.class;
+                    actionbar.setTitle(getResources().getString(R.string.nav_about_us));
                 } else if (id == R.id.nav_logout) {
                     editor.clear();
                     editor.commit();
