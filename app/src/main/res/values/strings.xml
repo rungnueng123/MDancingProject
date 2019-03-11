@@ -113,5 +113,10 @@
     <string name="cant_regis">คุณยังไม่ได้ลงทะเบียน</string>
     <string name="checked_enroll">คุณเช็คชื่อไปแล้ว</string>
     <string name="connect_fail">ผิดพลาด! กรุณาลองอีกครั้ง!</string>
+    <string name="checked_wrong_class">คุณเข้าไม่ตรงคลาส</string>
+    <string name="use_function_in_class">การเช็คชื่อต้องเข้าจากหน้าคลาสเรียน</string>
+    <string name="txt_list_check_name">list student</string>
+    <string name="count_checked_student">เช็คชื่อแล้ว</string>
+    <string name="txt_list_check_name_empty">ยังไม่มีใครมา</string>
 
 </resources>

@@ -103,16 +103,14 @@ public class HistoryProfileFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
         });
 
-        loadClassHistoryData();
+//        loadClassHistoryData();
 
 
     }
 
     private void loadClassHistoryData() {
         layoutProgress.setVisibility(View.VISIBLE);
-        if (classList != null || classList.size() > 0) {
-            classList.clear();
-        }
+        classList.clear();
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
             Log.d("Onresponse", response);
@@ -152,7 +150,8 @@ public class HistoryProfileFragment extends Fragment {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
-            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();}) {
+            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();

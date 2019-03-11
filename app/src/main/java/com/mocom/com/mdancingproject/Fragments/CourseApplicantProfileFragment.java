@@ -102,14 +102,12 @@ public class CourseApplicantProfileFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
         });
 
-        loadClassApplicantData();
+//        loadClassApplicantData();
     }
 
     private void loadClassApplicantData() {
         layoutProgress.setVisibility(View.VISIBLE);
-        if (classList != null || classList.size() > 0) {
-            classList.clear();
-        }
+        classList.clear();
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
 //            Log.d("Onresponse", response);

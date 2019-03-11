@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
+import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -15,17 +16,20 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
+import android.view.View;
 
 import com.facebook.login.LoginManager;
 import com.mocom.com.mdancingproject.Fragments.AdminHomeFragment;
+import com.mocom.com.mdancingproject.QRCode.AdminQRCodeScannedActivity;
 import com.mocom.com.mdancingproject.R;
 
-public class AdminDashboardActivity extends AppCompatActivity {
+public class AdminDashboardActivity extends AppCompatActivity implements View.OnClickListener {
 
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
+    FloatingActionButton fabQr;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,11 +38,17 @@ public class AdminDashboardActivity extends AppCompatActivity {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(this);
 //        sharedPreferences = getSharedPreferences("dancing",Context.MODE_PRIVATE);
         editor = sharedPreferences.edit();
-        Log.d("preference",sharedPreferences.getString(getString(R.string.Groups),""));
+        Log.d("preference", sharedPreferences.getString(getString(R.string.Groups), ""));
         checkLogin();
 
+        initFindViewByID();
         initInstance(savedInstanceState);
 
+    }
+
+    private void initFindViewByID() {
+        fabQr = findViewById(R.id.fab_qr);
+        fabQr.setOnClickListener(this);
     }
 
     private void initInstance(Bundle savedInstanceState) {
@@ -56,15 +66,9 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 int id = item.getItemId();
                 Fragment fragment = null;
                 Class fragmentClass = null;
-                if(id == R.id.nav_home){
+                if (id == R.id.nav_home) {
                     fragmentClass = AdminHomeFragment.class;
-                }else if(id == R.id.nav_course){
-                    fragmentClass = AdminHomeFragment.class;
-                }else if(id == R.id.nav_coin){
-                    fragmentClass = AdminHomeFragment.class;
-                }else if(id == R.id.nav_profile){
-                    fragmentClass = AdminHomeFragment.class;
-                }else if(id == R.id.nav_logout){
+                } else if (id == R.id.nav_logout) {
                     editor.clear();
                     editor.commit();
                     LoginManager.getInstance().logOut();
@@ -90,7 +94,7 @@ public class AdminDashboardActivity extends AppCompatActivity {
     }
 
     private void checkFragmentShow(Bundle savedInstanceState) {
-        String Groups = sharedPreferences.getString(getString(R.string.Groups),"");
+        String Groups = sharedPreferences.getString(getString(R.string.Groups), "");
         if (savedInstanceState == null) {
             getSupportFragmentManager().beginTransaction()
                     .add(R.id.fragment_dashboard, AdminHomeFragment.newInstance())
@@ -99,8 +103,8 @@ public class AdminDashboardActivity extends AppCompatActivity {
     }
 
     private void checkLogin() {
-        String UserID = sharedPreferences.getString(getString(R.string.UserID),"");
-        if(UserID.equals("")){
+        String UserID = sharedPreferences.getString(getString(R.string.UserID), "");
+        if (UserID.equals("")) {
             Intent intent = new Intent(this, LoginActivity.class);
             startActivity(intent);
         }
@@ -121,5 +125,14 @@ public class AdminDashboardActivity extends AppCompatActivity {
                 return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    @Override
+    public void onClick(View v) {
+        if (v == fabQr) {
+            Intent intent = new Intent(this, AdminQRCodeScannedActivity.class);
+//            intent.putExtra("eventID","97");
+            startActivity(intent);
+        }
     }
 }
