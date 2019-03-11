@@ -88,7 +88,7 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false));
 
-        loadListStudentCheck();
+//        loadListStudentCheck();
 
     }
 
@@ -110,16 +110,16 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
 //                        Toast.makeText(getContext(), jsonObject.getString("monthName"), Toast.LENGTH_LONG).show();
                         studentList.add(item);
                     }
-                    if (studentList.size() == 0){
+                    if (studentList.size() == 0) {
                         recyclerView.setVisibility(View.GONE);
                         txtCheckEmpty.setVisibility(View.VISIBLE);
-                    }else{
+                    } else {
                         recyclerView.setVisibility(View.VISIBLE);
                         txtCheckEmpty.setVisibility(View.GONE);
                         adapter = new NameCheckedAdapter(studentList, getApplicationContext());
                         recyclerView.setAdapter(adapter);
                     }
-                }else if(jsonObject.getString("msg").equals("empty")){
+                } else if (jsonObject.getString("msg").equals("empty")) {
                     recyclerView.setVisibility(View.GONE);
                     txtCheckEmpty.setVisibility(View.VISIBLE);
                 } else {
@@ -242,6 +242,8 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
     protected void onResume() {
         super.onResume();
 //        loadClassDetail();
-        loadListStudentCheck();
+//        if (studentList.size() > 0) {
+            loadListStudentCheck();
+//        }
     }
 }

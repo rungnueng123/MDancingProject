@@ -107,20 +107,20 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
 
         }
 
-        if (checkedStudentObject.eventID != null && checkedStudentObject.userID != null && checkedStudentObject.checked != null) {
-            layout_show_checked_result.visibility = View.VISIBLE
-            layout_buy_coin_and_class.visibility = View.GONE
-            layout_buy_coin_only.visibility = View.GONE
-            layout_btn_ok_and_cancel.visibility = View.GONE
-            layout_progressbar.visibility = View.VISIBLE
+        if (eventIDForCheck != null && !eventIDForCheck.isEmpty()) {
+            if (checkedStudentObject.eventID != null && checkedStudentObject.userID != null && checkedStudentObject.checked != null) {
+                layout_show_checked_result.visibility = View.VISIBLE
+                layout_buy_coin_and_class.visibility = View.GONE
+                layout_buy_coin_only.visibility = View.GONE
+                layout_btn_ok_and_cancel.visibility = View.GONE
+                layout_progressbar.visibility = View.VISIBLE
 
-            if (checkedStudentObject.eventID == eventIDForCheck) {
-                val stringRequest = object : StringRequest(Request.Method.POST, checkStudentClassUrl, Response.Listener<String> { response ->
-                    //                        Log.d(TAG, response)
-                    layout_progressbar.visibility = View.GONE
-                    try {
-                        val obj = JSONObject(response)
-//                        if (obj.getString("className") == null) {
+                if (checkedStudentObject.eventID == eventIDForCheck) {
+                    val stringRequest = object : StringRequest(Request.Method.POST, checkStudentClassUrl, Response.Listener<String> { response ->
+                        //                        Log.d(TAG, response)
+                        layout_progressbar.visibility = View.GONE
+                        try {
+                            val obj = JSONObject(response)
                             when {
                                 obj.getString("msg") == "cant regis" -> {
                                     img_status_check.setImageResource(R.drawable.ic_fail)
@@ -145,39 +145,34 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
                                     txt_status_student.setText(R.string.checked_already)
                                 }
                             }
-//                        } else {
-//                            img_status_check.setImageResource(R.drawable.ic_fail)
-//                            txt_name_student.setText(R.string.use_function_in_class)
-//                        }
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
+                        }
 
-                },
-                        object : Response.ErrorListener {
-                            override fun onErrorResponse(volleyError: VolleyError) {
-                                layout_progressbar.visibility = View.GONE
-                                img_status_check.setImageResource(R.drawable.ic_fail)
-                                txt_name_student.setText(R.string.connect_fail)
-                            }
-                        }) {
-                    @Throws(AuthFailureError::class)
-                    override fun getParams(): MutableMap<String, String> {
-                        val params = HashMap<String, String>()
-                        params.put("userID", checkedStudentObject.userID)
-                        params.put("eventID", eventIDForCheck)
-                        return params
+                    },
+                            object : Response.ErrorListener {
+                                override fun onErrorResponse(volleyError: VolleyError) {
+                                    layout_progressbar.visibility = View.GONE
+                                    img_status_check.setImageResource(R.drawable.ic_fail)
+                                    txt_name_student.setText(R.string.connect_fail)
+                                }
+                            }) {
+                        @Throws(AuthFailureError::class)
+                        override fun getParams(): MutableMap<String, String> {
+                            val params = HashMap<String, String>()
+                            params.put("userID", checkedStudentObject.userID)
+                            params.put("eventID", eventIDForCheck)
+                            return params
+                        }
                     }
-                }
-                VolleySingleton.getInstance(applicationContext).addToRequestQueue(stringRequest)
-            } else if (checkedStudentObject.eventID != eventIDForCheck) {
-                //เข้าผิดคลาส
-                val stringRequest = object : StringRequest(Request.Method.POST, userWrongClassUrl, Response.Listener<String> { response ->
-                    //                        Log.d(TAG, response)
-                    layout_progressbar.visibility = View.GONE
-                    try {
-                        val obj = JSONObject(response)
-                        if (obj.getString("className") == null) {
+                    VolleySingleton.getInstance(applicationContext).addToRequestQueue(stringRequest)
+                } else if (checkedStudentObject.eventID != eventIDForCheck) {
+                    //เข้าผิดคลาส
+                    val stringRequest = object : StringRequest(Request.Method.POST, userWrongClassUrl, Response.Listener<String> { response ->
+                        Log.d(TAG, response)
+                        layout_progressbar.visibility = View.GONE
+                        try {
+                            val obj = JSONObject(response)
                             when {
                                 obj.getString("msg") == "fail" -> {
                                     img_status_check.setImageResource(R.drawable.ic_fail)
@@ -190,33 +185,37 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
                                     txt_status_student.setText(R.string.checked_wrong_class)
                                 }
                             }
-                        } else {
-                            img_status_check.setImageResource(R.drawable.ic_fail)
-                            txt_name_student.setText(R.string.use_function_in_class)
+                        } catch (e: JSONException) {
+                            e.printStackTrace()
                         }
-                    } catch (e: JSONException) {
-                        e.printStackTrace()
-                    }
 
-                },
-                        object : Response.ErrorListener {
-                            override fun onErrorResponse(volleyError: VolleyError) {
-                                layout_progressbar.visibility = View.GONE
-                                img_status_check.setImageResource(R.drawable.ic_fail)
-                                txt_name_student.setText(R.string.connect_fail)
-                            }
-                        }) {
-                    @Throws(AuthFailureError::class)
-                    override fun getParams(): MutableMap<String, String> {
-                        val params = HashMap<String, String>()
-                        params.put("userID", checkedStudentObject.userID)
-                        params.put("eventID", eventIDForCheck)
-                        return params
+                    },
+                            object : Response.ErrorListener {
+                                override fun onErrorResponse(volleyError: VolleyError) {
+                                    layout_progressbar.visibility = View.GONE
+                                    img_status_check.setImageResource(R.drawable.ic_fail)
+                                    txt_name_student.setText(R.string.connect_fail)
+                                }
+                            }) {
+                        @Throws(AuthFailureError::class)
+                        override fun getParams(): MutableMap<String, String> {
+                            val params = HashMap<String, String>()
+                            params.put("userID", checkedStudentObject.userID)
+                            params.put("eventID", eventIDForCheck)
+                            return params
+                        }
                     }
+                    VolleySingleton.getInstance(applicationContext).addToRequestQueue(stringRequest)
                 }
-                VolleySingleton.getInstance(applicationContext).addToRequestQueue(stringRequest)
-            }
 
+            }
+        } else {
+            layout_show_checked_result.visibility = View.VISIBLE
+            layout_buy_coin_and_class.visibility = View.GONE
+            layout_buy_coin_only.visibility = View.GONE
+            layout_btn_ok_and_cancel.visibility = View.GONE
+            img_status_check.setImageResource(R.drawable.ic_fail)
+            txt_name_student.setText(R.string.use_function_in_class)
         }
 
         btn_checked_back.setOnClickListener {
@@ -228,7 +227,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
         }
 
         btn_ok.setOnClickListener {
-            if (txt_scan_name.text.toString() != "") {
+            if (!txt_scan_name.text.toString().isEmpty()) {
                 layout_progressbar.visibility = View.VISIBLE
                 val stringRequest = object : StringRequest(Request.Method.POST, buyCoinPackUrl, Response.Listener<String> { response ->
                     Log.d(TAG, response)
@@ -263,7 +262,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
                 VolleySingleton.getInstance(applicationContext).addToRequestQueue(stringRequest)
 //                Toast.makeText(applicationContext, "a", Toast.LENGTH_LONG).show()
 //                Toast.makeText(applicationContext, txt_scan_name.text, Toast.LENGTH_LONG).show()
-            } else if (txt_event_for_class.text.toString() != "") {
+            } else if (!txt_event_for_class.text.toString().isEmpty()) {
                 layout_progressbar.visibility = View.VISIBLE
                 val stringRequest = object : StringRequest(Request.Method.POST, buyCoinAndClassUrl, Response.Listener<String> { response ->
                     Log.d(TAG, response)

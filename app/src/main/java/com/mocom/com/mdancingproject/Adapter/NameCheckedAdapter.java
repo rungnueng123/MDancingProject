@@ -33,12 +33,19 @@ public class NameCheckedAdapter extends RecyclerView.Adapter<NameCheckedHolder> 
     @Override
     public void onBindViewHolder(@NonNull NameCheckedHolder holder, int position) {
         NameCheckedDao nameCheckedDao = nameCheckedDaoList.get(position);
-        holder.getTxtNo().setText(position+" : ");
+        int no = position + 1;
+        holder.getTxtNo().setText(no + " : ");
         holder.getTxtStuName().setText(nameCheckedDao.getStuName());
     }
 
     @Override
     public int getItemCount() {
-        return 0;
+        if (nameCheckedDaoList == null) {
+            return 0;
+        }
+        if (nameCheckedDaoList.size() == 0) {
+            return 0;
+        }
+        return nameCheckedDaoList.size();
     }
 }
