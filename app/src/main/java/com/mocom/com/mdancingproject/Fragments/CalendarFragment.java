@@ -31,6 +31,7 @@ import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.ClassDao;
 import com.mocom.com.mdancingproject.Dao.StudentEventHomeDao;
 import com.mocom.com.mdancingproject.R;
+import com.shrikanthravi.collapsiblecalendarview.data.CalendarAdapter;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -40,6 +41,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -70,6 +72,7 @@ public class CalendarFragment extends Fragment {
     View layoutProgress;
 
     CollapsibleCalendar collapsibleCalendar;
+    CalendarAdapter calendarAdapter;
     Integer year, month, date;
     JSONArray arrayEvent;
     private List<StudentEventHomeDao> eventList = new ArrayList<>();
@@ -300,6 +303,7 @@ public class CalendarFragment extends Fragment {
             public void onDataUpdate() {
 //                collapsibleCalendar = new CollapsibleCalendar(getApplicationContext());
 //                Toast.makeText(getApplicationContext(), "sss", Toast.LENGTH_LONG).show();
+                loadClassData();
             }
 
             @Override
@@ -421,6 +425,10 @@ public class CalendarFragment extends Fragment {
                         //TODO
 //                        Log.d("aaa","aaa");
 //                        collapsibleCalendar = new CollapsibleCalendar(getApplicationContext());
+                        Calendar rightNow = Calendar.getInstance();
+                        calendarAdapter = new CalendarAdapter(getContext(), rightNow);
+                        calendarAdapter.refresh();
+                        collapsibleCalendar.setAdapter(calendarAdapter);
                         for (int i = 0; i < eventList.size(); i++) {
                             collapsibleCalendar.addEventTag(eventList.get(i).getYear(), eventList.get(i).getMonth() - 1, eventList.get(i).getDay());
                         }

@@ -29,6 +29,7 @@ import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.ClassDao;
 import com.mocom.com.mdancingproject.Dao.StudentEventHomeDao;
 import com.mocom.com.mdancingproject.R;
+import com.shrikanthravi.collapsiblecalendarview.data.CalendarAdapter;
 import com.shrikanthravi.collapsiblecalendarview.data.Day;
 import com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar;
 
@@ -37,6 +38,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -66,6 +68,8 @@ public class AdminHomeFragment extends Fragment {
     private ItemClickCallBack listener;
     TextView txtEmpty;
     String monthName;
+
+    CalendarAdapter calendarAdapter;
 
     public static AdminHomeFragment newInstance() {
         AdminHomeFragment fragment = new AdminHomeFragment();
@@ -132,7 +136,6 @@ public class AdminHomeFragment extends Fragment {
                     }
 
                     if (branch.size() > 0) {
-                        layoutProgress.setVisibility(View.GONE);
                         setSpinner();
                     }
                     layoutProgress.setVisibility(View.GONE);
@@ -143,7 +146,10 @@ public class AdminHomeFragment extends Fragment {
                 e.printStackTrace();
             }
 
-        }, error -> Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show());
+        }, error -> {
+            layoutProgress.setVisibility(View.GONE);
+            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        });
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
         requestQueue.add(stringRequest);
@@ -194,7 +200,8 @@ public class AdminHomeFragment extends Fragment {
             @Override
             public void onDataUpdate() {
 //                collapsibleCalendar = new CollapsibleCalendar(getApplicationContext());
-//                Toast.makeText(getApplicationContext(), "sss", Toast.LENGTH_LONG).show();
+//                Toast.makeText(getContext(), "sss", Toast.LENGTH_LONG).show();
+                loadClassData();
             }
 
             @Override
@@ -316,9 +323,15 @@ public class AdminHomeFragment extends Fragment {
                         //TODO
 //                        Log.d("aaa","aaa");
 //                        collapsibleCalendar = new CollapsibleCalendar(getApplicationContext());
+//                        calendarAdapter.getCalendar();
+                        Calendar rightNow = Calendar.getInstance();
+                        calendarAdapter = new CalendarAdapter(getContext(), rightNow);
+                        calendarAdapter.refresh();
+                        collapsibleCalendar.setAdapter(calendarAdapter);
                         for (int i = 0; i < eventList.size(); i++) {
                             collapsibleCalendar.addEventTag(eventList.get(i).getYear(), eventList.get(i).getMonth() - 1, eventList.get(i).getDay());
                         }
+//                        initCalendarListener();
                     }
                     layoutProgress.setVisibility(View.GONE);
 
