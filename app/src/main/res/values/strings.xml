@@ -118,5 +118,6 @@
     <string name="txt_list_check_name">list student</string>
     <string name="count_checked_student">เช็คชื่อแล้ว</string>
     <string name="txt_list_check_name_empty">ยังไม่มีใครมา</string>
+    <string name="twice_for_exit">Please click BACK again to exit</string>
 
 </resources>

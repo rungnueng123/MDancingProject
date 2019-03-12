@@ -34,9 +34,10 @@
 
             <ImageView
                 android:id="@+id/img_detail"
-                android:layout_width="15dp"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginEnd="15dp"
+                android:paddingEnd="15dp"
+                android:paddingStart="15dp"
                 android:src="@drawable/dot_detail"
                 android:layout_alignParentEnd="true"/>
 

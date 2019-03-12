@@ -3,6 +3,7 @@ package com.mocom.com.mdancingproject.Activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -67,6 +68,7 @@ public class StudentDashboardActivity extends AppCompatActivity
     String checkCanByStyle = DATA_URL + "check_coin_for_pay_style_pack.php";
     String buyPackStyleUrl = DATA_URL + "buy_pack_style.php";
     ActionBar actionbar;
+    boolean doubleBackToExitPressedOnce = false;
 
 
     @Override
@@ -366,7 +368,21 @@ public class StudentDashboardActivity extends AppCompatActivity
     @Override
     public void onBackPressed() {
         SavePreferences();
-        super.onBackPressed();
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getResources().getString(R.string.twice_for_exit), Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 
     @Override

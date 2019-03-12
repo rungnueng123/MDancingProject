@@ -3,6 +3,7 @@ package com.mocom.com.mdancingproject.Activities;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.Handler;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.FloatingActionButton;
@@ -17,6 +18,7 @@ import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.facebook.login.LoginManager;
 import com.mocom.com.mdancingproject.Fragments.AdminHomeFragment;
@@ -30,6 +32,8 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
     private DrawerLayout drawerLayout;
     NavigationView navigationView;
     FloatingActionButton fabQr;
+    String UserID, User, Email, GroupID, Groups;
+    boolean doubleBackToExitPressedOnce = false;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -134,5 +138,36 @@ public class AdminDashboardActivity extends AppCompatActivity implements View.On
 //            intent.putExtra("eventID","97");
             startActivity(intent);
         }
+    }
+
+    private void SavePreferences() {
+        sharedPreferences = getPreferences(MODE_PRIVATE);
+        editor = sharedPreferences.edit();
+        editor.putString(getString(R.string.UserID), UserID);
+        editor.putString(getString(R.string.User), User);
+        editor.putString(getString(R.string.Email), Email);
+        editor.putString(getString(R.string.GroupID), GroupID);
+        editor.putString(getString(R.string.Groups), Groups);
+        editor.apply();
+    }
+
+    @Override
+    public void onBackPressed() {
+        SavePreferences();
+        if (doubleBackToExitPressedOnce) {
+            super.onBackPressed();
+            return;
+        }
+
+        this.doubleBackToExitPressedOnce = true;
+        Toast.makeText(this, getResources().getString(R.string.twice_for_exit), Toast.LENGTH_SHORT).show();
+
+        new Handler().postDelayed(new Runnable() {
+
+            @Override
+            public void run() {
+                doubleBackToExitPressedOnce=false;
+            }
+        }, 2000);
     }
 }
