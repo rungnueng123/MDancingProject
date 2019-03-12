@@ -95,7 +95,7 @@ public class SelectStyleForShowCourseFragment extends Fragment {
 
 
         styleListener = (view, position) -> {
-            Toast.makeText(getContext(), selectStyle.toString(), Toast.LENGTH_LONG).show();
+//            Toast.makeText(getContext(), selectStyle.toString(), Toast.LENGTH_LONG).show();
             if (selectStyle != -1) {
                 selectedItems.delete(selectStyle);
                 selectView.setSelected(false);
