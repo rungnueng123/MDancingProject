@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <group>
+    <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
             android:icon="@drawable/ic_home_black_24dp"
@@ -13,19 +13,18 @@
             android:id="@+id/nav_coin"
             android:icon="@drawable/ic_home_black_24dp"
             android:title="@string/nav_coin" />
-    </group>
-    <group android:id="@+id/about_menu">
-            <item
-                android:id="@+id/nav_profile"
-                android:icon="@drawable/ic_person_outline_black_24dp"
-                android:title="@string/nav_profile" />
-            <item
-                android:id="@+id/nav_about_us"
-                android:icon="@drawable/ic_person_outline_black_24dp"
-                android:title="@string/nav_about_us" />
-            <item
-                android:id="@+id/nav_logout"
-                android:icon="@drawable/ic_exit_to_app_black_24dp"
-                android:title="@string/logout" />
+
+        <item
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_person_outline_black_24dp"
+            android:title="@string/nav_profile" />
+        <item
+            android:id="@+id/nav_about_us"
+            android:icon="@drawable/ic_person_outline_black_24dp"
+            android:title="@string/nav_about_us" />
+        <item
+            android:id="@+id/nav_logout"
+            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:title="@string/logout" />
     </group>
 </menu>

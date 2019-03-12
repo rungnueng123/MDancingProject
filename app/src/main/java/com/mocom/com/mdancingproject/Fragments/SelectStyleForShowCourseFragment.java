@@ -8,6 +8,7 @@ import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -44,11 +45,15 @@ public class SelectStyleForShowCourseFragment extends Fragment {
     View layoutShowFirstOpen, layoutShowEmpty, layoutProgress, layoutProgressStyle, layoutProgressCourse;
     String styleID = "";
 
+    View selectView;
+    Integer selectStyle = -1;
+
     private RecyclerView recyclerStyleView, recyclerCourseView;
     private RecyclerView.Adapter adapterStyle, adapterCourse;
     private List<StyleHomeDao> styleList;
     private List<CourseHomeDao> courseList;
     private ItemClickCallBack styleListener, courseListener;
+    private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
     public static SelectStyleForShowCourseFragment newInstance() {
         SelectStyleForShowCourseFragment fragment = new SelectStyleForShowCourseFragment();
@@ -90,7 +95,16 @@ public class SelectStyleForShowCourseFragment extends Fragment {
 
 
         styleListener = (view, position) -> {
-//            Toast.makeText(getContext(),styleList.get(position).getStyleID(),Toast.LENGTH_LONG).show();
+            Toast.makeText(getContext(), selectStyle.toString(), Toast.LENGTH_LONG).show();
+            if (selectStyle != -1) {
+                selectedItems.delete(selectStyle);
+                selectView.setSelected(false);
+            }
+
+            selectStyle = position;
+            selectView = view;
+            selectedItems.put(position, true);
+            view.setSelected(true);
             styleID = styleList.get(position).getStyleID();
             loadCourse();
 

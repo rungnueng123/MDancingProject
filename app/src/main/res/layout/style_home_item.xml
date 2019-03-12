@@ -9,12 +9,14 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:background="@drawable/my_selecter">
 
         <ImageView
             android:id="@+id/img_style"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:layout_margin="8dp"
             android:background="@drawable/shape_image"
             android:scaleType="fitXY" />
 

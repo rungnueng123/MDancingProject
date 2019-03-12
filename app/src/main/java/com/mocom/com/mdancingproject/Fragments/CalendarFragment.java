@@ -45,6 +45,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.Timer;
 import java.util.TimerTask;
 
@@ -73,7 +74,7 @@ public class CalendarFragment extends Fragment {
 
     CollapsibleCalendar collapsibleCalendar;
     CalendarAdapter calendarAdapter;
-    Integer year, month, date;
+    Integer year, month, date, monthCheck;
     JSONArray arrayEvent;
     private List<StudentEventHomeDao> eventList = new ArrayList<>();
 
@@ -126,6 +127,58 @@ public class CalendarFragment extends Fragment {
             intent.putExtra("eventID", classList.get(position).getEventID());
             startActivity(intent);
         };
+
+        Day day = collapsibleCalendar.getSelectedDay();
+        year = day.getYear();
+        month = (day.getMonth());
+        date = day.getDay();
+        monthCheck = month;
+//        Log.d("111", year + "/" + month + "/" + date);
+        loadClassData();
+        collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
+            @Override
+            public void onDaySelect() {
+                Day day = collapsibleCalendar.getSelectedDay();
+                year = day.getYear();
+                month = day.getMonth() + 1;
+                date = day.getDay();
+                classList.clear();
+                loadClassData();
+            }
+
+            @Override
+            public void onItemClick(View view) {
+                monthCheck = month;
+
+            }
+
+            @Override
+            public void onDataUpdate() {
+                Log.d("eee", monthCheck + "/" + month);
+                Day day = collapsibleCalendar.getSelectedDay();
+                year = day.getYear();
+                if (Objects.equals(monthCheck, month)) {
+                    month = monthCheck;
+                } else {
+                    month = monthCheck;
+                }
+                date = day.getDay();
+                Log.d("www", monthCheck + "/" + month);
+                classList.clear();
+                loadClassData();
+            }
+
+            @Override
+            public void onMonthChange() {
+
+            }
+
+            @Override
+            public void onWeekChange(int i) {
+//                String week = String.valueOf(i);
+//                Log.d("week",week);
+            }
+        });
 
     }
 
@@ -267,8 +320,8 @@ public class CalendarFragment extends Fragment {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 branchName = branch.get(position);
+//                initCalendarListener();
                 loadEventData();
-                initCalendarListener();
             }
 
             @Override
@@ -296,13 +349,22 @@ public class CalendarFragment extends Fragment {
 
             @Override
             public void onItemClick(View view) {
-
+                monthCheck = month;
             }
 
             @Override
             public void onDataUpdate() {
 //                collapsibleCalendar = new CollapsibleCalendar(getApplicationContext());
 //                Toast.makeText(getApplicationContext(), "sss", Toast.LENGTH_LONG).show();
+                Day day = collapsibleCalendar.getSelectedDay();
+                year = day.getYear();
+                if(Objects.equals(monthCheck, month)) {
+                    month = day.getMonth();
+                }else{
+                    month = day.getMonth() + 1;
+                }
+                date = day.getDay();
+//                Log.d("qqq",year+"/"+month+"/"+date);
                 loadClassData();
             }
 
@@ -378,7 +440,7 @@ public class CalendarFragment extends Fragment {
             layoutProgress.setVisibility(View.GONE);
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
-            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -436,6 +498,10 @@ public class CalendarFragment extends Fragment {
                     layoutProgress.setVisibility(View.GONE);
 
                 } else {
+                    Calendar rightNow = Calendar.getInstance();
+                    calendarAdapter = new CalendarAdapter(getContext(), rightNow);
+                    calendarAdapter.refresh();
+                    collapsibleCalendar.setAdapter(calendarAdapter);
                     layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {

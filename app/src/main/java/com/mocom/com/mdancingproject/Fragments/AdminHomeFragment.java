@@ -16,7 +16,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -42,6 +41,7 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
@@ -55,7 +55,7 @@ public class AdminHomeFragment extends Fragment {
     private Spinner spinnerBranch;
 
     CollapsibleCalendar collapsibleCalendar;
-    Integer year, month, date;
+    Integer year, month, date, monthCheck;
     JSONArray arrayEvent;
     private List<StudentEventHomeDao> eventList = new ArrayList<>();
 
@@ -111,6 +111,58 @@ public class AdminHomeFragment extends Fragment {
             intent.putExtra("eventID", classList.get(position).getEventID());
             startActivity(intent);
         };
+
+        Day day = collapsibleCalendar.getSelectedDay();
+        year = day.getYear();
+        month = (day.getMonth());
+        date = day.getDay();
+        monthCheck = month;
+//        Log.d("111", year + "/" + month + "/" + date);
+        loadClassData();
+        collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
+            @Override
+            public void onDaySelect() {
+                Day day = collapsibleCalendar.getSelectedDay();
+                year = day.getYear();
+                month = day.getMonth() + 1;
+                date = day.getDay();
+                classList.clear();
+                loadClassData();
+            }
+
+            @Override
+            public void onItemClick(View view) {
+                monthCheck = month;
+
+            }
+
+            @Override
+            public void onDataUpdate() {
+                Log.d("eee", monthCheck + "/" + month);
+                Day day = collapsibleCalendar.getSelectedDay();
+                year = day.getYear();
+                if (Objects.equals(monthCheck, month)) {
+                    month = monthCheck;
+                } else {
+                    month = monthCheck;
+                }
+                date = day.getDay();
+                Log.d("www", monthCheck + "/" + month);
+                classList.clear();
+                loadClassData();
+            }
+
+            @Override
+            public void onMonthChange() {
+
+            }
+
+            @Override
+            public void onWeekChange(int i) {
+//                String week = String.valueOf(i);
+//                Log.d("week",week);
+            }
+        });
     }
 
     private void initFindViewByID(View rootView) {
@@ -125,7 +177,7 @@ public class AdminHomeFragment extends Fragment {
     private void loadAllBranch() {
         layoutProgress.setVisibility(View.VISIBLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, loadBranchUrl, response -> {
-            Log.d("Onresponse", response);
+//            Log.d("Onresponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("msg").equals("success")) {
@@ -148,7 +200,7 @@ public class AdminHomeFragment extends Fragment {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
-            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
         RequestQueue requestQueue = Volley.newRequestQueue(getContext());
@@ -166,7 +218,7 @@ public class AdminHomeFragment extends Fragment {
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 branchName = branch.get(position);
                 loadEventData();
-                initCalendarListener();
+//                initCalendarListener();
             }
 
             @Override
@@ -181,6 +233,9 @@ public class AdminHomeFragment extends Fragment {
         year = day.getYear();
         month = (day.getMonth());
         date = day.getDay();
+        monthCheck = month;
+//        Log.d("111", year + "/" + month + "/" + date);
+        classList.clear();
         loadClassData();
         collapsibleCalendar.setCalendarListener(new CollapsibleCalendar.CalendarListener() {
             @Override
@@ -189,11 +244,13 @@ public class AdminHomeFragment extends Fragment {
                 year = day.getYear();
                 month = day.getMonth() + 1;
                 date = day.getDay();
+                classList.clear();
                 loadClassData();
             }
 
             @Override
             public void onItemClick(View view) {
+//                monthCheck = month;
 
             }
 
@@ -201,6 +258,17 @@ public class AdminHomeFragment extends Fragment {
             public void onDataUpdate() {
 //                collapsibleCalendar = new CollapsibleCalendar(getApplicationContext());
 //                Toast.makeText(getContext(), "sss", Toast.LENGTH_LONG).show();
+//                Log.d("eee", monthCheck + "/" + month);
+                Day day = collapsibleCalendar.getSelectedDay();
+                year = day.getYear();
+                if (Objects.equals(monthCheck, month)) {
+                    month = day.getMonth();
+                } else {
+                    month = day.getMonth() + 1;
+                }
+                date = day.getDay();
+//                Log.d("www", monthCheck + "/" + month);
+                classList.clear();
                 loadClassData();
             }
 
@@ -218,6 +286,7 @@ public class AdminHomeFragment extends Fragment {
     }
 
     private void loadClassData() {
+//        Log.d("qqq", year + "/" + month + "/" + date);
         layoutProgress.setVisibility(View.VISIBLE);
         if (classList != null || classList.size() > 0) {
             classList.clear();
@@ -255,6 +324,7 @@ public class AdminHomeFragment extends Fragment {
                         txtEmpty.setVisibility(View.GONE);
                         recyclerView.setVisibility(View.VISIBLE);
                         adapter = new ClassAdapter(listener, classList, getContext());
+                        adapter.notifyDataSetChanged();
                         recyclerView.setAdapter(adapter);
                     }
                     layoutProgress.setVisibility(View.GONE);
@@ -262,11 +332,6 @@ public class AdminHomeFragment extends Fragment {
                     if (classList.size() == 0) {
                         txtEmpty.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
-                    } else {
-                        txtEmpty.setVisibility(View.GONE);
-                        recyclerView.setVisibility(View.VISIBLE);
-                        adapter = new ClassAdapter(listener, classList, getContext());
-                        recyclerView.setAdapter(adapter);
                     }
                     layoutProgress.setVisibility(View.GONE);
                 }
@@ -276,7 +341,8 @@ public class AdminHomeFragment extends Fragment {
             layoutProgress.setVisibility(View.GONE);
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
-            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            Log.d("error",error.getMessage());
+//            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
@@ -296,9 +362,12 @@ public class AdminHomeFragment extends Fragment {
 
     private void loadEventData() {
         layoutProgress.setVisibility(View.VISIBLE);
-        eventList.clear();
+        if (eventList.size() > 0) {
+            eventList.clear();
+        }
+//        classList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, CalendarEventUrl, response -> {
-            Log.d("Onresponse", response);
+//            Log.d("Onresponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("msg").equals("have event")) {
@@ -336,6 +405,10 @@ public class AdminHomeFragment extends Fragment {
                     layoutProgress.setVisibility(View.GONE);
 
                 } else {
+                    Calendar rightNow = Calendar.getInstance();
+                    calendarAdapter = new CalendarAdapter(getContext(), rightNow);
+                    calendarAdapter.refresh();
+                    collapsibleCalendar.setAdapter(calendarAdapter);
                     layoutProgress.setVisibility(View.GONE);
                 }
             } catch (JSONException e) {
@@ -344,7 +417,7 @@ public class AdminHomeFragment extends Fragment {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
-            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+//            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {

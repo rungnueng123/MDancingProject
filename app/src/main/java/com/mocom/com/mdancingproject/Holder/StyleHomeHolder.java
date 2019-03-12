@@ -14,6 +14,7 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
     private ItemClickCallBack mListener;
     ImageView imgUrl, imgInfo;
     TextView style;
+//    private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
     public ImageView getImgUrl() {
         return imgUrl;
@@ -39,6 +40,13 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
 
     @Override
     public void onClick(View v) {
+//        if(selectedItems.get(getAdapterPosition(), false)){
+//            selectedItems.delete(getAdapterPosition());
+//            v.setSelected(false);
+//        }else{
+//            selectedItems.put(getAdapterPosition(),true);
+//            v.setSelected(true);
+//        }
         mListener.onClick(v, getAdapterPosition());
     }
 }

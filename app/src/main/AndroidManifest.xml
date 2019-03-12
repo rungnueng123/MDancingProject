@@ -17,10 +17,12 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.AdminClassDetailActivity"></activity>
+        <activity android:name=".Activities.LoginActivity"></activity>
+        <activity android:name=".Activities.AdminClassDetailActivity" />
         <activity android:name=".QRCode.QRCodeCheckedStudentActivity" />
         <activity android:name=".Activities.PaymentPackageActivity" />
-        <activity android:name=".Activities.LoginActivity">
+        <activity android:name=".Activities.SplashScreenActivity"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -44,7 +44,7 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    TextView txtProfile,txtCoin,txtUser,txtTel,txtBirth;
+    TextView txtProfile, txtCoin, txtUser, txtTel, txtBirth;
     BottomNavigationView bottomNavigationView;
     private TabLayout tabLayout;
     private ViewPager viewPager;
@@ -111,7 +111,6 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
         transaction.commit();
 
 
-
     }
 
     private void addTabs(ViewPager viewPager) {
@@ -157,27 +156,27 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
 //            Log.d("onResponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                if(jsonObject.getString("msg").equals("success")) {
+                if (jsonObject.getString("msg").equals("success")) {
                     JSONArray array = jsonObject.getJSONArray("data");
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject obj = array.getJSONObject(i);
 //                        Log.d("Member name: ", obj.getString("UserID"));
-                        if(obj.getString("User").equals("null")) {
+                        if (obj.getString("User").equals("null")) {
                             txtUser.setText("Name: ");
-                        }else{
-                            txtUser.setText("Name: "+obj.getString("User"));
+                        } else {
+                            txtUser.setText("Name: " + obj.getString("User"));
                         }
-                        if(obj.getString("Phone").equals("null")) {
+                        if (obj.getString("Phone").equals("null")) {
                             txtTel.setText("Tel: ");
-                        }else{
-                            txtTel.setText("Tel: "+obj.getString("Phone"));
+                        } else {
+                            txtTel.setText("Tel: " + obj.getString("Phone"));
                         }
-                        if(obj.getString("Birth").equals("null")) {
+                        if (obj.getString("Birth").equals("null")) {
                             txtBirth.setText("Birth: ");
-                        }else{
-                            txtBirth.setText("Birth: "+obj.getString("Birth"));
+                        } else {
+                            txtBirth.setText("Birth: " + obj.getString("Birth"));
                         }
-                        txtCoin.setText(obj.getString("CoinAmt"));
+                        txtCoin.setText(getResources().getString(R.string.coin) + " : " + obj.getString("CoinAmt"));
                     }
                 }
             } catch (JSONException e) {
@@ -233,7 +232,7 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v == txtCoin){
+        if (v == txtCoin) {
             Toast.makeText(getActivity(), "aaa", Toast.LENGTH_SHORT).show();
         }
     }
