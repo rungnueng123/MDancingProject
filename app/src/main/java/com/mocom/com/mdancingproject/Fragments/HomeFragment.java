@@ -10,9 +10,11 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -25,6 +27,7 @@ import com.mocom.com.mdancingproject.Adapter.CourseHomeAdapter;
 import com.mocom.com.mdancingproject.Adapter.ImageBannerAdapter;
 import com.mocom.com.mdancingproject.Adapter.StyleHomeAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
+import com.mocom.com.mdancingproject.Callback.RecyclerStyleClickCallBack;
 import com.mocom.com.mdancingproject.Dao.CourseHomeDao;
 import com.mocom.com.mdancingproject.Dao.StyleHomeDao;
 import com.mocom.com.mdancingproject.R;
@@ -52,6 +55,11 @@ public class HomeFragment extends Fragment {
     View layoutShowFirstOpen, layoutShowEmpty, layoutProgress;
     String styleID = "";
 
+    private SparseBooleanArray selectedItems = new SparseBooleanArray();
+    View selectView;
+    ImageView selectImg;
+    Integer selectStyle = -1;
+
 
     private static ViewPager viewPager;
     private static int currentPage = 0;
@@ -64,7 +72,8 @@ public class HomeFragment extends Fragment {
     private RecyclerView.Adapter adapterStyle, adapterCourse;
     private List<StyleHomeDao> styleList;
     private List<CourseHomeDao> courseList;
-    private ItemClickCallBack styleListener, courseListener;
+    private ItemClickCallBack courseListener;
+    private RecyclerStyleClickCallBack styleListener;
 
     public static HomeFragment newInstance() {
         HomeFragment fragment = new HomeFragment();
@@ -80,9 +89,9 @@ public class HomeFragment extends Fragment {
         if (savedInstanceState != null) {
             onRestoreInstanceState(savedInstanceState);
         }
-            getChildFragmentManager().beginTransaction()
-                    .add(R.id.container_style_course, SelectStyleForShowCourseFragment.newInstance())
-                    .commit();
+        getChildFragmentManager().beginTransaction()
+                .add(R.id.container_style_course, SelectStyleForShowCourseFragment.newInstance())
+                .commit();
     }
 
     @Override
@@ -111,8 +120,30 @@ public class HomeFragment extends Fragment {
         loadStyle();
 
 
-        styleListener = (view, position) -> {
-//            Toast.makeText(getContext(),styleList.get(position).getStyleID(),Toast.LENGTH_LONG).show();
+        styleListener = (view, position, imgSelect, txtShow) -> {
+
+            if (selectStyle != -1) {
+                //bg
+                selectedItems.delete(selectStyle);
+                selectView.setSelected(false);
+                txtShow.setSelected(false);
+                //img select
+//                selectImg.setVisibility(View.GONE);
+                selectView.setElevation(0);
+            }
+
+            selectStyle = position;
+            selectView = view;
+            selectImg = imgSelect;
+            view.setElevation(50);
+            //bg
+            selectedItems.put(position, true);
+            view.setSelected(true);
+            txtShow.setSelected(true);
+
+            //img select
+//            imgSelect.setVisibility(View.VISIBLE);
+
             styleID = styleList.get(position).getStyleID();
             loadCourse();
 

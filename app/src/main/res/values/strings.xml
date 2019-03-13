@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MDancing</string>
+    <string name="app_name">BeatsBox</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     //เก็บ User Login

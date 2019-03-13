@@ -144,9 +144,6 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             goRegister(username, email, password, phone, sex, birth);
         }
         if(v == btnBack){
-            Intent intent = new Intent(this,LoginActivity.class);
-            intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-            startActivity(intent);
             finish();
 
         }

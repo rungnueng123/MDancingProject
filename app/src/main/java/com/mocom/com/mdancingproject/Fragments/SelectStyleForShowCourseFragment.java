@@ -12,6 +12,7 @@ import android.util.SparseBooleanArray;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -23,6 +24,7 @@ import com.mocom.com.mdancingproject.Activities.ClassActivity;
 import com.mocom.com.mdancingproject.Adapter.CourseHomeAdapter;
 import com.mocom.com.mdancingproject.Adapter.StyleHomeAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
+import com.mocom.com.mdancingproject.Callback.RecyclerStyleClickCallBack;
 import com.mocom.com.mdancingproject.Dao.CourseHomeDao;
 import com.mocom.com.mdancingproject.Dao.StyleHomeDao;
 import com.mocom.com.mdancingproject.R;
@@ -42,17 +44,19 @@ public class SelectStyleForShowCourseFragment extends Fragment {
 
     private String styleUrl = DATA_URL + "get_style_all.php";
     private String courseUrl = DATA_URL + "get_course_style_all.php";
-    View layoutShowFirstOpen, layoutShowEmpty, layoutProgress, layoutProgressStyle, layoutProgressCourse;
+    View layoutShowFirstOpen, layoutShowEmpty, layoutProgress, layoutProgressCourse;
     String styleID = "";
 
     View selectView;
+    ImageView selectImg;
     Integer selectStyle = -1;
 
     private RecyclerView recyclerStyleView, recyclerCourseView;
     private RecyclerView.Adapter adapterStyle, adapterCourse;
     private List<StyleHomeDao> styleList;
     private List<CourseHomeDao> courseList;
-    private ItemClickCallBack styleListener, courseListener;
+    private ItemClickCallBack courseListener;
+    private RecyclerStyleClickCallBack styleListener;
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
     public static SelectStyleForShowCourseFragment newInstance() {
@@ -94,17 +98,30 @@ public class SelectStyleForShowCourseFragment extends Fragment {
         loadStyle();
 
 
-        styleListener = (view, position) -> {
-//            Toast.makeText(getContext(), selectStyle.toString(), Toast.LENGTH_LONG).show();
+        styleListener = (view, position, imgSelect, txtShow) -> {
+
             if (selectStyle != -1) {
+                //bg
                 selectedItems.delete(selectStyle);
                 selectView.setSelected(false);
+                txtShow.setSelected(false);
+                //img select
+//                selectImg.setVisibility(View.GONE);
+                selectView.setElevation(0);
             }
 
             selectStyle = position;
             selectView = view;
+            selectImg = imgSelect;
+            view.setElevation(50);
+            //bg
             selectedItems.put(position, true);
             view.setSelected(true);
+            txtShow.setSelected(true);
+
+            //img select
+//            imgSelect.setVisibility(View.VISIBLE);
+
             styleID = styleList.get(position).getStyleID();
             loadCourse();
 
@@ -124,14 +141,11 @@ public class SelectStyleForShowCourseFragment extends Fragment {
         layoutShowFirstOpen = rootView.findViewById(R.id.layout_show_first_open);
         layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
         layoutProgress = rootView.findViewById(R.id.layout_progressbar);
-        layoutProgressStyle = rootView.findViewById(R.id.layout_progressbar_style);
         layoutProgressCourse = rootView.findViewById(R.id.layout_progressbar_course);
     }
 
     private void loadStyle() {
-//        layoutProgress.setVisibility(View.VISIBLE);
         recyclerStyleView.setVisibility(View.GONE);
-//        layoutProgressStyle.setVisibility(View.VISIBLE);
         if (styleList != null || styleList.size() > 0) {
             styleList.clear();
         }
@@ -154,13 +168,9 @@ public class SelectStyleForShowCourseFragment extends Fragment {
                     adapterStyle = new StyleHomeAdapter(styleListener, styleList, getContext());
                     recyclerStyleView.setAdapter(adapterStyle);
                     recyclerStyleView.setVisibility(View.VISIBLE);
-//                    layoutProgressStyle.setVisibility(View.GONE);
-//                    layoutProgress.setVisibility(View.GONE);
                     loadCourse();
 
                 } else {
-//                    layoutProgress.setVisibility(View.GONE);
-//                    layoutProgressStyle.setVisibility(View.GONE);
                     recyclerStyleView.setVisibility(View.VISIBLE);
                 }
             } catch (JSONException e) {
@@ -168,8 +178,6 @@ public class SelectStyleForShowCourseFragment extends Fragment {
             }
 
         }, error -> {
-//            layoutProgress.setVisibility(View.GONE);
-//            layoutProgressStyle.setVisibility(View.GONE);
             recyclerStyleView.setVisibility(View.VISIBLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });

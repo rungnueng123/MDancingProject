@@ -2,19 +2,22 @@ package com.mocom.com.mdancingproject.Holder;
 
 import android.support.annotation.NonNull;
 import android.support.v7.widget.RecyclerView;
+import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
+import com.mocom.com.mdancingproject.Callback.RecyclerStyleClickCallBack;
 import com.mocom.com.mdancingproject.R;
 
 public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
-    private ItemClickCallBack mListener;
-    ImageView imgUrl, imgInfo;
-    TextView style;
-//    private SparseBooleanArray selectedItems = new SparseBooleanArray();
+    private RecyclerStyleClickCallBack mListener;
+    private ImageView imgUrl, imgInfo, imgSelect;
+    private TextView style, txtShowClick;
+    Integer selectStyle = -1;
+
+    private SparseBooleanArray selectedItems = new SparseBooleanArray();
 
     public ImageView getImgUrl() {
         return imgUrl;
@@ -28,7 +31,7 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
         return imgInfo;
     }
 
-    public StyleHomeHolder(@NonNull View itemView, ItemClickCallBack listener) {
+    public StyleHomeHolder(@NonNull View itemView, RecyclerStyleClickCallBack listener) {
         super(itemView);
         mListener = listener;
         itemView.setOnClickListener(this);
@@ -36,6 +39,9 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
         imgUrl = itemView.findViewById(R.id.img_style);
         style = itemView.findViewById(R.id.txt_style);
         imgInfo = itemView.findViewById(R.id.img_info);
+        imgSelect = itemView.findViewById(R.id.img_select);
+        txtShowClick = itemView.findViewById(R.id.txt_show_click);
+
     }
 
     @Override
@@ -47,6 +53,6 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
 //            selectedItems.put(getAdapterPosition(),true);
 //            v.setSelected(true);
 //        }
-        mListener.onClick(v, getAdapterPosition());
+        mListener.onClick(v, getAdapterPosition(), imgSelect, txtShowClick);
     }
 }
