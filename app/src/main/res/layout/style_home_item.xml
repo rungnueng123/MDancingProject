@@ -7,6 +7,7 @@
     android:layout_margin="15dp"
     android:background="@null"
     android:clipToPadding="false"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="8dp">
 
     <RelativeLayout
@@ -59,12 +60,6 @@
             android:text="hiphop"
             android:textColor="@color/white"
             android:textSize="18sp" />
-
-        <TextView
-            android:id="@+id/txt_show_click"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:background="@drawable/my_selecter_show" />
 
     </RelativeLayout>
 

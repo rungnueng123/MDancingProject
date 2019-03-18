@@ -5,6 +5,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="6dp"
     android:orientation="vertical"
+    android:foreground="?android:attr/selectableItemBackground"
     app:cardCornerRadius="6dp">
 
     <RelativeLayout

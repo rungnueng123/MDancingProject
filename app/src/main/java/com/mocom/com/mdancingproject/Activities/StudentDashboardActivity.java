@@ -313,6 +313,7 @@ public class StudentDashboardActivity extends AppCompatActivity
                         .add(R.id.fragment_dashboard, StudentCoinFragment.newInstance())
                         .commit();
             } else if (!TextUtils.isEmpty(goProfile)) {
+//                navigationView.setCheckedItem(R.id.nav_profile);
                 getSupportFragmentManager().beginTransaction()
                         .add(R.id.fragment_dashboard, StudentProfileFragment.newInstance())
                         .commit();

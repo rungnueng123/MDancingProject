@@ -98,13 +98,12 @@ public class SelectStyleForShowCourseFragment extends Fragment {
         loadStyle();
 
 
-        styleListener = (view, position, imgSelect, txtShow) -> {
+        styleListener = (view, position, imgSelect) -> {
 
             if (selectStyle != -1) {
                 //bg
                 selectedItems.delete(selectStyle);
                 selectView.setSelected(false);
-                txtShow.setSelected(false);
                 //img select
 //                selectImg.setVisibility(View.GONE);
                 selectView.setElevation(0);
@@ -117,7 +116,6 @@ public class SelectStyleForShowCourseFragment extends Fragment {
             //bg
             selectedItems.put(position, true);
             view.setSelected(true);
-            txtShow.setSelected(true);
 
             //img select
 //            imgSelect.setVisibility(View.VISIBLE);

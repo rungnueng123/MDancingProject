@@ -14,7 +14,7 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
 
     private RecyclerStyleClickCallBack mListener;
     private ImageView imgUrl, imgInfo, imgSelect;
-    private TextView style, txtShowClick;
+    private TextView style;
     Integer selectStyle = -1;
 
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
@@ -40,7 +40,6 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
         style = itemView.findViewById(R.id.txt_style);
         imgInfo = itemView.findViewById(R.id.img_info);
         imgSelect = itemView.findViewById(R.id.img_select);
-        txtShowClick = itemView.findViewById(R.id.txt_show_click);
 
     }
 
@@ -53,6 +52,6 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
 //            selectedItems.put(getAdapterPosition(),true);
 //            v.setSelected(true);
 //        }
-        mListener.onClick(v, getAdapterPosition(), imgSelect, txtShowClick);
+        mListener.onClick(v, getAdapterPosition(), imgSelect);
     }
 }

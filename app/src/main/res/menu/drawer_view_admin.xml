@@ -3,13 +3,13 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home_black_24dp"
+            android:icon="@drawable/ic_home"
             android:title="@string/nav_home" />
     </group>
     <group android:id="@+id/about_menu">
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_exit_to_app_black_24dp"
+            android:icon="@drawable/ic_logout"
             android:title="@string/logout" />
     </group>
 </menu>

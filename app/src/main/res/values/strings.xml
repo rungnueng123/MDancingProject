@@ -119,5 +119,7 @@
     <string name="count_checked_student">เช็คชื่อแล้ว</string>
     <string name="txt_list_check_name_empty">ยังไม่มีใครมา</string>
     <string name="twice_for_exit">Please click BACK again to exit</string>
+    <string name="branch">Branch</string>
+    <string name="province">Province</string>
 
 </resources>

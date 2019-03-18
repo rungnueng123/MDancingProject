@@ -10,9 +10,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.Button;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
+import android.widget.TextView;
 
 import com.mocom.com.mdancingproject.R;
 
@@ -26,7 +26,7 @@ public class StudentCoinPackPaymentDialog extends DialogFragment implements View
 
     public OnSelectTypePayPackListener onSelectTypePayPackListener;
     RadioGroup radioGroup;
-    Button btnCancel, btnOk;
+    TextView txtCancel, txtOk;
     String[] items;
     RadioButton radioButton;
     private String namePack, baht, coinAmt, coinPackID, userID, secret_key;
@@ -64,72 +64,23 @@ public class StudentCoinPackPaymentDialog extends DialogFragment implements View
 
     private void initFindViewByID(View rootView) {
         radioGroup = rootView.findViewById(R.id.radio_group);
-        btnCancel = rootView.findViewById(R.id.btn_cancel);
-        btnOk = rootView.findViewById(R.id.btn_ok);
-        btnCancel.setOnClickListener(this);
-        btnOk.setOnClickListener(this);
+        txtCancel = rootView.findViewById(R.id.txt_cancel);
+        txtOk = rootView.findViewById(R.id.txt_ok);
+        txtCancel.setOnClickListener(this);
+        txtOk.setOnClickListener(this);
     }
 
     @Override
     public void onClick(View v) {
-        if (v == btnCancel) {
+        if (v == txtCancel){
             getDialog().dismiss();
         }
-        if (v == btnOk) {
+        if (v == txtOk){
             int selectedId = radioGroup.getCheckedRadioButtonId();
             RadioButton selectRadioButton = v.getRootView().findViewById(selectedId);
 
             onSelectTypePayPackListener.sendOnSelectTypePayPackCoinListener(selectRadioButton.getText().toString(), coinPackID, baht, coinAmt);
             getDialog().dismiss();
-//            int selectedId = radioGroup.getCheckedRadioButtonId();
-//            RadioButton selectRadioButton = v.getRootView().findViewById(selectedId);
-////            Toast.makeText(getContext(),selectRadioButton.getText().toString(),Toast.LENGTH_LONG).show();
-//            if (selectRadioButton.getText().toString().equals(getResources().getString(R.string.qr_code))) {
-//
-//                sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getActivity());
-//                userID = sharedPreferences.getString(getString(R.string.UserID), "");
-//
-//                StringRequest stringRequest = new StringRequest(Request.Method.POST, queryGenQrUrl, response -> {
-////                    Log.d("Onresponse", response);
-//                    try {
-//                        JSONObject jsonObject = new JSONObject(response);
-//                        if (jsonObject.getString("msg").equals("success")) {
-//                            JSONArray array = jsonObject.getJSONArray("data");
-//                            for (int i = 0; i < array.length(); i++) {
-//                                JSONObject obj = array.getJSONObject(i);
-//                                secret_key = obj.getString("key");
-//                            }
-//                            Intent intent = new Intent(getContext(), StudentQRCodeActivity.class);
-//                            intent.putExtra("secret_key",secret_key);
-//                            intent.putExtra("baht",baht);
-//                            intent.putExtra("coinAmt",coinAmt);
-//                            startActivity(intent);
-//                        }
-//                    } catch (JSONException e) {
-//                        e.printStackTrace();
-//                    }
-//                }, error -> {
-//                    Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-//                }) {
-//                    @Override
-//                    protected Map<String, String> getParams() throws AuthFailureError {
-//                        Map<String, String> params = new HashMap<String, String>();
-//                        params.put("coinPackID", coinPackID);
-//                        params.put("userID", userID);
-//
-//                        return params;
-//                    }
-//                };
-//                RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-//                requestQueue.add(stringRequest);
-//
-//
-//
-//            } else if (selectRadioButton.getText().toString().equals(getResources().getString(R.string.payment_gateway))) {
-//                Intent intent = new Intent(getContext(), PaymentGatewayTestActivity.class);
-//                intent.putExtra("coinPackID",coinPackID);
-//                startActivity(intent);
-//            }
         }
     }
 
