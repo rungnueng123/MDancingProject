@@ -2,13 +2,14 @@ package com.mocom.com.mdancingproject.Dao;
 
 public class CourseHomeDao {
 
-    private String imgUrl, courseID, courseName, courseStyle, courseDesc;
+    private String imgUrl, courseID, courseName, courseStyle, courseLength, courseDesc;
 
-    public CourseHomeDao(String imgUrl, String courseID, String courseName, String courseStyle, String courseDesc) {
+    public CourseHomeDao(String imgUrl, String courseID, String courseName, String courseStyle, String courseLength, String courseDesc) {
         this.imgUrl = imgUrl;
         this.courseID = courseID;
         this.courseName = courseName;
         this.courseStyle = courseStyle;
+        this.courseLength = courseLength;
         this.courseDesc = courseDesc;
     }
 
@@ -26,6 +27,10 @@ public class CourseHomeDao {
 
     public String getCourseStyle() {
         return courseStyle;
+    }
+
+    public String getCourseLength() {
+        return courseLength;
     }
 
     public String getCourseDesc() {

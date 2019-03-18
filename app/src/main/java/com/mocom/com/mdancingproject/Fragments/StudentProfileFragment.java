@@ -6,9 +6,12 @@ import android.os.Bundle;
 import android.preference.PreferenceManager;
 import android.support.annotation.NonNull;
 import android.support.design.widget.BottomNavigationView;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
+import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -27,7 +30,9 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
@@ -39,8 +44,10 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
     private SharedPreferences sharedPreferences;
     private SharedPreferences.Editor editor;
 
-    TextView txtProfile,txtCoin,txtUser,txtTel,txtBirth;
+    TextView txtProfile, txtCoin, txtUser, txtTel, txtBirth;
     BottomNavigationView bottomNavigationView;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     public static StudentProfileFragment newInstance() {
         StudentProfileFragment fragment = new StudentProfileFragment();
@@ -76,6 +83,10 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
         initFindViewByID(rootView);
         queryProfile();
 
+        addTabs(viewPager);
+
+        tabLayout.setupWithViewPager(viewPager);
+
 
         bottomNavigationView.setOnNavigationItemSelectedListener(new BottomNavigationView.OnNavigationItemSelectedListener() {
             @Override
@@ -100,37 +111,72 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
         transaction.commit();
 
 
+    }
 
+    private void addTabs(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFrag(new CourseApplicantProfileFragment(), "APPLICANT");
+        adapter.addFrag(new HistoryProfileFragment(), "HISTORY");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 
     private void queryProfile() {
         RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest request = new StringRequest(Request.Method.POST, profileUrl, response -> {
-            Log.d("onResponse", response);
+//            Log.d("onResponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
-                if(jsonObject.getString("msg").equals("success")) {
+                if (jsonObject.getString("msg").equals("success")) {
                     JSONArray array = jsonObject.getJSONArray("data");
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject obj = array.getJSONObject(i);
 //                        Log.d("Member name: ", obj.getString("UserID"));
-                        if(obj.getString("User").equals("null")) {
+                        if (obj.getString("User").equals("null")) {
                             txtUser.setText("Name: ");
-                        }else{
-                            txtUser.setText("Name: "+obj.getString("User"));
+                        } else {
+                            txtUser.setText("Name: " + obj.getString("User"));
                         }
-                        if(obj.getString("Phone").equals("null")) {
+                        if (obj.getString("Phone").equals("null")) {
                             txtTel.setText("Tel: ");
-                        }else{
-                            txtTel.setText("Tel: "+obj.getString("Phone"));
+                        } else {
+                            txtTel.setText("Tel: " + obj.getString("Phone"));
                         }
-                        if(obj.getString("Birth").equals("null")) {
+                        if (obj.getString("Birth").equals("null")) {
                             txtBirth.setText("Birth: ");
-                        }else{
-                            txtBirth.setText("Birth: "+obj.getString("Birth"));
+                        } else {
+                            txtBirth.setText("Birth: " + obj.getString("Birth"));
                         }
-                        txtCoin.setText(obj.getString("CoinAmt"));
+                        txtCoin.setText(getResources().getString(R.string.coin) + " : " + obj.getString("CoinAmt"));
                     }
                 }
             } catch (JSONException e) {
@@ -160,6 +206,9 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
         txtUser = rootView.findViewById(R.id.txt_user);
         txtTel = rootView.findViewById(R.id.txt_tel);
         txtBirth = rootView.findViewById(R.id.txt_birth);
+
+        viewPager = rootView.findViewById(R.id.view_pager);
+        tabLayout = rootView.findViewById(R.id.tab_layout);
     }
 
     @Override
@@ -183,7 +232,7 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
 
     @Override
     public void onClick(View v) {
-        if(v == txtCoin){
+        if (v == txtCoin) {
             Toast.makeText(getActivity(), "aaa", Toast.LENGTH_SHORT).show();
         }
     }

@@ -7,6 +7,8 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
+import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -30,15 +32,17 @@ import java.util.Map;
 
 import static com.mocom.com.mdancingproject.config.config.DATA_URL;
 
-public class StudentCourseClassActivity extends AppCompatActivity {
+public class StudentCourseClassActivity extends AppCompatActivity implements View.OnClickListener {
 
     String getClassUrl = DATA_URL + "json_get_course_class_student.php";
     String courseID;
     Toolbar toolbar;
-    TextView txtCoin;
     private RecyclerView recyclerViewClass;
     private RecyclerView.Adapter adapter;
     private List<StudentCourseClassDao> classList;
+
+    ImageView imgClass,imgArrow;
+    TextView txtClassName,txtPlaylist,txtStyle,txtTeacher,txtDate,txtTime,txtEmpty,txtBranch,txtCoin,txtDesc;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,23 +97,22 @@ public class StudentCourseClassActivity extends AppCompatActivity {
                 if (jsonObject.getString("msg").equals("success")) {
                     JSONArray classArray = jsonObject.getJSONArray("class");
                     for (int i = 0; i < classArray.length(); i++) {
-                        JSONObject objGallery = classArray.getJSONObject(i);
+                        JSONObject objClass = classArray.getJSONObject(i);
                         StudentCourseClassDao item = new StudentCourseClassDao(
-                                objGallery.getString("eventID"),
-                                objGallery.getString("imgUrl"),
-                                objGallery.getString("eventTitle"),
-                                objGallery.getString("playlist"),
-                                objGallery.getString("eventStyle"),
-                                objGallery.getString("eventTeacher"),
-                                objGallery.getString("eventDate"),
-                                objGallery.getString("eventTime"),
-                                objGallery.getString("eventEmpty"),
-                                objGallery.getString("eventBranch"),
-                                objGallery.getString("description"),
-                                objGallery.getString("coin")
+                                objClass.getString("eventID"),
+                                objClass.getString("imgUrl"),
+                                objClass.getString("eventTitle"),
+                                objClass.getString("playlist"),
+                                objClass.getString("eventStyle"),
+                                objClass.getString("eventTeacher"),
+                                objClass.getString("eventDate"),
+                                objClass.getString("eventTime"),
+                                objClass.getString("eventEmpty"),
+                                objClass.getString("eventBranch"),
+                                objClass.getString("description"),
+                                objClass.getString("coin")
                         );
 
-                        txtCoin.setText(objGallery.getString("coin")+" Coins/Time");
                         classList.add(item);
                     }
 
@@ -153,7 +156,25 @@ public class StudentCourseClassActivity extends AppCompatActivity {
 
     private void initFindViewByID() {
         toolbar = findViewById(R.id.toolbar_course_class_detail);
-        txtCoin = findViewById(R.id.txt_coin_amount);
         recyclerViewClass = findViewById(R.id.recycler_student_course_class);
+        imgClass = findViewById(R.id.img_class);
+        imgArrow = findViewById(R.id.img_arrow);
+        imgArrow.setOnClickListener(this);
+        txtClassName = findViewById(R.id.txt_class_name);
+        txtPlaylist = findViewById(R.id.txt_playlist);
+        txtStyle = findViewById(R.id.txt_style);
+        txtTeacher = findViewById(R.id.txt_teacher);
+        txtDate = findViewById(R.id.txt_date);
+        txtTime = findViewById(R.id.txt_time);
+        txtEmpty = findViewById(R.id.txt_empty);
+        txtBranch = findViewById(R.id.txt_branch);
+        txtCoin = findViewById(R.id.txt_coin);
+        txtDesc = findViewById(R.id.txt_show_desc);
+
+    }
+
+    @Override
+    public void onClick(View v) {
+
     }
 }

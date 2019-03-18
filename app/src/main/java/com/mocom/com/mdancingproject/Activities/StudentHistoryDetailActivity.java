@@ -33,6 +33,7 @@ import static com.mocom.com.mdancingproject.config.config.HOST_URL;
 public class StudentHistoryDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String dataUrl = DATA_URL + "get_class_for_history.php";
+    View layoutProgress;
 
     String eventID, active, userID;
     Toolbar toolbar;
@@ -61,6 +62,7 @@ public class StudentHistoryDetailActivity extends AppCompatActivity implements V
     }
 
     private void loadClassDetail() {
+        layoutProgress.setVisibility(View.VISIBLE);
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest request = new StringRequest(Request.Method.POST, dataUrl, response -> {
@@ -109,12 +111,12 @@ public class StudentHistoryDetailActivity extends AppCompatActivity implements V
                         }
                     }
                 }
+                layoutProgress.setVisibility(View.GONE);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, error -> {
-//                    Log.d("onError", error.toString());
-//                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -151,6 +153,7 @@ public class StudentHistoryDetailActivity extends AppCompatActivity implements V
         txtBranch = findViewById(R.id.txt_branch);
         txtStatus = findViewById(R.id.txt_status);
         txtDesc = findViewById(R.id.txt_desc);
+        layoutProgress = findViewById(R.id.layout_progressbar);
     }
 
     @Override

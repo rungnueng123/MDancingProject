@@ -2,7 +2,10 @@ package com.mocom.com.mdancingproject.Fragments;
 
 import android.content.Context;
 import android.os.Bundle;
+import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -10,13 +13,15 @@ import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.mocom.com.mdancingproject.Adapter.StudentCoinAdapter;
 import com.mocom.com.mdancingproject.R;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class StudentCoinFragment extends Fragment {
 
-    ViewPager viewPager;
-    StudentCoinAdapter studentCoinAdapter;
+    private TabLayout tabLayout;
+    private ViewPager viewPager;
 
     public static StudentCoinFragment newInstance() {
         StudentCoinFragment fragment = new StudentCoinFragment();
@@ -38,7 +43,6 @@ public class StudentCoinFragment extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_student_coin, container, false);
-        setHasOptionsMenu(true);
         initInstances(rootView, savedInstanceState);
         return rootView;
     }
@@ -48,28 +52,50 @@ public class StudentCoinFragment extends Fragment {
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
-        studentCoinAdapter = new StudentCoinAdapter(getFragmentManager());
-        viewPager.setAdapter(studentCoinAdapter);
-        viewPager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
-            @Override
-            public void onPageScrolled(int i, float v, int i1) {
+        addTabs(viewPager);
 
-            }
-
-            @Override
-            public void onPageSelected(int i) {
-
-            }
-
-            @Override
-            public void onPageScrollStateChanged(int i) {
-
-            }
-        });
+        tabLayout.setupWithViewPager(viewPager);
     }
 
     private void initFindViewByID(View rootView) {
         viewPager = rootView.findViewById(R.id.view_pager);
+        tabLayout = rootView.findViewById(R.id.tab_layout);
+    }
+
+    private void addTabs(ViewPager viewPager) {
+        ViewPagerAdapter adapter = new ViewPagerAdapter(getChildFragmentManager());
+        adapter.addFrag(new StudentCoinPackageFragment(), "PACKAGE COIN");
+        adapter.addFrag(new StudentStylePackageFragment(), "PACKAGE STYLE");
+        viewPager.setAdapter(adapter);
+    }
+
+    class ViewPagerAdapter extends FragmentPagerAdapter {
+        private final List<Fragment> mFragmentList = new ArrayList<>();
+        private final List<String> mFragmentTitleList = new ArrayList<>();
+
+        public ViewPagerAdapter(FragmentManager manager) {
+            super(manager);
+        }
+
+        @Override
+        public Fragment getItem(int position) {
+            return mFragmentList.get(position);
+        }
+
+        @Override
+        public int getCount() {
+            return mFragmentList.size();
+        }
+
+        public void addFrag(Fragment fragment, String title) {
+            mFragmentList.add(fragment);
+            mFragmentTitleList.add(title);
+        }
+
+        @Override
+        public CharSequence getPageTitle(int position) {
+            return mFragmentTitleList.get(position);
+        }
     }
 
     @Override

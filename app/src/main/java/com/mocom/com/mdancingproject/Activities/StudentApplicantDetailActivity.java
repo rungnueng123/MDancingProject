@@ -1,7 +1,5 @@
 package com.mocom.com.mdancingproject.Activities;
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -21,6 +19,8 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.mocom.com.mdancingproject.DialogFragment.CheckedAlreadyDialog;
+import com.mocom.com.mdancingproject.QRCode.QRCodeCheckedStudentActivity;
 import com.mocom.com.mdancingproject.R;
 
 import org.json.JSONArray;
@@ -36,6 +36,7 @@ import static com.mocom.com.mdancingproject.config.config.HOST_URL;
 public class StudentApplicantDetailActivity extends AppCompatActivity implements View.OnClickListener {
 
     private String dataUrl = DATA_URL + "get_class_for_applicant.php";
+    View layoutProgress;
 
     String eventID, active, userID;
     Toolbar toolbar;
@@ -58,13 +59,14 @@ public class StudentApplicantDetailActivity extends AppCompatActivity implements
 
     private void initInstance() {
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
+        userID = sharedPreferences.getString(getString(R.string.UserID), "");
         initFindViewByID();
         initToolbar();
         loadClassDetail();
     }
 
     private void loadClassDetail() {
-        userID = sharedPreferences.getString(getString(R.string.UserID), "");
+        layoutProgress.setVisibility(View.VISIBLE);
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest request = new StringRequest(Request.Method.POST, dataUrl, response -> {
             Log.d("onResponse", response);
@@ -115,12 +117,12 @@ public class StudentApplicantDetailActivity extends AppCompatActivity implements
                         }
                     }
                 }
+                layoutProgress.setVisibility(View.GONE);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, error -> {
-//                    Log.d("onError", error.toString());
-//                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
+            layoutProgress.setVisibility(View.GONE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -160,25 +162,31 @@ public class StudentApplicantDetailActivity extends AppCompatActivity implements
         txtActive = findViewById(R.id.txt_active);
         btnQrCheck = findViewById(R.id.btn_qr_check);
         btnQrCheck.setOnClickListener(this);
+        layoutProgress = findViewById(R.id.layout_progressbar);
     }
 
     @Override
     public void onClick(View v) {
         if (v == btnQrCheck) {
-            if(txtActive.getText().toString().equals("1")) {
-                Toast.makeText(getApplicationContext(), txtActive.getText().toString(), Toast.LENGTH_LONG).show();
-            }else{
-                AlertDialog alertDialog = new AlertDialog.Builder(getApplicationContext()).create();
-                alertDialog.setTitle("Alert");
-                alertDialog.setMessage("เช็คชื่อแล้ว");
-                alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        });
-                alertDialog.show();
+            if (txtActive.getText().toString().equals("1")) {
+                Intent intent = new Intent(this, QRCodeCheckedStudentActivity.class);
+                intent.putExtra("eventID", eventID);
+                intent.putExtra("userID", userID);
+                startActivity(intent);
+            } else {
+                openDialogChecked();
             }
         }
+    }
+
+    private void openDialogChecked() {
+        CheckedAlreadyDialog dialog = new CheckedAlreadyDialog();
+        dialog.show(getSupportFragmentManager(), "CheckedAlreadyDialog");
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        loadClassDetail();
     }
 }

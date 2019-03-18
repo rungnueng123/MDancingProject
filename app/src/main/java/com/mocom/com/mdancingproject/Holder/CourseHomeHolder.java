@@ -12,7 +12,7 @@ import com.mocom.com.mdancingproject.R;
 public class CourseHomeHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
 
     private ItemClickCallBack mListener;
-    ImageView imgUrl;
+    ImageView imgUrl, imgDetail;
     TextView courseName, courseStyle, courseDesc;
 
     public ImageView getImgUrl() {
@@ -31,6 +31,10 @@ public class CourseHomeHolder extends RecyclerView.ViewHolder implements View.On
         return courseDesc;
     }
 
+    public ImageView getImgDetail() {
+        return imgDetail;
+    }
+
     public CourseHomeHolder(@NonNull View itemView, ItemClickCallBack listener) {
         super(itemView);
         mListener = listener;
@@ -39,7 +43,7 @@ public class CourseHomeHolder extends RecyclerView.ViewHolder implements View.On
         imgUrl = itemView.findViewById(R.id.img_course_home);
         courseName = itemView.findViewById(R.id.txt_course_name);
         courseStyle = itemView.findViewById(R.id.txt_course_style);
-        courseDesc = itemView.findViewById(R.id.txt_course_desc);
+        imgDetail = itemView.findViewById(R.id.img_detail);
     }
 
     @Override

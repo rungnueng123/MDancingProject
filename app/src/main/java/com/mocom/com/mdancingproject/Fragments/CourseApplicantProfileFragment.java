@@ -9,7 +9,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -42,7 +41,7 @@ public class CourseApplicantProfileFragment extends Fragment {
 
     private String jsonUrl = DATA_URL + "json_get_class_applicant_student.php";
 
-    View layoutShowEmpty;
+    View layoutShowEmpty, layoutProgress;
     TextView txtRecyclerDate;
     String userID;
 
@@ -103,16 +102,15 @@ public class CourseApplicantProfileFragment extends Fragment {
             swipeRefreshLayout.setRefreshing(false);
         });
 
-        loadClassApplicantData();
+//        loadClassApplicantData();
     }
 
     private void loadClassApplicantData() {
-        if (classList != null || classList.size() > 0) {
-            classList.clear();
-        }
+        layoutProgress.setVisibility(View.VISIBLE);
+        classList.clear();
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
-            Log.d("Onresponse", response);
+//            Log.d("Onresponse", response);
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("msg").equals("success")) {
@@ -143,11 +141,15 @@ public class CourseApplicantProfileFragment extends Fragment {
                         recyclerView.setAdapter(adapter);
                     }
                 }
+                layoutProgress.setVisibility(View.GONE);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
-        }, error -> Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show()) {
+        }, error -> {
+            layoutProgress.setVisibility(View.GONE);
+            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+        }) {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<String, String>();
@@ -166,6 +168,7 @@ public class CourseApplicantProfileFragment extends Fragment {
         swipeRefreshLayout = rootView.findViewById(R.id.pullToRefresh);
         layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
         txtRecyclerDate = rootView.findViewById(R.id.txt_recycler_home_empty);
+        layoutProgress = rootView.findViewById(R.id.layout_progressbar);
     }
 
     @Override
@@ -185,5 +188,11 @@ public class CourseApplicantProfileFragment extends Fragment {
     }
 
     private void onRestoreInstanceState(Bundle savedInstanceState) {
+    }
+
+    @Override
+    public void onResume() {
+        super.onResume();
+        loadClassApplicantData();
     }
 }

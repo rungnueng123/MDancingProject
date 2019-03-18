@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginStart="40dp"
+    android:layout_marginEnd="40dp"
+    tools:context=".DialogFragment.PaymentClassDialog">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="244dp">
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="13dp"
+            android:fontFamily="@font/kanit_medium"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/title_payment_dialog"
+            android:textColor="#000"
+            android:textSize="24sp" />
+
+        <ImageView
+            android:id="@+id/img_class_name"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_below="@id/heading"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="16dp"
+            android:background="@drawable/shapecircle"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/txt_class_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/heading"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="16dp"
+            android:layout_toEndOf="@id/img_class_name"
+            android:fontFamily="@font/kanit_regular"
+            android:text="@string/class_payment_dialog"
+            android:textColor="#000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_class_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_class_name_title"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/img_class_name"
+            android:fontFamily="@font/kanit_regular"
+            android:textColor="#000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/divider"
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_below="@id/img_class_name"
+            android:layout_gravity="bottom"
+            android:layout_marginTop="12.5dp"
+            android:layout_marginEnd="29dp"
+            android:layout_toEndOf="@id/img_class_name"
+            android:background="@android:color/darker_gray"
+            android:fontFamily="@font/kanit_regular" />
+
+        <ImageView
+            android:id="@+id/img_coin_price"
+            android:layout_width="43dp"
+            android:layout_height="43dp"
+            android:layout_below="@id/divider"
+            android:layout_marginStart="22dp"
+            android:layout_marginTop="12.5dp"
+            android:background="@drawable/shapecircle"
+            android:src="@mipmap/ic_launcher" />
+
+        <TextView
+            android:id="@+id/txt_coin_price_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/divider"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12.5dp"
+            android:layout_toEndOf="@id/img_coin_price"
+            android:fontFamily="@font/kanit_regular"
+            android:text="@string/coin_payment_dialog"
+            android:textColor="#000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_coin_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_coin_price_title"
+            android:layout_marginStart="16dp"
+            android:layout_toEndOf="@id/img_coin_price"
+            android:fontFamily="@font/kanit_regular"
+            android:textColor="#000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/action_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="20dp"
+            android:layout_marginBottom="14dp"
+            android:layout_toStartOf="@+id/action_cancel"
+            android:fontFamily="@font/kanit_medium"
+            android:text="@string/confirm"
+            android:textColor="#33bbff"
+            android:textSize="20sp" />
+
+        <TextView
+            android:id="@+id/action_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentBottom="true"
+            android:layout_marginEnd="29dp"
+            android:layout_marginBottom="14dp"
+            android:fontFamily="@font/kanit_medium"
+            android:text="@string/cancel"
+            android:textColor="#000"
+            android:textSize="20sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

@@ -24,6 +24,8 @@ import me.dm7.barcodescanner.zxing.ZXingScannerView
 
 class AdminQRCodeScannedActivity : AppCompatActivity(), ZXingScannerView.ResultHandler, View.OnClickListener {
 
+    var eventIdForCheck = ""
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -31,18 +33,37 @@ class AdminQRCodeScannedActivity : AppCompatActivity(), ZXingScannerView.ResultH
                 WindowManager.LayoutParams.FLAG_FULLSCREEN)
         setContentView(R.layout.activity_admin_qrcode_scanned)
 
+        val i = intent.extras ?: return
+        if (i.getString("eventID") != null) {
+            eventIdForCheck = i.getString("eventID")
+        }
+//        Toast.makeText(applicationContext,"a"+eventIdForCheck+"a",Toast.LENGTH_LONG).show()
         initInstance()
     }
 
     private fun initInstance() {
         setScannerProperties()
+
+        barcodeBackImageView.setOnClickListener {
+            finish()
+        }
+
+        flashOnOffImageView.setOnClickListener {
+            if (qrCodeScanner.flash) {
+                qrCodeScanner.flash = false
+                flashOnOffImageView.background = ContextCompat.getDrawable(this, R.drawable.flash_off_vector_icon)
+            } else {
+                qrCodeScanner.flash = true
+                flashOnOffImageView.background = ContextCompat.getDrawable(this, R.drawable.flash_on_vector_icon)
+            }
+        }
     }
 
     override fun onClick(v: View?) {
-        if(v == barcodeBackImageView){
-            onBackPressed()
+        if (v == barcodeBackImageView) {
+            finish()
         }
-        if(v == flashOnOffImageView){
+        if (v == flashOnOffImageView) {
             if (qrCodeScanner.flash) {
                 qrCodeScanner.flash = false
                 flashOnOffImageView.background = ContextCompat.getDrawable(this, R.drawable.flash_off_vector_icon)
@@ -108,7 +129,11 @@ class AdminQRCodeScannedActivity : AppCompatActivity(), ZXingScannerView.ResultH
 
     override fun handleResult(result: Result?) {
         if (result != null) {
-            startActivity(AdminQRCodeScannedResultActivity.getScannedActivity(this, result.text))
+
+//            val intent = Intent(applicationContext,AdminQRCodeScannedResultActivity.getScannedActivity(this, result.text)::class.java)
+//            intent.putExtra("eventID",eventIdForCheck)
+//            startActivity(intent)
+            startActivity(AdminQRCodeScannedResultActivity.getScannedActivity(this, result.text, eventIdForCheck))
             resumeCamera()
         }
     }

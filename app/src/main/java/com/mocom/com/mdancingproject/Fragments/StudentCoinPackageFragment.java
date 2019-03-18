@@ -17,7 +17,9 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.mocom.com.mdancingproject.Adapter.StudentCoinPackageAdapter;
+import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Dao.StudentCoinPackageDao;
+import com.mocom.com.mdancingproject.DialogFragment.StudentCoinPackPaymentDialog;
 import com.mocom.com.mdancingproject.R;
 
 import org.json.JSONArray;
@@ -33,18 +35,15 @@ public class StudentCoinPackageFragment extends Fragment {
 
     private static final String TAG = "fragment";
     private String coinPackUrl = DATA_URL + "json_get_coin_pack_student.php";
-    private int position;
-    private String title;
 
     private RecyclerView recyclerView;
     private RecyclerView.Adapter adapter;
     private List<StudentCoinPackageDao> coinPackageList;
+    private ItemClickCallBack coinPackListener;
 
-    public static StudentCoinPackageFragment newInstance(int position, String title) {
+    public static StudentCoinPackageFragment newInstance() {
         StudentCoinPackageFragment fragment = new StudentCoinPackageFragment();
         Bundle args = new Bundle();
-        args.putInt("position", position);
-        args.putString("title", title);
         fragment.setArguments(args);
         return fragment;
     }
@@ -70,8 +69,6 @@ public class StudentCoinPackageFragment extends Fragment {
     }
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
-        position = getArguments().getInt("position");
-        title = getArguments().getString("someTitle");
         initFindViewByID(rootView);
 
         coinPackageList = new ArrayList<>();
@@ -79,6 +76,10 @@ public class StudentCoinPackageFragment extends Fragment {
         recyclerView.setLayoutManager(new GridLayoutManager(getContext(), 2));
 
         loadCoinPack();
+
+        coinPackListener = (view, position) -> {
+            openDialogFragment(coinPackageList.get(position).getCoinPackID(),coinPackageList.get(position).getCoin(),coinPackageList.get(position).getBaht(),coinPackageList.get(position).getNamePack());
+        };
 
         //Test RecyclerView >>>
 //        for(int i = 0; i<=10;i++){
@@ -96,6 +97,17 @@ public class StudentCoinPackageFragment extends Fragment {
         //Test RecyclerView <<<
 
 
+    }
+
+    private void openDialogFragment(String coinPackID, String coin, String baht, String namePack) {
+        Bundle bundle = new Bundle();
+        bundle.putString("namePack", namePack);
+        bundle.putString("baht", baht);
+        bundle.putString("coinAmt", coin);
+        bundle.putString("coinPackID", coinPackID);
+        StudentCoinPackPaymentDialog dialog = new StudentCoinPackPaymentDialog();
+        dialog.setArguments(bundle);
+        dialog.show(getFragmentManager(), "StudentCoinPackPaymentDialog");
     }
 
     private void loadCoinPack() {
@@ -118,7 +130,7 @@ public class StudentCoinPackageFragment extends Fragment {
                                 obj.getString("imgUrl")
                         );
                         coinPackageList.add(item);
-                        adapter = new StudentCoinPackageAdapter(coinPackageList, getContext());
+                        adapter = new StudentCoinPackageAdapter(coinPackListener,coinPackageList, getContext());
                         recyclerView.setAdapter(adapter);
                     }
                 } else {

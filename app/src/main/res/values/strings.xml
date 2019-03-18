@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">MDancing</string>
+    <string name="app_name">BeatsBox</string>
     <string name="username">Username</string>
     <string name="password">Password</string>
     //เก็บ User Login
@@ -11,12 +11,12 @@
 
     <string name="login">Log In</string>
     <string name="txt_recycler_home_empty">Today dont have class</string>
-    <string name="course">Course Name</string>
+    <string name="course">คอร์ส</string>
     <string name="coin">Coin</string>
     <string name="hour">Hour</string>
     <string name="gallery">Gallery</string>
     <string name="description">Description</string>
-    <string name="style">Style</string>
+    <string name="style">สไตล์</string>
     <string name="watch_class">Watch Class</string>
     <string name="payment">Payment</string>
     <string name="detail">Detail</string>
@@ -32,6 +32,7 @@
 
     //dropdown register
     <string name="sex_prompt">Choose a sex</string>
+    <string name="branch_prompt">เลือกสาขา</string>
 
     //drawer menu
     <string name="nav_home">Home</string>
@@ -49,10 +50,8 @@
     <string name="scanned_qr_code_result">Scanned Qr Code result</string>
     <string name="app_needs_your_camera_permission_in_order_to_scan_qr_code">App needs your camera permission in order to scan qr code.</string>
     <string name="buy">BUY</string>
-    <string name="cancel">CANCEL</string>
-
-    <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="cancel">Cancel</string>
+    <string name="cancel_thai">ยกเลิก</string>
     <string name="ok">OK</string>
     <string name="type_pay">TYPE PAY</string>
     <string name="payment_gateway">PAYMENT GATEWAY</string>
@@ -70,5 +69,57 @@
     <string name="birth">Birth</string>
     <string name="register">Register</string>
     <string name="btn_finish_pgw">กดเมื่อชำระเงินเสร็จ</string>
+    <string name="txt_show_first_open">choose style</string>
+    <string name="txt_recycler_course_style_empty">dont have course</string>
+    <string name="style_show">สไตล์ :</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="length">ระยะเวลาการสอน</string>
+    <string name="description_thai">คำอธิบาย</string>
+    <string name="close">Close</string>
+    <string name="title_payment_dialog">ชำระเงิน</string>
+    <string name="class_payment_dialog">ชื่อคลาสเรียน</string>
+    <string name="coin_payment_dialog">จำนวน COIN</string>
+    <string name="confirm">ตกลง</string>
+    <string name="txt_class">คลาส</string>
+    <string name="style_pack">Style</string>
+    <string name="txt_type_payment_coin">ชำระด้วย COIN</string>
+    <string name="txt_type_payment_style_pack">ชำระด้วย STYLE</string>
+    <string name="txt_payment_coin_list">จำนวน COIN ไม่พอ กรุณาเลือกช่องทางการเติมเงิน</string>
+    <string name="txt_type_payment_coin_by_coin">ซื้อ COIN</string>
+    <string name="txt_type_payment_coin_by_pack">ซื้อ PACKAGE</string>
+    <string name="txt_type_payment_coin_by_qr">QR CODE</string>
+    <string name="type_pay_thai">เลือกช่องทางการชำระเงิน</string>
+    <string name="title_confirm_buy_style_pack">คุณแน่ใจที่จะซื้อหรือไม่?</string>
+    <string name="coin_dont_enough">Your coin don\'t enough! Please go to shop!</string>
+    <string name="txt_payment_success">สั่งซื้อสำเร็จ</string>
+    <string name="txt_payment_fail">สั่งซื้อไม่สำเร็จ</string>
+    <string name="txt_time_show">จำนวนครั้ง</string>
+    <string name="style_dont_enough">Your style package don\'t enough! Please go to shop!</string>
+    <string name="shop">Shop</string>
+    <string name="txt_payment_success_detail">ขั้นตอนการลงทะเบียนและชำระเงินสำเร็จ กรุณามาเรียนตามวันและเวลาที่ลงทะเบียน</string>
+    <string name="txt_payment_fail_detail">กรุณาตรวจสอบขั้นตอนการลงทะเบียนอีกครั้ง</string>
+    <string name="txt_payment_class_fail">ชำระเงินไม่สำเร็จ!</string>
+    <string name="txt_payment_class_success">ชำระเงินสำเร็จ!</string>
+    <string name="price">ราคา</string>
+    <string name="class_title">Class Detail</string>
+    <string name="txt_full_class">คลาสเต็มแล้ว</string>
+    <string name="nav_calendar">Calendar</string>
+    <string name="txt_buy_class_already">คุณซื้อคลาสนี้เรียบร้อยแล้ว</string>
+    <string name="nav_course_and_style"><![CDATA[Course & Style]]></string>
+    <string name="nav_about_us">About Us</string>
+    <string name="checked_already">คุณเช็คชื่อเรียบร้อยแล้ว</string>
+    <string name="cant_regis">คุณยังไม่ได้ลงทะเบียน</string>
+    <string name="checked_enroll">คุณเช็คชื่อไปแล้ว</string>
+    <string name="connect_fail">ผิดพลาด! กรุณาลองอีกครั้ง!</string>
+    <string name="checked_wrong_class">คุณเข้าไม่ตรงคลาส</string>
+    <string name="use_function_in_class">การเช็คชื่อต้องเข้าจากหน้าคลาสเรียน</string>
+    <string name="txt_list_check_name">list student</string>
+    <string name="count_checked_student">เช็คชื่อแล้ว</string>
+    <string name="txt_list_check_name_empty">ยังไม่มีใครมา</string>
+    <string name="twice_for_exit">Please click BACK again to exit</string>
+    <string name="branch">Branch</string>
+    <string name="province">Province</string>
 
 </resources>

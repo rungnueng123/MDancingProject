@@ -60,8 +60,6 @@ public class ForgotPasswordActivity extends AppCompatActivity implements View.On
             goSendRequest(email);
         }
         if(v == btnBack){
-            Intent intent = new Intent(this,LoginActivity.class);
-            startActivity(intent);
             finish();
         }
     }

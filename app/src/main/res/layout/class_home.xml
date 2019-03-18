@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <ImageView
+                android:id="@+id/img_class_home"
+                android:layout_width="160dp"
+                android:layout_height="86dp"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/txt_class_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kanit_regular"
+                android:textSize="14sp"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/img_class_home"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="Class" />
+
+            <TextView
+                android:id="@+id/txt_playlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kanit_regular"
+                android:textSize="14sp"
+                android:layout_below="@id/txt_class_name"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/img_class_home"
+                android:ellipsize="end"
+                android:maxLines="1"
+                android:text="playlist"
+                tools:ignore="SmallSp" />
+
+            <TextView
+                android:id="@+id/txt_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kanit_regular"
+                android:textSize="14sp"
+                android:layout_below="@id/txt_playlist"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/img_class_home"
+                android:text="style"
+                tools:ignore="SmallSp" />
+
+            <TextView
+                android:id="@+id/txt_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kanit_regular"
+                android:textSize="14sp"
+                android:layout_below="@id/txt_style"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/img_class_home"
+                android:text="teacher"
+                tools:ignore="SmallSp" />
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kanit_regular"
+                android:textSize="14sp"
+                android:layout_below="@id/txt_teacher"
+                android:layout_marginStart="8dp"
+                android:layout_toEndOf="@id/img_class_home"
+                android:text="time"
+                tools:ignore="SmallSp" />
+
+            <TextView
+                android:id="@+id/txt_courseID"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kanit_regular"
+                android:visibility="gone" />
+
+
+        </RelativeLayout>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:background="@android:color/darker_gray"
+            android:layout_gravity="bottom"/>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
