@@ -3,11 +3,11 @@
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home"
-            android:icon="@drawable/ic_home"
+            android:icon="@drawable/ic_home_nav"
             android:title="@string/nav_home" />
         <item
             android:id="@+id/nav_calendar"
-            android:icon="@drawable/ic_course"
+            android:icon="@drawable/ic_course_nav"
             android:title="@string/nav_course_and_style" />
         <item
             android:id="@+id/nav_coin"
@@ -16,15 +16,19 @@
 
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_profile"
+            android:icon="@drawable/ic_profile_nav"
             android:title="@string/nav_profile" />
         <item
+            android:id="@+id/nav_video"
+            android:icon="@drawable/ic_video_nav"
+            android:title="@string/nav_video" />
+        <item
             android:id="@+id/nav_about_us"
-            android:icon="@drawable/ic_about_us"
+            android:icon="@drawable/ic_about_us_nav"
             android:title="@string/nav_about_us" />
         <item
             android:id="@+id/nav_logout"
-            android:icon="@drawable/ic_logout"
+            android:icon="@drawable/ic_logout_nav"
             android:title="@string/logout" />
     </group>
 </menu>
