@@ -29,6 +29,7 @@ import com.mocom.com.mdancingproject.Adapter.StyleHomeAdapter;
 import com.mocom.com.mdancingproject.Callback.ItemClickCallBack;
 import com.mocom.com.mdancingproject.Callback.RecyclerStyleClickCallBack;
 import com.mocom.com.mdancingproject.Dao.CourseHomeDao;
+import com.mocom.com.mdancingproject.Dao.ImageBannerDao;
 import com.mocom.com.mdancingproject.Dao.StyleHomeDao;
 import com.mocom.com.mdancingproject.R;
 import com.viewpagerindicator.CirclePageIndicator;
@@ -72,6 +73,7 @@ public class HomeFragment extends Fragment {
     private RecyclerView.Adapter adapterStyle, adapterCourse;
     private List<StyleHomeDao> styleList;
     private List<CourseHomeDao> courseList;
+    private List<ImageBannerDao> bannerList;
     private ItemClickCallBack courseListener;
     private RecyclerStyleClickCallBack styleListener;
 
@@ -104,7 +106,7 @@ public class HomeFragment extends Fragment {
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
-
+        bannerList = new ArrayList<>();
         loadBanner();
 
         ViewCompat.setNestedScrollingEnabled(recyclerCourseView, false);
@@ -167,12 +169,13 @@ public class HomeFragment extends Fragment {
                     urls = new String[array.length()];
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject obj = array.getJSONObject(i);
-//                        ImageBannerDao item = new ImageBannerDao(
-//                                obj.getString("id"),
-//                                obj.getString("title"),
-//                                obj.getString("desc"),
-//                                obj.getString("imgUrl")
-//                        );
+                        ImageBannerDao item = new ImageBannerDao(
+                                obj.getString("id"),
+                                obj.getString("title"),
+                                obj.getString("desc"),
+                                obj.getString("imgUrl")
+                        );
+                        bannerList.add(item);
                         urls[i] = HOST_URL + obj.getString("imgUrl");
 //                        urls[2] = HOST_URL+"imgBanner/0860476001551410367--Mask Group 34.png";
                     }
@@ -183,7 +186,7 @@ public class HomeFragment extends Fragment {
 //                            "https://demonuts.com/Demonuts/SampleImages/W-17.JPG",
 //                            "https://demonuts.com/Demonuts/SampleImages/W-21.JPG"};
 
-                    viewPager.setAdapter(new ImageBannerAdapter(getContext(), urls));
+                    viewPager.setAdapter(new ImageBannerAdapter(getContext(), urls, bannerList));
                     indicator.setViewPager(viewPager);
                     final float density = getResources().getDisplayMetrics().density;
                     indicator.setRadius(5 * density);
