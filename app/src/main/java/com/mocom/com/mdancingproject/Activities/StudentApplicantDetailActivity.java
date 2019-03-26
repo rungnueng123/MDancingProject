@@ -19,6 +19,7 @@ import com.android.volley.RequestQueue;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.bumptech.glide.Glide;
+import com.mocom.com.mdancingproject.DialogFragment.CancelAlreadyDialog;
 import com.mocom.com.mdancingproject.DialogFragment.CheckedAlreadyDialog;
 import com.mocom.com.mdancingproject.QRCode.QRCodeCheckedStudentActivity;
 import com.mocom.com.mdancingproject.R;
@@ -173,10 +174,17 @@ public class StudentApplicantDetailActivity extends AppCompatActivity implements
                 intent.putExtra("eventID", eventID);
                 intent.putExtra("userID", userID);
                 startActivity(intent);
-            } else {
+            } else if(txtActive.getText().toString().equals("0")) {
                 openDialogChecked();
+            }else{
+                openDialogCancel();
             }
         }
+    }
+
+    private void openDialogCancel() {
+        CancelAlreadyDialog dialog = new CancelAlreadyDialog();
+        dialog.show(getSupportFragmentManager(), "CancelAlreadyDialog");
     }
 
     private void openDialogChecked() {
