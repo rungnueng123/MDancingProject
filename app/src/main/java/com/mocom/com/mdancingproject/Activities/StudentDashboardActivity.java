@@ -36,6 +36,7 @@ import com.mocom.com.mdancingproject.Fragments.CalendarFragment;
 import com.mocom.com.mdancingproject.Fragments.HomeFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentCoinFragment;
 import com.mocom.com.mdancingproject.Fragments.StudentProfileFragment;
+import com.mocom.com.mdancingproject.Fragments.VideoFragment;
 import com.mocom.com.mdancingproject.PaymentGateway.PaymentGatewayTestActivity;
 import com.mocom.com.mdancingproject.QRCode.StudentQRCodeActivity;
 import com.mocom.com.mdancingproject.R;
@@ -277,6 +278,9 @@ public class StudentDashboardActivity extends AppCompatActivity
                 } else if (id == R.id.nav_profile) {
                     fragmentClass = StudentProfileFragment.class;
                     actionbar.setTitle(getResources().getString(R.string.nav_profile));
+                } else if (id == R.id.nav_video) {
+                    fragmentClass = VideoFragment.class;
+                    actionbar.setTitle(getResources().getString(R.string.nav_video));
                 } else if (id == R.id.nav_about_us) {
                     fragmentClass = AboutUsFragment.class;
                     actionbar.setTitle(getResources().getString(R.string.nav_about_us));

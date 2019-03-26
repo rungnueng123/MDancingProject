@@ -121,5 +121,7 @@
     <string name="twice_for_exit">Please click BACK again to exit</string>
     <string name="branch">Branch</string>
     <string name="province">Province</string>
+    <string name="nav_video">Video</string>
+    <string name="cancel_already">คลาสนี้ยกเลิกแล้ว</string>
 
 </resources>
