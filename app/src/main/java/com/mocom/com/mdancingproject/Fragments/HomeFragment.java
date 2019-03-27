@@ -11,10 +11,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.util.SparseBooleanArray;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -55,6 +57,8 @@ public class HomeFragment extends Fragment {
     private String BannerUrl = DATA_URL + "get_banner.php";
     View layoutShowFirstOpen, layoutShowEmpty, layoutProgress;
     String styleID = "";
+    LinearLayout layoutBanner;
+    int width,heigth;
 
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
     View selectView;
@@ -106,6 +110,12 @@ public class HomeFragment extends Fragment {
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        heigth = width/2;
+        layoutBanner.setLayoutParams(new LinearLayout.LayoutParams(width,heigth));
+
         bannerList = new ArrayList<>();
         loadBanner();
 
@@ -173,7 +183,8 @@ public class HomeFragment extends Fragment {
                                 obj.getString("id"),
                                 obj.getString("title"),
                                 obj.getString("desc"),
-                                obj.getString("imgUrl")
+                                obj.getString("imgUrl"),
+                                obj.getString("posterUrl")
                         );
                         bannerList.add(item);
                         urls[i] = HOST_URL + obj.getString("imgUrl");
@@ -256,6 +267,7 @@ public class HomeFragment extends Fragment {
         viewPager = rootView.findViewById(R.id.pager);
         indicator = rootView.findViewById(R.id.indicator);
         layoutProgress = rootView.findViewById(R.id.layout_progressbar);
+        layoutBanner = rootView.findViewById(R.id.layout_banner);
     }
 
     private void loadStyle() {

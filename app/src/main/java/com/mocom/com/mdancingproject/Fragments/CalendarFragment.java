@@ -10,11 +10,13 @@ import android.support.v4.view.ViewPager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
+import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -60,6 +62,8 @@ public class CalendarFragment extends Fragment {
     private String CalendarEventUrl = DATA_URL + "get_event_by_branch.php";
     private String CalendarClassUrl = DATA_URL + "get_class_by_branch_and_date.php";
 
+    LinearLayout layoutBanner;
+    int width,heigth;
     String branchName;
 
     private static ViewPager viewPager;
@@ -116,6 +120,13 @@ public class CalendarFragment extends Fragment {
 
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
+
+        Display display = getActivity().getWindowManager().getDefaultDisplay();
+        width = display.getWidth();
+        heigth = width/2;
+        layoutBanner.setLayoutParams(new LinearLayout.LayoutParams(width,heigth));
+//        Log.d("width",width+"/"+heigth);
+
         bannerList = new ArrayList<>();
 
         loadBanner();
@@ -193,6 +204,7 @@ public class CalendarFragment extends Fragment {
         recyclerView = rootView.findViewById(R.id.recycler_calendar_fragment);
         txtEmpty = rootView.findViewById(R.id.txt_recycler_calendar_fragment_empty);
         layoutProgress = rootView.findViewById(R.id.layout_progressbar);
+        layoutBanner = rootView.findViewById(R.id.layout_banner);
 
     }
 
@@ -207,14 +219,15 @@ public class CalendarFragment extends Fragment {
                     urls = new String[array.length()];
                     for (int i = 0; i < array.length(); i++) {
                         JSONObject obj = array.getJSONObject(i);
-                       ImageBannerDao item = new ImageBannerDao(
+                        ImageBannerDao item = new ImageBannerDao(
                                 obj.getString("id"),
                                 obj.getString("title"),
                                 obj.getString("desc"),
-                                obj.getString("imgUrl")
+                                obj.getString("imgUrl"),
+                                obj.getString("posterUrl")
                         );
                         bannerList.add(item);
-                        urls[i] = HOST_URL+obj.getString("imgUrl");
+                        urls[i] = HOST_URL + obj.getString("imgUrl");
 //                        urls[2] = HOST_URL+"imgBanner/0860476001551410367--Mask Group 34.png";
                     }
 //                    urls = new String[] {"https://demonuts.com/Demonuts/SampleImages/W-03.JPG",
@@ -362,9 +375,9 @@ public class CalendarFragment extends Fragment {
 //                Toast.makeText(getApplicationContext(), "sss", Toast.LENGTH_LONG).show();
                 Day day = collapsibleCalendar.getSelectedDay();
                 year = day.getYear();
-                if(Objects.equals(monthCheck, month)) {
+                if (Objects.equals(monthCheck, month)) {
                     month = day.getMonth();
-                }else{
+                } else {
                     month = day.getMonth() + 1;
                 }
                 date = day.getDay();
