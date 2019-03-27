@@ -123,5 +123,8 @@
     <string name="province">Province</string>
     <string name="nav_video">Video</string>
     <string name="cancel_already">คลาสนี้ยกเลิกแล้ว</string>
+    <string name="style_pack_title">แพ็คเกจที่ซื้อ</string>
+    <string name="style_show_pack_all">ทั้งหมด ></string>
+    <string name="all">ทั้งหมด</string>
 
 </resources>
