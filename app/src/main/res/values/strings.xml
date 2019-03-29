@@ -26,8 +26,8 @@
 
 
     //facebook
-    <string name="facebook_app_id">1094329207415724</string>
-    <string name="fb_login_protocol_scheme">fb1094329207415724</string>
+    <string name="facebook_app_id">2057739537607933</string>
+    <string name="fb_login_protocol_scheme">fb2057739537607933</string>
     <string name="com_facebook_loginview_log_in_button_long">CONTINUE WITH FACEBOOK</string>
 
     //dropdown register
