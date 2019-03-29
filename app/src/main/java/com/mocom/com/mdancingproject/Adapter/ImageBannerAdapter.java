@@ -11,11 +11,13 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 
 import com.bumptech.glide.Glide;
-import com.mocom.com.mdancingproject.Activities.ShowPictureActivity;
+import com.mocom.com.mdancingproject.Activities.ShowPosterActivity;
 import com.mocom.com.mdancingproject.Dao.ImageBannerDao;
 import com.mocom.com.mdancingproject.R;
 
 import java.util.List;
+
+import static com.mocom.com.mdancingproject.config.config.HOST_URL;
 
 public class ImageBannerAdapter extends PagerAdapter {
 
@@ -24,7 +26,7 @@ public class ImageBannerAdapter extends PagerAdapter {
     private Context context;
     private List<ImageBannerDao> imageBannerDaoList;
 
-    public ImageBannerAdapter(Context context, String[] urls,List<ImageBannerDao> imageBannerDaoList) {
+    public ImageBannerAdapter(Context context, String[] urls, List<ImageBannerDao> imageBannerDaoList) {
         this.urls = urls;
         this.context = context;
         this.imageBannerDaoList = imageBannerDaoList;
@@ -56,10 +58,15 @@ public class ImageBannerAdapter extends PagerAdapter {
         imageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                Toast.makeText(context,imageBannerDaoList.get(position).getDesc()+"/"+urls[position] , Toast.LENGTH_SHORT).show();
-                Intent intent = new Intent(context, ShowPictureActivity.class);
-                intent.putExtra("imageUrl", urls[position]);
-                intent.putExtra("txtDesc", imageBannerDao.getDesc());
+//                Intent intent = new Intent(context, ShowPictureActivity.class);
+//                intent.putExtra("imageUrl", urls[position]);
+//                intent.putExtra("txtDesc", imageBannerDao.getDesc());
+//                context.startActivity(intent);
+
+                Intent intent = new Intent(context, ShowPosterActivity.class);
+                intent.putExtra("imgUrl", imageBannerDao.getImageUrl());
+                intent.putExtra("posterUrl", imageBannerDao.getPosterUrl());
+                intent.putExtra("desc", imageBannerDao.getDesc());
                 context.startActivity(intent);
             }
         });

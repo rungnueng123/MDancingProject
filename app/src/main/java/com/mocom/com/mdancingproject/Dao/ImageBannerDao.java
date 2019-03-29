@@ -6,13 +6,14 @@ public class ImageBannerDao {
 
     }
 
-    private String id,title,desc,imageUrl;
+    private String id,title,desc,imageUrl, posterUrl;
 
-    public ImageBannerDao(String id, String title, String desc, String imageUrl) {
+    public ImageBannerDao(String id, String title, String desc, String imageUrl, String posterUrl) {
         this.id = id;
         this.title = title;
         this.desc = desc;
         this.imageUrl = imageUrl;
+        this.posterUrl = posterUrl;
     }
 
     public String getId() {
@@ -45,5 +46,13 @@ public class ImageBannerDao {
 
     public void setImageUrl(String imageUrl) {
         this.imageUrl = imageUrl;
+    }
+
+    public String getPosterUrl() {
+        return posterUrl;
+    }
+
+    public void setPosterUrl(String posterUrl) {
+        this.posterUrl = posterUrl;
     }
 }
