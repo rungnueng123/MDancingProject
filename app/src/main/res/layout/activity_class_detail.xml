@@ -18,7 +18,7 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:title="@string/class_title"
-            app:titleTextColor="@color/white" />
+            app:titleTextColor="@color/colorPrimaryDark" />
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nestedScrollView"

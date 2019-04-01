@@ -46,8 +46,8 @@
                             android:gravity="bottom"
                             android:padding="10dip"
                             app:centered="true"
-                            app:fillColor="#df0623"
-                            app:pageColor="#fff"
+                            app:fillColor="@color/colorPrimaryDark"
+                            app:pageColor="@color/white"
                             app:snap="false" />
 
                     </RelativeLayout>
@@ -65,20 +65,32 @@
                     android:prompt="@string/branch_prompt"
                     android:spinnerMode="dialog" />
 
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:layout_marginTop="8dp"
+                    android:background="@color/colorPrimaryDark" />
+
                 <com.shrikanthravi.collapsiblecalendarview.widget.CollapsibleCalendar
                     android:id="@+id/calendarView"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="8dp"
-                    app:buttonLeft_drawableTintColor="@android:color/white"
-                    app:buttonRight_drawableTintColor="@android:color/white"
-                    app:expandIconColor="@android:color/white"
-                    app:primaryColor="@color/colorPrimaryDark"
+                    app:buttonLeft_drawableTintColor="@color/colorPrimaryDark"
+                    app:buttonRight_drawableTintColor="@color/colorPrimaryDark"
+                    app:expandIconColor="@color/colorPrimaryDark"
+                    app:primaryColor="@color/white"
                     app:selectedItem_background="@drawable/circle_pink_stroke_background"
-                    app:selectedItem_textColor="@color/colorPrimaryDark"
-                    app:textColor="@android:color/white"
+                    app:selectedItem_textColor="@color/white"
+                    app:textColor="@color/colorPrimaryDark"
                     app:todayItem_background="@drawable/circle_white_stroke_background"
-                    app:todayItem_textColor="@android:color/white" />
+                    app:todayItem_textColor="@color/colorPrimaryDark" />
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_gravity="bottom"
+                    android:background="@color/colorPrimaryDark" />
 
                 <TextView
                     android:id="@+id/txt_recycler_calendar_fragment_empty"

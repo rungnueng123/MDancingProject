@@ -8,11 +8,11 @@
             <item>
                 <shape>
 
-                    <solid android:color="#7A62FF"/>
+                    <solid android:color="@color/colorPrimaryDark"/>
 
-                    <gradient android:angle="90" android:endColor="#7A62FF" android:startColor="#7A62FF" android:type="linear" />
+                    <gradient android:angle="90" android:endColor="@color/colorPrimaryDark" android:startColor="@color/colorPrimaryDark" android:type="linear" />
 
-                    <stroke android:width="0.33dp" android:color="#7A62FF" />
+                    <stroke android:width="0.33dp" android:color="@color/colorPrimaryDark" />
 
                     <corners android:radius="25dp" />
 

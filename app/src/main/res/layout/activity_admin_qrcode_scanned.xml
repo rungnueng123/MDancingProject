@@ -49,7 +49,7 @@
             android:layout_marginStart="10dp"
             android:gravity="center_vertical"
             android:text="@string/barcode_reader"
-            android:textColor="@color/white"
+            android:textColor="@color/colorPrimaryDark"
             android:textStyle="bold" />
 
     </LinearLayout>

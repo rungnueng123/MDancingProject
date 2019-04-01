@@ -32,7 +32,7 @@
                 android:fontFamily="@font/kanit_regular"
                 android:maxLines="1"
                 android:text="คลาส"
-                android:textColor="@color/txt_color_class_list"
+                android:textColor="@color/txt_color_all"
                 android:textSize="24sp" />
 
             <TextView

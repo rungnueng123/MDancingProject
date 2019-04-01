@@ -139,10 +139,11 @@
             android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
             app:tabGravity="fill"
-            app:tabIndicatorColor="@color/colorPrimary"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
             app:tabIndicatorHeight="4dp"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorPrimary" />
+            app:tabSelectedTextColor="@color/colorPrimaryDark"
+            app:tabTextColor="@color/colorNotSelect" />
 
     </android.support.design.widget.AppBarLayout>
 

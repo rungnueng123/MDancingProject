@@ -16,11 +16,12 @@
             android:layout_height="wrap_content"
             android:background="@color/white"
             android:minHeight="?attr/actionBarSize"
-            app:tabIndicatorColor="@color/colorPrimary"
-            app:tabIndicatorHeight="4dp"
             app:tabGravity="fill"
+            app:tabIndicatorColor="@color/colorPrimaryDark"
+            app:tabIndicatorHeight="4dp"
             app:tabMode="fixed"
-            app:tabSelectedTextColor="@color/colorPrimary"/>
+            app:tabSelectedTextColor="@color/colorPrimaryDark"
+            app:tabTextColor="@color/colorNotSelect" />
 
     </android.support.design.widget.AppBarLayout>
 

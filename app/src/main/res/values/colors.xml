@@ -2,6 +2,7 @@
 <resources>
     <color name="colorPrimary">#FFFFFF</color>
     <color name="colorPrimaryDark">#6C7B8A</color>
+    <color name="colorNotSelect">#CBCBCB</color>
     <color name="colorBgEmail">#5C5968</color>
     <color name="colorAccent">#FF4081</color>
     <color name="white">#FFFFFF</color>
@@ -18,6 +19,6 @@
     <color name="transparent">#80000000</color>
     <color name="color_bg_login">#F5F6F8</color>
     <color name="color_username_login">#515C6F</color>
-    <drawable name="selected_color">#5DB0FD</drawable>
+    <drawable name="selected_color">#6C7B8A</drawable>
     <drawable name="pressed_color">#30000000</drawable>
 </resources>

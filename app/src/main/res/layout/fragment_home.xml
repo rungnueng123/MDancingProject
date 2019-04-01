@@ -46,8 +46,8 @@
                             android:gravity="bottom"
                             android:padding="10dip"
                             app:centered="true"
-                            app:fillColor="#df0623"
-                            app:pageColor="#fff"
+                            app:fillColor="@color/colorPrimaryDark"
+                            app:pageColor="@color/white"
                             app:snap="false" />
                     </RelativeLayout>
 

@@ -15,7 +15,13 @@
         android:fontFamily="@font/kanit_regular"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="@string/class_detail_title"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/txt_color_all" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimaryDark" />
 
     <FrameLayout
         android:layout_width="match_parent"
@@ -44,7 +50,7 @@
                 android:layout_marginTop="12.37dp"
                 android:fontFamily="@font/kanit_regular"
                 android:text="คลาส"
-                android:textColor="@color/txt_color_class_list"
+                android:textColor="@color/txt_color_all"
                 android:textSize="24sp" />
 
             <TextView
