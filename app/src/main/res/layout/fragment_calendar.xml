@@ -73,9 +73,9 @@
                     app:buttonLeft_drawableTintColor="@android:color/white"
                     app:buttonRight_drawableTintColor="@android:color/white"
                     app:expandIconColor="@android:color/white"
-                    app:primaryColor="@color/colorPrimary"
+                    app:primaryColor="@color/colorPrimaryDark"
                     app:selectedItem_background="@drawable/circle_pink_stroke_background"
-                    app:selectedItem_textColor="@color/white"
+                    app:selectedItem_textColor="@color/colorPrimaryDark"
                     app:textColor="@android:color/white"
                     app:todayItem_background="@drawable/circle_white_stroke_background"
                     app:todayItem_textColor="@android:color/white" />
