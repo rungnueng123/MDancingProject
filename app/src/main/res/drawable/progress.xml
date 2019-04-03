@@ -10,7 +10,7 @@
         android:innerRadiusRatio="3"
         android:thicknessRatio="8"
         android:useLevel="false">
-        
+
 
         <size
             android:width="76dip"
