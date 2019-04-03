@@ -38,7 +38,7 @@
         android:layout_marginEnd="15dp"
         android:layout_marginBottom="30dp"
         android:layout_below="@id/txt_fail"
-        android:background="@drawable/shapefailback"
+        android:background="@drawable/shapelogin"
         android:fontFamily="@font/kanit_medium"
         android:shadowColor="@android:color/transparent"
         android:text="@string/back"

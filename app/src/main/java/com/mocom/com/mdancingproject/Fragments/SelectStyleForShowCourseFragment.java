@@ -4,7 +4,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewCompat;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
@@ -85,7 +84,7 @@ public class SelectStyleForShowCourseFragment extends Fragment {
     private void initInstances(View rootView, Bundle savedInstanceState) {
         initFindViewByID(rootView);
 
-        ViewCompat.setNestedScrollingEnabled(recyclerCourseView, false);
+//        ViewCompat.setNestedScrollingEnabled(recyclerCourseView, false);
 
         styleList = new ArrayList<>();
         recyclerStyleView.setHasFixedSize(true);
@@ -99,175 +98,189 @@ public class SelectStyleForShowCourseFragment extends Fragment {
 
 
         styleListener = (view, position, imgSelect) -> {
-
             if (selectStyle != -1) {
-                //bg
-                selectedItems.delete(selectStyle);
-                selectView.setSelected(false);
-                //img select
-//                selectImg.setVisibility(View.GONE);
-                selectView.setElevation(0);
+                styleList.get(selectStyle).setStyleSelect("0");
+                adapterStyle.notifyItemChanged(selectStyle);
             }
-
             selectStyle = position;
             selectView = view;
             selectImg = imgSelect;
-            view.setElevation(50);
-            //bg
-            selectedItems.put(position, true);
-            view.setSelected(true);
+            styleList.get(position).setStyleSelect("1");
+            adapterStyle.notifyItemChanged(position);
 
-            //img select
+//            if (selectStyle != -1) {
+//                //bg
+//                selectedItems.delete(selectStyle);
+//                selectView.setSelected(false);
+//                //img select
+////                selectImg.setVisibility(View.GONE);
+//                selectView.setElevation(8);
+////                recyclerStyleView.setAdapter(adapterStyle);
+//            }
+//            if (selectStyle != position) {
+//                view.setElevation(50);
+//                //bg
+//                selectedItems.put(position, true);
+//                view.setSelected(true);
+//
+//                selectStyle = position;
+//                selectView = view;
+//                selectImg = imgSelect;
+//            }
+
+                //img select
 //            imgSelect.setVisibility(View.VISIBLE);
 
-            styleID = styleList.get(position).getStyleID();
-            loadCourse();
+                styleID = styleList.get(position).getStyleID();
+                loadCourse();
 
-        };
-
-        courseListener = (view, position) -> {
-            Intent intent = new Intent(getContext(), ClassActivity.class);
-            intent.putExtra("courseID", courseList.get(position).getCourseID());
-            intent.putExtra("courseName", courseList.get(position).getCourseName());
-            startActivity(intent);
-        };
-    }
-
-    private void initFindViewByID(View rootView) {
-        recyclerStyleView = rootView.findViewById(R.id.recycler_style_home);
-        recyclerCourseView = rootView.findViewById(R.id.recycler_course_home);
-        layoutShowFirstOpen = rootView.findViewById(R.id.layout_show_first_open);
-        layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
-        layoutProgress = rootView.findViewById(R.id.layout_progressbar);
-        layoutProgressCourse = rootView.findViewById(R.id.layout_progressbar_course);
-    }
-
-    private void loadStyle() {
-        recyclerStyleView.setVisibility(View.GONE);
-        if (styleList != null || styleList.size() > 0) {
-            styleList.clear();
-        }
-        StringRequest stringRequest = new StringRequest(Request.Method.GET, styleUrl, response -> {
-            Log.d("Onresponse", response);
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject.getString("msg").equals("success")) {
-                    JSONArray array = jsonObject.getJSONArray("style");
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject obj = array.getJSONObject(i);
-                        StyleHomeDao item = new StyleHomeDao(
-                                obj.getString("courseStyleID"),
-                                obj.getString("courseStyleName"),
-                                obj.getString("courseStyleDesc"),
-                                obj.getString("courseStyleImage")
-                        );
-                        styleList.add(item);
-                    }
-                    adapterStyle = new StyleHomeAdapter(styleListener, styleList, getContext());
-                    recyclerStyleView.setAdapter(adapterStyle);
-                    recyclerStyleView.setVisibility(View.VISIBLE);
-                    loadCourse();
-
-                } else {
-                    recyclerStyleView.setVisibility(View.VISIBLE);
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
             }
+            ;
 
-        }, error -> {
-            recyclerStyleView.setVisibility(View.VISIBLE);
-            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-        });
+            courseListener = (view, position) -> {
+                Intent intent = new Intent(getContext(), ClassActivity.class);
+                intent.putExtra("courseID", courseList.get(position).getCourseID());
+                intent.putExtra("courseName", courseList.get(position).getCourseName());
+                startActivity(intent);
+            };
+        }
 
-        RequestQueue requestQueue = Volley.newRequestQueue(getContext());
-        requestQueue.add(stringRequest);
+        private void initFindViewByID (View rootView){
+            recyclerStyleView = rootView.findViewById(R.id.recycler_style_home);
+            recyclerCourseView = rootView.findViewById(R.id.recycler_course_home);
+            layoutShowFirstOpen = rootView.findViewById(R.id.layout_show_first_open);
+            layoutShowEmpty = rootView.findViewById(R.id.layout_show_empty);
+            layoutProgress = rootView.findViewById(R.id.layout_progressbar);
+            layoutProgressCourse = rootView.findViewById(R.id.layout_progressbar_course);
+        }
 
-    }
+        private void loadStyle () {
+            recyclerStyleView.setVisibility(View.GONE);
+            if (styleList != null || styleList.size() > 0) {
+                styleList.clear();
+            }
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, styleUrl, response -> {
+                Log.d("Onresponse", response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("msg").equals("success")) {
+                        JSONArray array = jsonObject.getJSONArray("style");
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject obj = array.getJSONObject(i);
+                            StyleHomeDao item = new StyleHomeDao(
+                                    obj.getString("courseStyleID"),
+                                    obj.getString("courseStyleName"),
+                                    obj.getString("courseStyleDesc"),
+                                    obj.getString("courseStyleImage"),
+                                    "0"
+                            );
+                            styleList.add(item);
+                        }
+                        adapterStyle = new StyleHomeAdapter(styleListener, styleList, getContext());
+                        recyclerStyleView.setAdapter(adapterStyle);
+                        recyclerStyleView.setVisibility(View.VISIBLE);
+                        loadCourse();
 
-    private void loadCourse() {
-        recyclerCourseView.setVisibility(View.GONE);
+                    } else {
+                        recyclerStyleView.setVisibility(View.VISIBLE);
+                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }, error -> {
+                recyclerStyleView.setVisibility(View.VISIBLE);
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            });
+
+            RequestQueue requestQueue = Volley.newRequestQueue(getContext());
+            requestQueue.add(stringRequest);
+
+        }
+
+        private void loadCourse () {
+            recyclerCourseView.setVisibility(View.GONE);
 //        layoutProgress.setVisibility(View.VISIBLE);
 //        layoutProgressCourse.setVisibility(View.VISIBLE);
-        if (courseList != null || courseList.size() > 0) {
-            courseList.clear();
-        }
-        RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
-        StringRequest request = new StringRequest(Request.Method.POST, courseUrl, response -> {
-            Log.d("onResponse", response);
-            try {
-                JSONObject jsonObject = new JSONObject(response);
-                if (jsonObject.getString("msg").equals("success")) {
-                    JSONArray array = jsonObject.getJSONArray("course");
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject objClass = array.getJSONObject(i);
-                        CourseHomeDao item = new CourseHomeDao(
-                                objClass.getString("imgUrl"),
-                                objClass.getString("courseID"),
-                                objClass.getString("courseName"),
-                                objClass.getString("courseStyle"),
-                                objClass.getString("courseLength"),
-                                objClass.getString("courseDesc")
-                        );
+            if (courseList != null || courseList.size() > 0) {
+                courseList.clear();
+            }
+            RequestQueue requestQueue = Volley.newRequestQueue(getActivity());
+            StringRequest request = new StringRequest(Request.Method.POST, courseUrl, response -> {
+                Log.d("onResponse", response);
+                try {
+                    JSONObject jsonObject = new JSONObject(response);
+                    if (jsonObject.getString("msg").equals("success")) {
+                        JSONArray array = jsonObject.getJSONArray("course");
+                        for (int i = 0; i < array.length(); i++) {
+                            JSONObject objClass = array.getJSONObject(i);
+                            CourseHomeDao item = new CourseHomeDao(
+                                    objClass.getString("imgUrl"),
+                                    objClass.getString("courseID"),
+                                    objClass.getString("courseName"),
+                                    objClass.getString("courseStyle"),
+                                    objClass.getString("courseLength"),
+                                    objClass.getString("courseDesc")
+                            );
 
-                        courseList.add(item);
-                    }
+                            courseList.add(item);
+                        }
 
-                    if (courseList.size() == 0) {
+                        if (courseList.size() == 0) {
+                            layoutShowEmpty.setVisibility(View.VISIBLE);
+                            recyclerCourseView.setVisibility(View.GONE);
+                            layoutShowFirstOpen.setVisibility(View.GONE);
+                        } else {
+                            layoutShowEmpty.setVisibility(View.GONE);
+                            layoutShowFirstOpen.setVisibility(View.GONE);
+                            recyclerCourseView.setVisibility(View.VISIBLE);
+                            adapterCourse = new CourseHomeAdapter(courseListener, courseList, getContext());
+                            recyclerCourseView.setAdapter(adapterCourse);
+                        }
+                        layoutProgress.setVisibility(View.GONE);
+//                    layoutProgressCourse.setVisibility(View.GONE);
+                    } else {
                         layoutShowEmpty.setVisibility(View.VISIBLE);
                         recyclerCourseView.setVisibility(View.GONE);
                         layoutShowFirstOpen.setVisibility(View.GONE);
-                    } else {
-                        layoutShowEmpty.setVisibility(View.GONE);
-                        layoutShowFirstOpen.setVisibility(View.GONE);
-                        recyclerCourseView.setVisibility(View.VISIBLE);
-                        adapterCourse = new CourseHomeAdapter(courseListener, courseList, getContext());
-                        recyclerCourseView.setAdapter(adapterCourse);
+                        layoutProgress.setVisibility(View.GONE);
+//                    layoutProgressCourse.setVisibility(View.GONE);
                     }
-                    layoutProgress.setVisibility(View.GONE);
-//                    layoutProgressCourse.setVisibility(View.GONE);
-                } else {
-                    layoutShowEmpty.setVisibility(View.VISIBLE);
-                    recyclerCourseView.setVisibility(View.GONE);
-                    layoutShowFirstOpen.setVisibility(View.GONE);
-                    layoutProgress.setVisibility(View.GONE);
-//                    layoutProgressCourse.setVisibility(View.GONE);
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-        }, error -> {
-            layoutProgress.setVisibility(View.GONE);
+            }, error -> {
+                layoutProgress.setVisibility(View.GONE);
 //            layoutProgressCourse.setVisibility(View.GONE);
-            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
-        }) {
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String, String> params = new HashMap<String, String>();
-                params.put("styleID", styleID);
+                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+            }) {
+                @Override
+                protected Map<String, String> getParams() throws AuthFailureError {
+                    Map<String, String> params = new HashMap<String, String>();
+                    params.put("styleID", styleID);
 
-                return params;
-            }
-        };
-        requestQueue.add(request);
-    }
+                    return params;
+                }
+            };
+            requestQueue.add(request);
+        }
 
-    @Override
-    public void onAttach(Context context) {
-        super.onAttach(context);
-    }
+        @Override
+        public void onAttach (Context context){
+            super.onAttach(context);
+        }
 
-    @Override
-    public void onDetach() {
-        super.onDetach();
-    }
+        @Override
+        public void onDetach () {
+            super.onDetach();
+        }
 
-    @Override
-    public void onSaveInstanceState(Bundle outState) {
-        super.onSaveInstanceState(outState);
-        // Save Instance (Fragment level's variables) State here
-    }
+        @Override
+        public void onSaveInstanceState (Bundle outState){
+            super.onSaveInstanceState(outState);
+            // Save Instance (Fragment level's variables) State here
+        }
 
-    private void onRestoreInstanceState(Bundle savedInstanceState) {
+        private void onRestoreInstanceState (Bundle savedInstanceState){
+        }
     }
-}

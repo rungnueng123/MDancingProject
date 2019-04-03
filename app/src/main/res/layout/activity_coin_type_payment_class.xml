@@ -50,7 +50,7 @@
             android:layout_below="@id/txt_class_name_title"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/kanit_regular"
-            android:textColor="@color/txt_color_class_list"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
         <TextView
@@ -72,7 +72,7 @@
             android:layout_below="@id/txt_coin_price_title"
             android:layout_marginStart="16dp"
             android:fontFamily="@font/kanit_regular"
-            android:textColor="@color/txt_color_class_list"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
         <TextView
@@ -85,7 +85,7 @@
             android:layout_toStartOf="@+id/action_buy"
             android:fontFamily="@font/kanit_medium"
             android:text="@string/cancel"
-            android:textColor="@color/txt_color_class_list"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
         <TextView
@@ -97,7 +97,7 @@
             android:layout_below="@id/txt_coin_price"
             android:fontFamily="@font/kanit_medium"
             android:text="@string/confirm"
-            android:textColor="@color/txt_color_class_list"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
     </RelativeLayout>

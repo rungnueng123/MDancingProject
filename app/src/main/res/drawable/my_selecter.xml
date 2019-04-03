@@ -9,4 +9,6 @@
         android:state_selected="true"
         android:drawable="@drawable/selected_color"/>
 
+    <item android:drawable="@drawable/normal_color"/>
+
 </selector>

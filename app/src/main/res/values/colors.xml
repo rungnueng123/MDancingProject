@@ -4,7 +4,7 @@
     <color name="colorPrimaryDark">#6C7B8A</color>
     <color name="colorNotSelect">#CBCBCB</color>
     <color name="colorBgEmail">#5C5968</color>
-    <color name="colorAccent">#FF4081</color>
+    <color name="colorAccent">#757575</color>
     <color name="white">#FFFFFF</color>
     <color name="signupColor">#066e8a</color>
     <color name="nav_item_profile">#FFFFFF</color>
@@ -21,4 +21,5 @@
     <color name="color_username_login">#515C6F</color>
     <drawable name="selected_color">#6C7B8A</drawable>
     <drawable name="pressed_color">#30000000</drawable>
+    <drawable name="normal_color">#FFFFFF</drawable>
 </resources>

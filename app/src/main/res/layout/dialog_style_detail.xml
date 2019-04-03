@@ -43,7 +43,7 @@
             android:layout_alignParentEnd="true"
             android:fontFamily="@font/kanit_regular"
             android:text="@string/close"
-            android:textColor="@color/txt_color_class_list"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
     </RelativeLayout>

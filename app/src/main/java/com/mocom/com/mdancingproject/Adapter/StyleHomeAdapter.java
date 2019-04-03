@@ -52,9 +52,14 @@ public class StyleHomeAdapter extends RecyclerView.Adapter<StyleHomeHolder> {
         holder.getImgInfo().setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                openInfoDialogFragment(styleHomeDao.getStyleName(),styleHomeDao.getStyleDesc());
+                openInfoDialogFragment(styleHomeDao.getStyleName(), styleHomeDao.getStyleDesc());
             }
         });
+        if (styleHomeDaoList.get(position).getStyleSelect().equals("0")) {
+            holder.getRelativeLayout().setSelected(false);
+        } else {
+            holder.getRelativeLayout().setSelected(true);
+        }
     }
 
     private void openInfoDialogFragment(String styleName, String styleDesc) {

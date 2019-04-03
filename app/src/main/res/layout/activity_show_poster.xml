@@ -32,7 +32,7 @@
             android:id="@+id/img_banner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:scaleType="fitXY" />
 
     </LinearLayout>

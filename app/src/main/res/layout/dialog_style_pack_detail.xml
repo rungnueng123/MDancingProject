@@ -52,7 +52,7 @@
             android:fontFamily="@font/kanit_regular"
             android:padding="8dp"
             android:text="@string/close"
-            android:textColor="@color/colorPrimary"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
     </RelativeLayout>
