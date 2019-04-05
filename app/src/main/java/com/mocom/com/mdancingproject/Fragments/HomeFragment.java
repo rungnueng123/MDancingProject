@@ -287,7 +287,8 @@ public class HomeFragment extends Fragment {
                                 obj.getString("courseStyleID"),
                                 obj.getString("courseStyleName"),
                                 obj.getString("courseStyleDesc"),
-                                obj.getString("courseStyleImage")
+                                obj.getString("courseStyleImage"),
+                                "0"
                         );
                         styleList.add(item);
                     }

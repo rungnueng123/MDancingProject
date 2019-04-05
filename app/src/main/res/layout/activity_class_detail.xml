@@ -18,7 +18,7 @@
             android:background="?attr/colorPrimary"
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:title="@string/class_title"
-            app:titleTextColor="@color/white" />
+            app:titleTextColor="@color/colorPrimaryDark" />
 
         <android.support.v4.widget.NestedScrollView
             android:id="@+id/nestedScrollView"
@@ -51,7 +51,7 @@
                     android:layout_marginTop="12dp"
                     android:layout_marginBottom="12dp"
                     android:fontFamily="@font/kanit_medium"
-                    android:textColor="@color/txt_class"
+                    android:textColor="@color/colorPrimaryDark"
                     android:textSize="24sp" />
 
                 <TextView
@@ -205,7 +205,7 @@
 
         <ProgressBar
             android:id="@+id/progressbar"
-            style="?android:attr/progressBarStyleLarge"
+            android:indeterminateDrawable="@drawable/progress"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center" />

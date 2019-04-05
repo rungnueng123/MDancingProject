@@ -55,7 +55,7 @@
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@id/img_class_name"
             android:fontFamily="@font/kanit_regular"
-            android:textColor="#000"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
         <TextView
@@ -101,7 +101,7 @@
             android:layout_marginStart="16dp"
             android:layout_toEndOf="@id/img_coin_price"
             android:fontFamily="@font/kanit_regular"
-            android:textColor="#000"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="14sp" />
 
         <TextView
@@ -114,7 +114,7 @@
             android:layout_toStartOf="@+id/action_cancel"
             android:fontFamily="@font/kanit_medium"
             android:text="@string/confirm"
-            android:textColor="#33bbff"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp" />
 
         <TextView
@@ -127,7 +127,7 @@
             android:layout_marginBottom="14dp"
             android:fontFamily="@font/kanit_medium"
             android:text="@string/cancel"
-            android:textColor="#000"
+            android:textColor="@color/colorPrimaryDark"
             android:textSize="20sp" />
 
     </RelativeLayout>

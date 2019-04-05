@@ -14,7 +14,13 @@
         android:background="?attr/colorPrimary"
         android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
         app:title="@string/description"
-        app:titleTextColor="@color/white" />
+        app:titleTextColor="@color/colorPrimaryDark" />
+
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_gravity="bottom"
+        android:background="@color/colorPrimaryDark" />
 
     <LinearLayout
         android:id="@+id/layout_banner"
@@ -26,7 +32,7 @@
             android:id="@+id/img_banner"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:background="@color/colorAccent"
+            android:background="@color/colorPrimaryDark"
             android:scaleType="fitXY" />
 
     </LinearLayout>

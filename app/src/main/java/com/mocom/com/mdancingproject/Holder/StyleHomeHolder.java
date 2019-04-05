@@ -5,6 +5,7 @@ import android.support.v7.widget.RecyclerView;
 import android.util.SparseBooleanArray;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.mocom.com.mdancingproject.Callback.RecyclerStyleClickCallBack;
@@ -15,6 +16,7 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
     private RecyclerStyleClickCallBack mListener;
     private ImageView imgUrl, imgInfo, imgSelect;
     private TextView style;
+    private RelativeLayout relativeLayout;
     Integer selectStyle = -1;
 
     private SparseBooleanArray selectedItems = new SparseBooleanArray();
@@ -31,6 +33,10 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
         return imgInfo;
     }
 
+    public RelativeLayout getRelativeLayout() {
+        return relativeLayout;
+    }
+
     public StyleHomeHolder(@NonNull View itemView, RecyclerStyleClickCallBack listener) {
         super(itemView);
         mListener = listener;
@@ -40,6 +46,7 @@ public class StyleHomeHolder extends RecyclerView.ViewHolder implements View.OnC
         style = itemView.findViewById(R.id.txt_style);
         imgInfo = itemView.findViewById(R.id.img_info);
         imgSelect = itemView.findViewById(R.id.img_select);
+        relativeLayout = itemView.findViewById(R.id.relative_layout);
 
     }
 

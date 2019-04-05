@@ -28,7 +28,7 @@
                 android:layout_below="@id/img_class"
                 android:layout_marginTop="12.37dp"
                 android:fontFamily="@font/kanit_regular"
-                android:textColor="@color/txt_color_class_list"
+                android:textColor="@color/colorPrimaryDark"
                 android:text="คลาส"
                 android:textSize="24sp" />
 

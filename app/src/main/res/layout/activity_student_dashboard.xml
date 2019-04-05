@@ -20,6 +20,12 @@
             android:theme="@style/ThemeOverlay.AppCompat.ActionBar"
             app:titleTextColor="@color/txt_color_all"/>
 
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_gravity="bottom"
+            android:background="@color/colorPrimaryDark" />
+
         <FrameLayout
             android:id="@+id/fragment_dashboard"
             android:layout_width="match_parent"

@@ -11,20 +11,39 @@
 
     <application
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@mipmap/logo"
         android:label="@string/app_name"
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".Activities.ShowPosterActivity"></activity>
-        <activity android:name=".Activities.HaveStylePackAllActivity" />
-        <activity android:name=".Activities.LoginActivity" />
-        <activity android:name=".Activities.AdminClassDetailActivity" />
-        <activity android:name=".QRCode.QRCodeCheckedStudentActivity" />
-        <activity android:name=".Activities.PaymentPackageActivity" />
+        <activity
+            android:name=".Activities.ShowPosterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.HaveStylePackAllActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.LoginActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.AdminClassDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QRCode.QRCodeCheckedStudentActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.PaymentPackageActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.SplashScreenActivity"
+            android:configChanges="orientation"
             android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -34,34 +53,86 @@
         </activity>
         <activity
             android:name=".Activities.StudentDashboardActivity"
-            android:configChanges="orientation|keyboardHidden" />
-        <activity android:name=".QRCode.AdminQRCodeScannedActivity" />
-        <activity android:name=".Activities.RegisterActivity" />
-        <activity android:name=".Activities.AdminDashboardActivity" />
-        <activity android:name=".QRCode.AdminQRCodeScannedResultActivity" />
-        <activity android:name=".QRCode.StudentQRCodeActivity" />
-        <activity android:name=".Activities.ForgotPasswordActivity" />
-        <activity android:name=".Activities.StudentCourseClassDetailActivity" />
-        <activity android:name=".Activities.StudentCourseClassActivity" />
-        <activity android:name=".Activities.StudentCourseActivity" />
-        <activity android:name=".QRCode.QRCodeCoinForClassActivity" />
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QRCode.AdminQRCodeScannedActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.RegisterActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.AdminDashboardActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QRCode.AdminQRCodeScannedResultActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QRCode.StudentQRCodeActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.ForgotPasswordActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.StudentCourseClassDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.StudentCourseClassActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.StudentCourseActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".QRCode.QRCodeCoinForClassActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".PaymentGateway.PaymentGatewayCoinForClassActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
         <activity
             android:name=".Activities.ShowPictureActivity"
             android:theme="@style/TransparentCompat" />
         <activity
             android:name=".PaymentGateway.PaymentGatewayTestActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:windowSoftInputMode="adjustPan" />
-        <activity android:name=".Activities.StyleTypePaymentClassActivity" />
+        <activity
+            android:name=".Activities.StyleTypePaymentClassActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".Activities.CoinTypePaymentClassActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait"
             android:theme="@style/TransparentCompat" />
-        <activity android:name=".Activities.ClassDetailActivity" />
-        <activity android:name=".Activities.ClassActivity" />
-        <activity android:name=".Activities.StudentApplicantDetailActivity" />
-        <activity android:name=".Activities.StudentHistoryDetailActivity" />
+        <activity
+            android:name=".Activities.ClassDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.ClassActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.StudentApplicantDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".Activities.StudentHistoryDetailActivity"
+            android:configChanges="orientation"
+            android:screenOrientation="portrait" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"

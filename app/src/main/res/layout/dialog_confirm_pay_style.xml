@@ -63,7 +63,7 @@
             android:layout_marginBottom="18dp"
             android:padding="8dp"
             android:text="@string/confirm"
-            android:textColor="@color/txt_color_class_list" />
+            android:textColor="@color/colorPrimaryDark" />
 
         <TextView
             android:id="@+id/txt_cancel"
@@ -76,7 +76,7 @@
             android:layout_toStartOf="@id/txt_ok"
             android:padding="8dp"
             android:text="@string/cancel"
-            android:textColor="@color/txt_color_class_list" />
+            android:textColor="@color/colorPrimaryDark" />
 
     </RelativeLayout>
 
