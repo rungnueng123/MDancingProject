@@ -120,10 +120,10 @@ public class StudentCourseActivity extends AppCompatActivity implements View.OnC
                     for (int i = 0; i < classArray.length(); i++) {
                         JSONObject objClass = classArray.getJSONObject(i);
                         txtCourse.setText(objClass.getString("Course"));
-                        txtCoin.setText(objClass.getString("CoinAmt") + " Coins/Class");
-                        txtHour.setText("จำนวนครั้งที่เรียน : " + objClass.getString("CourseLength"));
-                        txtStyle.setText("Style : " + objClass.getString("courseStyleName"));
-                        txtDesc.setText("Description : \n\n" + objClass.getString("Description"));
+                        txtCoin.setText(objClass.getString("CoinAmt") + " " + getResources().getString(R.string.coin_per_class));
+                        txtHour.setText(getResources().getString(R.string.time_for_study) + " : " + objClass.getString("CourseLength"));
+                        txtStyle.setText(getResources().getString(R.string.style) + " : " + objClass.getString("courseStyleName"));
+                        txtDesc.setText(getResources().getString(R.string.description) + " : \n\n" + objClass.getString("Description"));
                         if (objClass.getString("ClipLink").equals("null")) {
                             youtubeUrl = "";
                         } else {

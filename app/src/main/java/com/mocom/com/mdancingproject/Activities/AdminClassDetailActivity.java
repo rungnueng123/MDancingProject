@@ -155,14 +155,14 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
                     JSONArray classArray = jsonObject.getJSONArray("class");
                     for (int i = 0; i < classArray.length(); i++) {
                         JSONObject obj = classArray.getJSONObject(i);
-                        txtClassName.setText("คลาส : " + obj.getString("eventTitle"));
+                        txtClassName.setText(getResources().getString(R.string.txt_class) + " : " + obj.getString("eventTitle"));
                         eventName = obj.getString("eventTitle");
-                        txtPlaylist.setText("เพลง : " + obj.getString("playlist"));
-                        txtStyle.setText("สไตล์ : " + obj.getString("eventStyle"));
-                        txtTeacher.setText("ผู้สอน : " + obj.getString("eventTeacher"));
-                        txtDate.setText("วันที่เรียน : " + obj.getString("eventDate"));
-                        txtTime.setText("เวลา : " + obj.getString("eventTime"));
-                        txtBranch.setText("สาขา : " + obj.getString("eventBranch"));
+                        txtPlaylist.setText(getResources().getString(R.string.song) + " : " + obj.getString("playlist"));
+                        txtStyle.setText(getResources().getString(R.string.style) + " : " + obj.getString("eventStyle"));
+                        txtTeacher.setText(getResources().getString(R.string.teacher) + " : " + obj.getString("eventTeacher"));
+                        txtDate.setText(getResources().getString(R.string.study_date) + " : " + obj.getString("eventDate"));
+                        txtTime.setText(getResources().getString(R.string.time) + " : " + obj.getString("eventTime"));
+                        txtBranch.setText(getResources().getString(R.string.branch) + " : " + obj.getString("eventBranch"));
                         txtDesc.setText(getResources().getString(R.string.description) + " : " + obj.getString("description"));
 
                         if (obj.getString("youtubeUrl").equals("null")) {
@@ -243,7 +243,7 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
         super.onResume();
 //        loadClassDetail();
 //        if (studentList.size() > 0) {
-            loadListStudentCheck();
+        loadListStudentCheck();
 //        }
     }
 }

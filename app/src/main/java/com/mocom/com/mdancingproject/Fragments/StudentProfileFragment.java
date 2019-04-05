@@ -200,19 +200,19 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
                         JSONObject obj = array.getJSONObject(i);
 //                        Log.d("Member name: ", obj.getString("UserID"));
                         if (obj.getString("User").equals("null")) {
-                            txtUser.setText("Name: ");
+                            txtUser.setText(getResources().getString(R.string.name) + ": ");
                         } else {
-                            txtUser.setText("Name: " + obj.getString("User"));
+                            txtUser.setText(getResources().getString(R.string.name) + ": " + obj.getString("User"));
                         }
                         if (obj.getString("Phone").equals("null")) {
-                            txtTel.setText("Tel: ");
+                            txtTel.setText(getResources().getString(R.string.tel) + ": ");
                         } else {
-                            txtTel.setText("Tel: " + obj.getString("Phone"));
+                            txtTel.setText(getResources().getString(R.string.tel) + ": " + obj.getString("Phone"));
                         }
                         if (obj.getString("Birth").equals("null")) {
-                            txtBirth.setText("Birth: ");
+                            txtBirth.setText(getResources().getString(R.string.birth) + ": ");
                         } else {
-                            txtBirth.setText("Birth: " + obj.getString("Birth"));
+                            txtBirth.setText(getResources().getString(R.string.birth) + ": " + obj.getString("Birth"));
                         }
                         txtCoin.setText(getResources().getString(R.string.coin) + " : " + obj.getString("CoinAmt"));
                     }

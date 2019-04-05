@@ -367,17 +367,17 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
                         }else if(obj.getString("canBuy").equals("cant")){
                             btnPayment.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.shapebtncantpayment));
                         }
-                        txtClassName.setText("คลาส : " + obj.getString("eventTitle"));
+                        txtClassName.setText(getResources().getString(R.string.txt_class) + " : " + obj.getString("eventTitle"));
                         eventName = obj.getString("eventTitle");
-                        txtPlaylist.setText("เพลง : " + obj.getString("playlist"));
-                        txtStyle.setText("สไตล์ : " + obj.getString("eventStyle"));
-                        txtTeacher.setText("ผู้สอน : " + obj.getString("eventTeacher"));
-                        txtDate.setText("วันที่เรียน : " + obj.getString("eventDate"));
-                        txtTime.setText("เวลา : " + obj.getString("eventTime"));
-                        txtEmpty.setText("ว่าง : " + obj.getString("eventEmpty"));
+                        txtPlaylist.setText(getResources().getString(R.string.song) + " : " + obj.getString("playlist"));
+                        txtStyle.setText(getResources().getString(R.string.style) + " : " + obj.getString("eventStyle"));
+                        txtTeacher.setText(getResources().getString(R.string.teacher) + " : " + obj.getString("eventTeacher"));
+                        txtDate.setText(getResources().getString(R.string.study_date) + " : " + obj.getString("eventDate"));
+                        txtTime.setText(getResources().getString(R.string.time) + " : " + obj.getString("eventTime"));
+                        txtEmpty.setText(getResources().getString(R.string.empty) + " : " + obj.getString("eventEmpty"));
                         numEmpty = obj.getString("eventEmpty");
-                        txtBranch.setText("สาขา : " + obj.getString("eventBranch"));
-                        txtCoin.setText(obj.getString("coin") + " Coins/Time");
+                        txtBranch.setText(getResources().getString(R.string.branch) + " : " + obj.getString("eventBranch"));
+                        txtCoin.setText(obj.getString("coin") + " " + getResources().getString(R.string.coin_per_time));
                         coinAmt = obj.getString("coin");
                         txtDesc.setText(obj.getString("description"));
                         imgUrl = HOST_URL + obj.getString("imgUrl");

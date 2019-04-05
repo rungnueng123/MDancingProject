@@ -16,7 +16,7 @@ import com.mocom.com.mdancingproject.R;
 public class ConfirmPayStyleDialog extends DialogFragment implements View.OnClickListener {
 
     public interface OnConfirmStyleListener {
-        void sendConfirmStyle(String confirm,String stylePackID,String coin);
+        void sendConfirmStyle(String confirm, String stylePackID, String coin);
     }
 
     public OnConfirmStyleListener onConfirmStyleListener;
@@ -39,10 +39,10 @@ public class ConfirmPayStyleDialog extends DialogFragment implements View.OnClic
         coin = this.getArguments().getString("coin");
         times = this.getArguments().getString("times");
         style = this.getArguments().getString("style");
-        txtName.setText("Package : " + namePack);
-        txtCoin.setText("Coin : " + coin);
-        txtStyle.setText("Style : " + style);
-        txtTime.setText("จำนวนครั้ง : " + times);
+        txtName.setText(getResources().getString(R.string.pack) + " : " + namePack);
+        txtCoin.setText(getResources().getString(R.string.coin) + " : " + coin);
+        txtStyle.setText(getResources().getString(R.string.style) + " : " + style);
+        txtTime.setText(getResources().getString(R.string.txt_time_show) + " : " + times);
     }
 
     private void initFindViewByID(View rootView) {
@@ -59,12 +59,12 @@ public class ConfirmPayStyleDialog extends DialogFragment implements View.OnClic
 
     @Override
     public void onClick(View v) {
-        if(v == txtOk){
-            onConfirmStyleListener.sendConfirmStyle(txtOk.getText().toString(),stylePackID,coin);
+        if (v == txtOk) {
+            onConfirmStyleListener.sendConfirmStyle(txtOk.getText().toString(), stylePackID, coin);
             getDialog().dismiss();
         }
-        if(v == txtCancel){
-            onConfirmStyleListener.sendConfirmStyle(txtCancel.getText().toString(),stylePackID,coin);
+        if (v == txtCancel) {
+            onConfirmStyleListener.sendConfirmStyle(txtCancel.getText().toString(), stylePackID, coin);
             getDialog().dismiss();
         }
     }

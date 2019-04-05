@@ -126,6 +126,16 @@
     <string name="style_pack_title">แพ็คเกจที่ซื้อ</string>
     <string name="style_show_pack_all">ทั้งหมด ></string>
     <string name="all">ทั้งหมด</string>
+    <string name="song">เพลง</string>
+    <string name="teacher">ผู้สอน</string>
+    <string name="study_date">วันที่เรียน</string>
+    <string name="time">เวลา</string>
+    <string name="empty">ว่าง</string>
+    <string name="coin_per_time">Coins/Time</string>
+    <string name="coin_per_class">Coins/Class</string>
+    <string name="time_for_study">จำนวนครั้งที่เรียน</string>
+    <string name="name">Name</string>
+    <string name="tel">Tel</string>
     <string name="checkin_or_register">เข้าสู่ระบบหรือสมัครสมาชิก</string>
     <string name="username_login">USERNAME</string>
     <string name="password_login">PASSWORD</string>

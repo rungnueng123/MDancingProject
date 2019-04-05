@@ -31,9 +31,9 @@ public class CourseDetailDialog extends DialogFragment implements View.OnClickLi
         courseLength = this.getArguments().getString("courseLength");
         courseDesc = this.getArguments().getString("courseDesc");
 
-        txtCourse.setText("คอร์ส : "+courseName);
-        txtStyle.setText("สไตล์ : "+courseStyle);
-        txtLength.setText("ระยะเวลาการสอน : "+courseLength+" ชั่วโมง");
+        txtCourse.setText(getResources().getString(R.string.course) + " : " + courseName);
+        txtStyle.setText(getResources().getString(R.string.style) + " : " + courseStyle);
+        txtLength.setText(getResources().getString(R.string.length) + " : " + courseLength + " ชั่วโมง");
         txtDesc.setText(courseDesc);
 
     }
@@ -49,7 +49,7 @@ public class CourseDetailDialog extends DialogFragment implements View.OnClickLi
 
     @Override
     public void onClick(View v) {
-        if (v == txtClose){
+        if (v == txtClose) {
             getDialog().dismiss();
         }
     }
