@@ -87,9 +87,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
                 }
             }
             VolleySingleton.getInstance(applicationContext).addToRequestQueue(stringRequest)
-        }
-
-        if (payCoinAndClassObject.eventID != null && payCoinAndClassObject.baht != null) {
+        } else if (payCoinAndClassObject.eventID != null && payCoinAndClassObject.baht != null) {
             layout_buy_coin_and_class.visibility = View.VISIBLE
             layout_buy_coin_only.visibility = View.GONE
             layout_btn_ok_and_cancel.visibility = View.VISIBLE
@@ -105,9 +103,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
             txt_coin_for_class.text = coin
             txt_baht_for_class.text = baht
 
-        }
-
-        if (eventIDForCheck != null && !eventIDForCheck.isEmpty()) {
+        } else if (eventIDForCheck != null && !eventIDForCheck.isEmpty()) {
             if (checkedStudentObject.eventID != null && checkedStudentObject.userID != null && checkedStudentObject.checked != null) {
                 layout_show_checked_result.visibility = View.VISIBLE
                 layout_buy_coin_and_class.visibility = View.GONE
