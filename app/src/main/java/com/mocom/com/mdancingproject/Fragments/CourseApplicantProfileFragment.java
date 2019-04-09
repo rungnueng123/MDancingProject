@@ -12,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -107,6 +108,8 @@ public class CourseApplicantProfileFragment extends Fragment {
 
     private void loadClassApplicantData() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         classList.clear();
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonUrl, response -> {
@@ -142,12 +145,14 @@ public class CourseApplicantProfileFragment extends Fragment {
                     }
                 }
                 layoutProgress.setVisibility(View.GONE);
+                getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

@@ -12,6 +12,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -88,6 +89,8 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void checkCoinCanPayment(String coin, String eventid) {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
@@ -96,6 +99,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             try {
                 JSONObject obj = new JSONObject(response);
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 if (obj.getString("message").equals("enough")) {
                     goBuyClass(userID, eventid);
                 } else {
@@ -107,6 +111,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -173,12 +178,15 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void checkCanBuyClassByStylePack(String eventStyleID) {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
         StringRequest stringRequest = new StringRequest(Request.Method.POST, checkCanBuyClassByStyle, response -> {
             Log.d("checkCanBy", response);
             try {
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("msg").equals("can")) {
                     goBuyClassByStyle(eventStyleID, sharedUserID);
@@ -190,6 +198,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             }
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -211,6 +220,8 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void goBuyClassByStyle(String eventStyleID, String sharedUserID) {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, buyClassByStyleUrl, response -> {
             Log.d("buyclassbystyle", response);
             try {
@@ -227,6 +238,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -275,10 +287,13 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void genQrForBuyCoin() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, qrBuyClassUrl, response -> {
             Log.d("response", response);
             try {
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("msg").equals("success")) {
                     Intent intent = new Intent(this, QRCodeCoinForClassActivity.class);
@@ -303,6 +318,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -349,6 +365,8 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void loadClassDetail() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest request = new StringRequest(Request.Method.POST, getClassUrl, response -> {
             Log.d("onResponse", response);
             try {
@@ -406,8 +424,10 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
                         eventStyleID = obj.getString("eventStyleID");
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -415,6 +435,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -523,10 +544,13 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
 
     private void goBuyClass(String userID, String eventID) {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest stringRequest = new StringRequest(Request.Method.POST, canBuyClassByCoinUrl, response -> {
             Log.d("response", response);
             try {
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("Payment Success")) {
                     openDialogSuccessBuyClass();
@@ -543,6 +567,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
             }
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

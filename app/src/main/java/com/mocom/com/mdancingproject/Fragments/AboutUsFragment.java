@@ -8,6 +8,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
@@ -98,6 +99,8 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
 
     private void loadAllBranch() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, loadBranchUrl, response -> {
 //            Log.d("Onresponse", response);
             try {
@@ -111,11 +114,14 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
 
                     if (branch.size() > 0) {
                         layoutProgress.setVisibility(View.GONE);
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         setSpinner();
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -149,6 +155,8 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
 
     private void loadDetailBranch() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 //        if (classList != null || classList.size() > 0) {
 //            classList.clear();
 //        }
@@ -173,8 +181,10 @@ public class AboutUsFragment extends Fragment implements View.OnClickListener {
             }
 
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

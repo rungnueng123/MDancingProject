@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -94,6 +95,8 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
 
     private void loadListStudentCheck() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         studentList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, StudentCheckedUrl, response -> {
             Log.d("Onresponse", response);
@@ -126,11 +129,13 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
                     Toast.makeText(getApplicationContext(), jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                 }
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -147,6 +152,8 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
 
     private void loadClassDetail() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest request = new StringRequest(Request.Method.POST, getClassUrl, response -> {
             Log.d("onResponse", response);
             try {
@@ -183,8 +190,10 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
                         }
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                 }
             } catch (JSONException e) {
@@ -194,6 +203,7 @@ public class AdminClassDetailActivity extends AppCompatActivity implements View.
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

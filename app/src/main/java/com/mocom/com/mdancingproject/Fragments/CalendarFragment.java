@@ -14,6 +14,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
@@ -63,7 +64,7 @@ public class CalendarFragment extends Fragment {
     private String CalendarClassUrl = DATA_URL + "get_class_by_branch_and_date.php";
 
     LinearLayout layoutBanner;
-    int width,heigth;
+    int width, heigth;
     String branchName;
 
     private static ViewPager viewPager;
@@ -123,8 +124,8 @@ public class CalendarFragment extends Fragment {
 
         Display display = getActivity().getWindowManager().getDefaultDisplay();
         width = display.getWidth();
-        heigth = width/2;
-        layoutBanner.setLayoutParams(new LinearLayout.LayoutParams(width,heigth));
+        heigth = width / 2;
+        layoutBanner.setLayoutParams(new LinearLayout.LayoutParams(width, heigth));
 //        Log.d("width",width+"/"+heigth);
 
         bannerList = new ArrayList<>();
@@ -210,6 +211,8 @@ public class CalendarFragment extends Fragment {
 
     private void loadBanner() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, BannerUrl, response -> {
             Log.d("Onresponse", response);
             try {
@@ -281,6 +284,7 @@ public class CalendarFragment extends Fragment {
                         }
                     });
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -288,6 +292,7 @@ public class CalendarFragment extends Fragment {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
@@ -298,6 +303,8 @@ public class CalendarFragment extends Fragment {
 
     private void loadAllBranch() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, loadBranchUrl, response -> {
             Log.d("Onresponse", response);
             try {
@@ -311,11 +318,14 @@ public class CalendarFragment extends Fragment {
 
                     if (branch.size() > 0) {
                         layoutProgress.setVisibility(View.GONE);
+                        getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         setSpinner();
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -400,6 +410,8 @@ public class CalendarFragment extends Fragment {
 
     private void loadClassData() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if (classList != null || classList.size() > 0) {
             classList.clear();
         }
@@ -439,6 +451,7 @@ public class CalendarFragment extends Fragment {
                         recyclerView.setAdapter(adapter);
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     if (classList.size() == 0) {
                         txtEmpty.setVisibility(View.VISIBLE);
@@ -450,13 +463,16 @@ public class CalendarFragment extends Fragment {
                         recyclerView.setAdapter(adapter);
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 //            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -477,6 +493,8 @@ public class CalendarFragment extends Fragment {
 
     private void loadEventData() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         eventList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, CalendarEventUrl, response -> {
             Log.d("Onresponse", response);
@@ -513,6 +531,7 @@ public class CalendarFragment extends Fragment {
                         }
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                 } else {
                     Calendar rightNow = Calendar.getInstance();
@@ -520,6 +539,7 @@ public class CalendarFragment extends Fragment {
                     calendarAdapter.refresh();
                     collapsibleCalendar.setAdapter(calendarAdapter);
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -527,6 +547,7 @@ public class CalendarFragment extends Fragment {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

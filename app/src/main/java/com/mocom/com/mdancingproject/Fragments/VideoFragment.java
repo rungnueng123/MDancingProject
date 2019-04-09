@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -82,6 +83,8 @@ public class VideoFragment extends Fragment {
 
     private void loadVideo() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if (youtubeList != null || youtubeList.size() > 0) {
             youtubeList.clear();
         }
@@ -107,8 +110,10 @@ public class VideoFragment extends Fragment {
                 e.printStackTrace();
             }
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 

@@ -15,6 +15,7 @@ import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.Toast;
@@ -170,6 +171,8 @@ public class HomeFragment extends Fragment {
 
     private void loadBanner() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, BannerUrl, response -> {
             Log.d("Onresponse", response);
             try {
@@ -242,8 +245,10 @@ public class HomeFragment extends Fragment {
                     });
 
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -251,6 +256,7 @@ public class HomeFragment extends Fragment {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
@@ -272,6 +278,8 @@ public class HomeFragment extends Fragment {
 
     private void loadStyle() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if (styleList != null || styleList.size() > 0) {
             styleList.clear();
         }
@@ -295,10 +303,12 @@ public class HomeFragment extends Fragment {
                     adapterStyle = new StyleHomeAdapter(styleListener, styleList, getContext());
                     recyclerStyleView.setAdapter(adapterStyle);
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     loadCourse();
 
                 } else {
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -306,6 +316,7 @@ public class HomeFragment extends Fragment {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
@@ -316,6 +327,8 @@ public class HomeFragment extends Fragment {
 
     private void loadCourse() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if (courseList != null || courseList.size() > 0) {
             courseList.clear();
         }
@@ -352,17 +365,20 @@ public class HomeFragment extends Fragment {
                         recyclerCourseView.setAdapter(adapterCourse);
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     layoutShowEmpty.setVisibility(View.VISIBLE);
                     recyclerCourseView.setVisibility(View.GONE);
                     layoutShowFirstOpen.setVisibility(View.GONE);
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

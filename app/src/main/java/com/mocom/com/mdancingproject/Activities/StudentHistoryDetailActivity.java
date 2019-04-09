@@ -8,6 +8,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -63,6 +64,8 @@ public class StudentHistoryDetailActivity extends AppCompatActivity implements V
 
     private void loadClassDetail() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         userID = sharedPreferences.getString(getString(R.string.UserID), "");
         RequestQueue requestQueue = Volley.newRequestQueue(getApplicationContext());
         StringRequest request = new StringRequest(Request.Method.POST, dataUrl, response -> {
@@ -112,11 +115,13 @@ public class StudentHistoryDetailActivity extends AppCompatActivity implements V
                     }
                 }
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

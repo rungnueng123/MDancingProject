@@ -10,6 +10,7 @@ import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -165,6 +166,8 @@ public class ClassActivity extends AppCompatActivity {
 
     private void loadVideoYoutube() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest request = new StringRequest(Request.Method.POST, getYoutubeUrl, response -> {
 //            Log.d("onResponse", response);
             try {
@@ -188,11 +191,13 @@ public class ClassActivity extends AppCompatActivity {
                     }
                 }
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -210,6 +215,8 @@ public class ClassActivity extends AppCompatActivity {
 
     private void loadAllBranch() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, loadBranchUrl, response -> {
             Log.d("Onresponse", response);
             try {
@@ -225,8 +232,10 @@ public class ClassActivity extends AppCompatActivity {
                         setSpinner();
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -234,6 +243,7 @@ public class ClassActivity extends AppCompatActivity {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
 
         });
@@ -316,6 +326,8 @@ public class ClassActivity extends AppCompatActivity {
 
     private void loadEventData() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         eventList.clear();
         StringRequest stringRequest = new StringRequest(Request.Method.POST, jsonEventUrl, response -> {
             Log.d("Onresponse", response);
@@ -352,12 +364,14 @@ public class ClassActivity extends AppCompatActivity {
                         }
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     Calendar rightNow = Calendar.getInstance();
                     calendarAdapter = new CalendarAdapter(getApplicationContext(), rightNow);
                     calendarAdapter.refresh();
                     collapsibleCalendar.setAdapter(calendarAdapter);
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -365,6 +379,7 @@ public class ClassActivity extends AppCompatActivity {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(this, error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -386,6 +401,8 @@ public class ClassActivity extends AppCompatActivity {
 
     private void loadClassData() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if (classList != null || classList.size() > 0) {
             classList.clear();
         }
@@ -425,6 +442,7 @@ public class ClassActivity extends AppCompatActivity {
                         recyclerView.setAdapter(adapter);
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     if (classList.size() == 0) {
                         txtEmpty.setVisibility(View.VISIBLE);
@@ -436,6 +454,7 @@ public class ClassActivity extends AppCompatActivity {
                         recyclerView.setAdapter(adapter);
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -444,6 +463,7 @@ public class ClassActivity extends AppCompatActivity {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 //            Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

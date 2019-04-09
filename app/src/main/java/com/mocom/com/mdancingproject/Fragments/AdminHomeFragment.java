@@ -12,6 +12,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
@@ -176,6 +177,8 @@ public class AdminHomeFragment extends Fragment {
 
     private void loadAllBranch() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         StringRequest stringRequest = new StringRequest(Request.Method.GET, loadBranchUrl, response -> {
 //            Log.d("Onresponse", response);
             try {
@@ -191,8 +194,10 @@ public class AdminHomeFragment extends Fragment {
                         setSpinner();
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -200,6 +205,7 @@ public class AdminHomeFragment extends Fragment {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 //            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         });
 
@@ -288,6 +294,8 @@ public class AdminHomeFragment extends Fragment {
     private void loadClassData() {
 //        Log.d("qqq", year + "/" + month + "/" + date);
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if (classList != null || classList.size() > 0) {
             classList.clear();
         }
@@ -328,19 +336,23 @@ public class AdminHomeFragment extends Fragment {
                         recyclerView.setAdapter(adapter);
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 } else {
                     if (classList.size() == 0) {
                         txtEmpty.setVisibility(View.VISIBLE);
                         recyclerView.setVisibility(View.GONE);
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Log.d("error",error.getMessage());
 //            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
@@ -362,6 +374,8 @@ public class AdminHomeFragment extends Fragment {
 
     private void loadEventData() {
         layoutProgress.setVisibility(View.VISIBLE);
+        getActivity().getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         if (eventList.size() > 0) {
             eventList.clear();
         }
@@ -403,6 +417,7 @@ public class AdminHomeFragment extends Fragment {
 //                        initCalendarListener();
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
                 } else {
                     Calendar rightNow = Calendar.getInstance();
@@ -410,6 +425,7 @@ public class AdminHomeFragment extends Fragment {
                     calendarAdapter.refresh();
                     collapsibleCalendar.setAdapter(calendarAdapter);
                     layoutProgress.setVisibility(View.GONE);
+                    getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
@@ -417,6 +433,7 @@ public class AdminHomeFragment extends Fragment {
 
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getActivity().getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 //            Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

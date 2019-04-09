@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
@@ -219,6 +220,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void goLogin(String username, String pass) {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 
         if (!username.isEmpty()) {
             RequestQueue requestQueue = Volley.newRequestQueue(this);
@@ -227,6 +230,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                    edtCourse.setText("");
 //                    Toast.makeText(getActivity(),"เพิ่มข้อมูลแล้วจ้า",Toast.LENGTH_SHORT).show();
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 try {
                     //converting response to json object
 
@@ -252,6 +256,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                        courseList.add(item);
                         }
                         layoutProgress.setVisibility(View.GONE);
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         //TODO
                         if (Groups.equals("student")) {
                             Intent intent = new Intent(this, StudentDashboardActivity.class);
@@ -264,6 +269,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     } else if (jsonObject.getString("msg").equals("verify email")) {
                         layoutProgress.setVisibility(View.GONE);
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
 //                        Toast.makeText(this, jsonObject.getString("msg"), Toast.LENGTH_SHORT).show();
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setMessage(jsonObject.getString("msg"))
@@ -272,6 +278,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         alert.show();
                     } else {
                         layoutProgress.setVisibility(View.GONE);
+                        getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                         AlertDialog.Builder builder = new AlertDialog.Builder(this);
                         builder.setMessage(jsonObject.getString("msg"))
                                 .setNegativeButton("ok", null);
@@ -286,6 +293,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                    Log.d("onError", error.toString());
 //                    Toast.makeText(getActivity(), "เกิดข้อผิดพลาดโปรดลองอีกครั้ง", Toast.LENGTH_SHORT).show();
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }) {
                 @Override
@@ -301,11 +309,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
         }else{
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         }
     }
 
     private void goMainScreenWithFB(String id, String firstName, String lastName, String email, String birthday, String gender) {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, loginFBUrl, response -> {
             Log.d("onResponse", response);
@@ -334,6 +345,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 //                        courseList.add(item);
                     }
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     //TODO
                     if (!Groups.equals("student")) {
                         Intent intent = new Intent(this, AdminDashboardActivity.class);
@@ -346,6 +358,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                     }
                 } else {
                     layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(jsonObject.getString("msg"))
                             .setNegativeButton("ok", null);
@@ -359,6 +372,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         }, error -> {
 //                    Log.d("onError", error.toString());
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

@@ -9,6 +9,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.util.Log;
 import android.view.View;
+import android.view.WindowManager;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -83,12 +84,15 @@ public class PaymentPackageActivity extends AppCompatActivity
 
     private void checkCanByStyle(String stylePackID, String coinStyle) {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, checkCanByStyle, response -> {
             Log.d("checkCoinStyle", response);
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             try {
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("Your coin don't enough! Please go to shop!")) {
@@ -102,6 +106,7 @@ public class PaymentPackageActivity extends AppCompatActivity
             }
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -119,12 +124,15 @@ public class PaymentPackageActivity extends AppCompatActivity
 
     private void goBuyStyle(String stylePackID) {
         layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
         sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
 
         StringRequest stringRequest = new StringRequest(Request.Method.POST, buyPackStyleUrl, response -> {
             Log.d("Onresponse", response);
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             try {
                 JSONObject jsonObject = new JSONObject(response);
                 if (jsonObject.getString("message").equals("success")) {
@@ -137,6 +145,7 @@ public class PaymentPackageActivity extends AppCompatActivity
             }
         }, error -> {
             layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override
@@ -189,12 +198,15 @@ public class PaymentPackageActivity extends AppCompatActivity
             startActivityForResult(intent, PAY_PACKAGE);
         } else if (typePay.equals(getResources().getString(R.string.qr_code))) {
             layoutProgress.setVisibility(View.VISIBLE);
+            getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                    WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             sharedPreferences = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
             sharedUserID = sharedPreferences.getString(getString(R.string.UserID), "");
 
             StringRequest stringRequest = new StringRequest(Request.Method.POST, queryGenQrUrl, response -> {
 //                    Log.d("Onresponse", response);
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 try {
                     JSONObject jsonObject = new JSONObject(response);
                     if (jsonObject.getString("msg").equals("success")) {
@@ -214,6 +226,7 @@ public class PaymentPackageActivity extends AppCompatActivity
                 }
             }, error -> {
                 layoutProgress.setVisibility(View.GONE);
+                getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                 Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
             }) {
                 @Override
