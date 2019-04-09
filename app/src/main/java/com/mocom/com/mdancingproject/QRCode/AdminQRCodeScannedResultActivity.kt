@@ -98,9 +98,10 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
             val eventName = payCoinAndClassObject.eventName
             val coin = payCoinAndClassObject.coin
             val baht = payCoinAndClassObject.baht
+            val coinHave = payCoinAndClassObject.coinHave
             txt_name_for_class.text = userName
             txt_event_for_class.text = eventName
-            txt_coin_for_class.text = coin
+            txt_coin_for_class.text = (coin.toInt() - coinHave.toInt()).toString()
             txt_baht_for_class.text = baht
 
         } else if (eventIDForCheck != null && !eventIDForCheck.isEmpty()) {
@@ -287,6 +288,7 @@ class AdminQRCodeScannedResultActivity : AppCompatActivity(), SuccessBuyClassDia
                         params.put("eventID", payCoinAndClassObject.eventID)
                         params.put("coin", payCoinAndClassObject.coin)
                         params.put("baht", payCoinAndClassObject.baht)
+                        params.put("coinHave", payCoinAndClassObject.coinHave)
                         return params
                     }
                 }

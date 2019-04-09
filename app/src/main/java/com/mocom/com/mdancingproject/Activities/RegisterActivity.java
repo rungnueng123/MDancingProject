@@ -13,6 +13,7 @@ import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -51,6 +52,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     private TextView txtBirth;
     private Spinner spinnerSex;
     private DatePickerDialog.OnDateSetListener dateSetListener;
+    View layoutProgress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +77,7 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
         btnRegister.setOnClickListener(this);
         btnBack = findViewById(R.id.btn_back);
         btnBack.setOnClickListener(this);
+        layoutProgress = findViewById(R.id.layout_progressbar);
     }
 
     private void initInstance() {
@@ -191,12 +194,17 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
     }
 
     private void goRegister(String username, String email, String password, String phone, String sex, String birth) {
+        layoutProgress.setVisibility(View.VISIBLE);
+        getWindow().setFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE,
+                WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
         RequestQueue requestQueue = Volley.newRequestQueue(this);
         StringRequest request = new StringRequest(Request.Method.POST, registerUrl, response -> {
             Log.d("onResponse", response);
             try {
                 JSONObject obj = new JSONObject(response);
                 if (obj.getString("message").equals("You have been registered! Please verify your email!")) {
+                    layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(obj.getString("message"))
                             .setPositiveButton("ok", new DialogInterface.OnClickListener() {
@@ -212,6 +220,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
                     AlertDialog alert = builder.create();
                     alert.show();
                 } else {
+                    layoutProgress.setVisibility(View.GONE);
+                    getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
                     AlertDialog.Builder builder = new AlertDialog.Builder(this);
                     builder.setMessage(obj.getString("message"))
                             .setNegativeButton("ok", null);
@@ -223,6 +233,8 @@ public class RegisterActivity extends AppCompatActivity implements View.OnClickL
             }
 
         }, error -> {
+            layoutProgress.setVisibility(View.GONE);
+            getWindow().clearFlags(WindowManager.LayoutParams.FLAG_NOT_TOUCHABLE);
             Toast.makeText(getApplicationContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
         }) {
             @Override

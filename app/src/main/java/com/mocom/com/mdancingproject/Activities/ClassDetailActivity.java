@@ -303,6 +303,7 @@ public class ClassDetailActivity extends AppCompatActivity implements View.OnCli
                     intent.putExtra("eventName",obj.getString("eventName"));
                     intent.putExtra("coin",obj.getString("coin"));
                     intent.putExtra("baht",obj.getString("baht"));
+                    intent.putExtra("coinHave",obj.getString("coinHave"));
                     startActivity(intent);
 
                 }else{
