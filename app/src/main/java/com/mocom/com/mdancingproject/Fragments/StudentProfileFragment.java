@@ -101,7 +101,7 @@ public class StudentProfileFragment extends Fragment implements View.OnClickList
         styleList = new ArrayList<>();
         recyclerView.setHasFixedSize(true);
         recyclerView.setLayoutManager(new LinearLayoutManager(getContext(), LinearLayoutManager.HORIZONTAL, false));
-
+        cardView.setVisibility(View.GONE);
         queryProfile();
         queryStylePack();
 
