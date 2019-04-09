@@ -15,7 +15,7 @@ import com.mocom.com.mdancingproject.R;
 
 public class QRCodeCoinForClassActivity extends AppCompatActivity {
 
-    String userName, userID, eventID, eventName, coin, baht, serializeString, encryptedString;
+    String userName, userID, eventID, eventName, coin, baht, coinHave, serializeString, encryptedString;
     ImageView qrCodeImageView;
     Bitmap bitmap;
 
@@ -31,6 +31,7 @@ public class QRCodeCoinForClassActivity extends AppCompatActivity {
         eventName = intent.getStringExtra("eventName");
         coin = intent.getStringExtra("coin");
         baht = intent.getStringExtra("baht");
+        coinHave = intent.getStringExtra("coinHave");
 
         initFindViewByID();
         initInstance();
@@ -45,7 +46,7 @@ public class QRCodeCoinForClassActivity extends AppCompatActivity {
     }
 
     private void genQrCode() {
-        QRCodeGenForBuyClassObject qrCodeGenForBuyClassObject = new QRCodeGenForBuyClassObject(userName, userID, eventID, eventName, coin, baht);
+        QRCodeGenForBuyClassObject qrCodeGenForBuyClassObject = new QRCodeGenForBuyClassObject(userName, userID, eventID, eventName, coin, baht, coinHave);
         Gson gson = new Gson();
         serializeString = gson.toJson(qrCodeGenForBuyClassObject);
         encryptedString = EncryptionHelper.getInstance().encryptionString(serializeString).encryptMsg();

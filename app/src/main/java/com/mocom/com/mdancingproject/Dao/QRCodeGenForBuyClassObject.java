@@ -2,15 +2,16 @@ package com.mocom.com.mdancingproject.Dao;
 
 public class QRCodeGenForBuyClassObject {
 
-    private String userName, userID, eventID, eventName, coin, baht;
+    private String userName, userID, eventID, eventName, coin, baht, coinHave;
 
-    public QRCodeGenForBuyClassObject(String userName, String userID, String eventID, String eventName, String coin, String baht) {
+    public QRCodeGenForBuyClassObject(String userName, String userID, String eventID, String eventName, String coin, String baht, String coinHave) {
         this.userName = userName;
         this.userID = userID;
         this.eventID = eventID;
         this.eventName = eventName;
         this.coin = coin;
         this.baht = baht;
+        this.coinHave = coinHave;
     }
 
     public String getUserName() {
@@ -59,5 +60,13 @@ public class QRCodeGenForBuyClassObject {
 
     public void setBaht(String baht) {
         this.baht = baht;
+    }
+
+    public String getCoinHave() {
+        return coinHave;
+    }
+
+    public void setCoinHave(String coinHave) {
+        this.coinHave = coinHave;
     }
 }
