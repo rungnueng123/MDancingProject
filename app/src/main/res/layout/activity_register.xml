@@ -1,0 +1,167 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".Activities.RegisterActivity">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/color_bg_login"
+        android:gravity="center"
+        android:orientation="vertical"
+        android:paddingStart="50dp"
+        android:paddingEnd="50dp">
+
+        <EditText
+            android:id="@+id/edt_username"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:drawableStart="@drawable/ic_start_username"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/kanit_regular"
+            android:hint="@string/username"
+            android:textColor="@color/color_username_login"
+            android:textColorHighlight="@color/color_username_login"
+            android:textColorHint="@color/color_username_login"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edt_email"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="29.88dp"
+            android:drawableStart="@drawable/ic_email"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/kanit_regular"
+            android:hint="@string/email"
+            android:inputType="textEmailAddress"
+            android:textColor="@color/color_username_login"
+            android:textColorHighlight="@color/color_username_login"
+            android:textColorHint="@color/color_username_login"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edt_pass"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="29.88dp"
+            android:drawableStart="@drawable/ic_pass"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/kanit_regular"
+            android:hint="@string/password"
+            android:inputType="textPassword"
+            android:textColor="@color/color_username_login"
+            android:textColorHighlight="@color/color_username_login"
+            android:textColorHint="@color/color_username_login"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edt_cpass"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="29.88dp"
+            android:drawableStart="@drawable/ic_pass"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/kanit_regular"
+            android:hint="@string/confirm_pass"
+            android:inputType="textPassword"
+            android:textColor="@color/color_username_login"
+            android:textColorHighlight="@color/color_username_login"
+            android:textColorHint="@color/color_username_login"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/edt_tel"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="29.88dp"
+            android:drawableStart="@drawable/ic_phone_black_24dp"
+            android:drawablePadding="20dp"
+            android:fontFamily="@font/kanit_regular"
+            android:hint="@string/phone"
+            android:inputType="numberDecimal"
+            android:textColor="@color/color_username_login"
+            android:textColorHighlight="@color/color_username_login"
+            android:textColorHint="@color/color_username_login"
+            android:textSize="16sp" />
+
+        <Spinner
+            android:id="@+id/spinnerSex"
+            style="@style/SpinnerTheme"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="29.88dp"
+            android:fontFamily="@font/kanit_regular"
+            android:paddingStart="32dp"
+            android:paddingEnd="32dp"
+            android:prompt="@string/sex_prompt"
+            android:spinnerMode="dialog"
+            android:textColor="@color/color_username_login"
+            android:textColorHighlight="@color/color_username_login"
+            android:textColorHint="@color/color_username_login"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/txt_birth"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="29.88dp"
+            android:background="@drawable/shapeemail"
+            android:fontFamily="@font/kanit_regular"
+            android:gravity="center_vertical"
+            android:paddingStart="43.46dp"
+            android:paddingEnd="43.46dp"
+            android:text="@string/birth"
+            android:textColor="@color/color_username_login"
+            android:textColorHighlight="@color/color_username_login"
+            android:textColorHint="@color/color_username_login"
+            android:textSize="16sp"
+            android:visibility="gone" />
+
+        <Button
+            android:id="@+id/btn_register"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/shapelogin"
+            android:fontFamily="@font/kanit_regular"
+            android:padding="10dp"
+            android:shadowColor="@android:color/transparent"
+            android:text="@string/register"
+            android:textColor="@color/white" />
+
+        <Button
+            android:id="@+id/btn_back"
+            android:layout_width="match_parent"
+            android:layout_height="41dp"
+            android:layout_marginTop="25dp"
+            android:background="@drawable/shapeloginfacebook"
+            android:fontFamily="@font/kanit_regular"
+            android:padding="10dp"
+            android:shadowColor="@android:color/transparent"
+            android:text="@string/back"
+            android:textColor="@color/white" />
+
+    </LinearLayout>
+
+    <FrameLayout
+        android:id="@+id/layout_progressbar"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="#90000000"
+        android:visibility="gone">
+
+        <ProgressBar
+            android:id="@+id/progressbar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:indeterminateDrawable="@drawable/progress" />
+
+    </FrameLayout>
+
+
+</RelativeLayout>

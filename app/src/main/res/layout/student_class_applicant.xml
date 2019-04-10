@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="4dp"
+        android:foreground="?android:attr/selectableItemBackground">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/img_class"
+                android:layout_width="160dp"
+                android:layout_height="86dp"
+                android:layout_marginEnd="8dp"
+                android:scaleType="fitXY"
+                android:layout_centerVertical="true"
+                android:src="@mipmap/ic_launcher" />
+
+            <TextView
+                android:id="@+id/txt_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toEndOf="@id/img_class"
+                android:ellipsize="end"
+                android:fontFamily="@font/kanit_regular"
+                android:maxLines="1"
+                android:text="คลาส"
+                android:textColor="@color/txt_color_all"
+                android:textSize="24sp" />
+
+            <TextView
+                android:id="@+id/txt_playlist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_title"
+                android:layout_toEndOf="@id/img_class"
+                android:ellipsize="end"
+                android:fontFamily="@font/kanit_regular"
+                android:maxLines="1"
+                android:text="เพลง"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_playlist"
+                android:layout_toEndOf="@id/img_class"
+                android:ellipsize="end"
+                android:fontFamily="@font/kanit_regular"
+                android:maxLines="1"
+                android:text="สไตล์"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_teacher"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_style"
+                android:layout_toEndOf="@id/img_class"
+                android:ellipsize="end"
+                android:fontFamily="@font/kanit_regular"
+                android:maxLines="1"
+                android:text="ผู้สอน"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_date"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_teacher"
+                android:layout_toEndOf="@id/img_class"
+                android:ellipsize="end"
+                android:fontFamily="@font/kanit_regular"
+                android:maxLines="1"
+                android:text="วันที่เรียน"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_time"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_date"
+                android:layout_toEndOf="@id/img_class"
+                android:ellipsize="end"
+                android:fontFamily="@font/kanit_regular"
+                android:maxLines="1"
+                android:text="เวลา"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_branch"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_time"
+                android:layout_toEndOf="@id/img_class"
+                android:ellipsize="end"
+                android:fontFamily="@font/kanit_regular"
+                android:maxLines="1"
+                android:text="สาขา"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_active_show"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/txt_branch"
+                android:layout_toEndOf="@id/img_class"
+                android:ellipsize="end"
+                android:fontFamily="@font/kanit_regular"
+                android:maxLines="1"
+                android:text="สถานะ"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/txt_active"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:visibility="gone" />
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>

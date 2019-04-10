@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#90000000"
+    tools:context=".Activities.CoinTypePaymentClassActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="40dp"
+        android:layout_marginEnd="40dp"
+        android:paddingStart="22dp"
+        android:paddingEnd="22dp"
+        android:paddingTop="11dp"
+        android:background="@color/white"
+        android:layout_centerInParent="true">
+
+        <TextView
+            android:id="@+id/heading"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="22dp"
+            android:fontFamily="@font/kanit_medium"
+            android:paddingTop="5dp"
+            android:paddingBottom="5dp"
+            android:text="@string/title_payment_dialog"
+            android:textColor="#000"
+            android:textSize="22sp" />
+
+        <TextView
+            android:id="@+id/txt_class_name_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/heading"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="9dp"
+            android:fontFamily="@font/kanit_regular"
+            android:text="@string/class_payment_dialog"
+            android:textColor="#000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_class_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_class_name_title"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/kanit_regular"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_coin_price_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_class_name"
+            android:layout_marginStart="16dp"
+            android:layout_marginTop="12.5dp"
+            android:fontFamily="@font/kanit_regular"
+            android:text="@string/coin_payment_dialog"
+            android:textColor="#000"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/txt_coin_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_coin_price_title"
+            android:layout_marginStart="16dp"
+            android:fontFamily="@font/kanit_regular"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/action_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="14dp"
+            android:layout_below="@id/txt_coin_price"
+            android:layout_toStartOf="@+id/action_buy"
+            android:fontFamily="@font/kanit_medium"
+            android:text="@string/cancel"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+        <TextView
+            android:id="@+id/action_buy"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_marginBottom="14dp"
+            android:layout_below="@id/txt_coin_price"
+            android:fontFamily="@font/kanit_medium"
+            android:text="@string/confirm"
+            android:textColor="@color/colorPrimaryDark"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+</RelativeLayout>

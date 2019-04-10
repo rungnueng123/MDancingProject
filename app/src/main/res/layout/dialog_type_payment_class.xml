@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginStart="40dp"
+    android:layout_marginEnd="40dp"
+    tools:context=".DialogFragment.TypePaymentClassDialog">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="23dp"
+        android:layout_marginTop="11dp"
+        android:layout_marginEnd="23dp">
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/kanit_medium"
+            android:text="@string/type_pay_thai"
+            android:textColor="#000"
+            android:textSize="22sp" />
+
+        <RadioGroup
+            android:id="@+id/radio_group"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/txt_title"
+            android:layout_marginTop="8dp"
+            android:orientation="vertical">
+
+            <RadioButton
+                android:id="@+id/radio_payment_coin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:checked="true"
+                android:fontFamily="@font/kanit_regular"
+                android:paddingStart="23dp"
+                android:paddingEnd="23dp"
+                android:text="@string/txt_type_payment_coin"
+                android:textSize="18sp" />
+
+            <RadioButton
+                android:id="@+id/radio_payment_style"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="@font/kanit_regular"
+                android:paddingStart="23dp"
+                android:paddingEnd="23dp"
+                android:text="@string/txt_type_payment_style_pack"
+                android:textSize="18sp" />
+
+        </RadioGroup>
+
+        <TextView
+            android:id="@+id/txt_ok"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radio_group"
+            android:layout_alignParentEnd="true"
+            android:layout_marginTop="19dp"
+            android:layout_marginBottom="18dp"
+            android:padding="8dp"
+            android:text="@string/ok"
+            android:textColor="@color/colorPrimaryDark" />
+
+        <TextView
+            android:id="@+id/txt_cancel"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/radio_group"
+            android:layout_marginTop="19dp"
+            android:layout_marginEnd="19dp"
+            android:layout_marginBottom="18dp"
+            android:layout_toStartOf="@id/txt_ok"
+            android:padding="8dp"
+            android:text="@string/cancel"
+            android:textColor="@color/colorPrimaryDark" />
+
+    </RelativeLayout>
+
+</RelativeLayout>
